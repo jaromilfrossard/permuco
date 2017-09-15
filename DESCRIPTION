@@ -1,11 +1,13 @@
 Package: permuco
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
+Title: Permutation tests for regression, (repeated measures) ANOVA/ANCOVA and comparison of signals
+Version: 1.1.1
+Date: 2017-22-06
+Authors@R: c(
+  person("Frossard", "Jaromil", email = "jaromil.frossard@unige.ch",role = c("aut", "cre")),
+  person("Renaud","Olivier",email="olivier.renaud@unige.ch",role=c("aut")))
+Description: Functions to compute p-values based on permutation tests. For regression, ANOVA and ANCOVA, omnibus F-tests and marginal unilateral and bilateral t-tests are available. Several methods to handle nuisance variables are implemented.  An extension for the comparison of signals issued from experimental conditions (e.g. EEG/ERP signals) is provided. Several corrections for  multiple testing are possible, including the cluster-mass statistic and the threshold-free cluster enhancement.
+License: GPL (>= 2)
+Imports: permute,Matrix,stats,graphics,MASS
+LazyData: TRUE
+RoxygenNote: 6.0.1
