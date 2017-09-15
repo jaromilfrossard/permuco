@@ -1,0 +1,117 @@
+#' Cluster test for longitudinal data
+#'
+#' @description Compute the cluster mass test for longitudinal linear model.
+#' @param formula A formula object where the left part is a matrix defined in the global environnement.
+#' @param data A data frame for the independant variables.
+#' @param np The number of permutations. Default value is \code{5000}.
+#' @param method A character string indicating the method used to handle nuisance variables. Default is \code{NULL} and will switch to \code{"freedman_lane"} for the fixed effects model and to \code{"Rd_kheradPajouh_renaud"} for the repeated measures ANOVA. See \link{lmperm} or \link{aovperm} for details on the permutation methods.
+#' @param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
+#' @param threshold A numerical value that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. Default value is NULL and will switch to \code{4} for a \code{"fisher"} test and to \code{2} for a \code{"t"} test.
+#' @param aggr_FUN A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.
+#' @param multcomp A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are avaible : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.
+#' @param ... Futher arguments, see details.
+#' @return A list containing : a table of the \code{maris_oostenveld} clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
+#' @details
+#' The random effects model is only avaible with a F statistic.\cr
+#'
+#' Other arguments could be pass in \code{...} :\cr \cr
+#' \code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat} for the reproductibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
+#' \code{rnd_rotation} : A matrix of random value to compute a rotation of size \eqn{n \times n} that will be used for the \code{"huh_jhun"} method. \cr \cr
+#' \code{p_scale = FALSE} : if set to \code{TRUE}, the several multiple comparisons procedures are compute on the \code{1 - p} scale, where \code{p} is the p-value. The threshold have to be set between 0 and 1 (eg: \code{threshold = 0.95}). The function \code{aggr_FUN} should be big when there is evidence against the null (eg: \code{aggr_FUN = function(p)sum(abs(log(1-p)))}. Moreover under the probability scale the cluster mass statistics is sensitive to the number permutations.\cr \cr
+#' \code{H}, \code{E}, \code{ndh} : the parameters used for the \code{"tfce"} method. Default values are set to \code{H = 2} for the height parameter, to \code{E = 0.5} for the extend parameter and to \code{ndh = 500} for the number terms to approximate the integral.\cr \cr
+#' \code{alpha = 0.05} : the type I error rate. Used for the \code{troendle} multiple comparisons procedure.\cr \cr
+#' \code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.\cr
+#' \code{coding_sum} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
+#'
+#' @seealso \code{\link{plot.clusterlm}}
+#'
+#'@references
+#'Maris, E., & Oostenveld, R. (2007). Nonparametric statistical testing of EEG-and MEG-data. Journal of neuroscience methods, 164(1), 177-190.
+#'
+#'Smith, S. M., & Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98.
+#'
+#'@author jaromil.frossard@unige.ch
+#'@export
+clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fisher", threshold = NULL, aggr_FUN = function(x){sum(x^2)},
+                      multcomp = "maris_oostenveld", ...){
+
+  cl = match.call()
+  if(is.null(data)){data <- model.frame(formula = formula)}
+
+
+
+  ############
+  #Formula CHECK
+  Terms <- terms(formula, special = "Error", data = data)
+  indError <- attr(Terms, "specials")$Error
+
+  #dotargs
+  dotargs = list(...)
+
+  ####other parameters
+
+  if(is.null(dotargs$alpha)){
+    dotargs$alpha = 0.05
+  }
+
+  if(is.null(dotargs$p_scale)){
+    dotargs$p_scale = F
+  }
+
+  if(is.null(dotargs$H)){
+    switch(test,
+     "t" = {dotargs$H = 2},
+     "fisher" = {dotargs$H = 1})
+  }
+
+  if(is.null(dotargs$E)){
+    dotargs$E = 0.5
+  }
+
+
+  if(is.null(dotargs$ndh)){
+    dotargs$ndh = 500
+  }
+
+  if(is.null(dotargs$return_distribution)){
+    dotargs$return_distribution = F
+  }
+
+  if(is.null(threshold)){
+    switch(test,
+           "t" = {threshold = 2},
+           "fisher" = {threshold = 4})
+  }
+
+  if(is.null(dotargs$new_method)){
+    dotargs$new_method = F
+  }
+
+  if(is.null(dotargs$coding_sum)){
+    switch(test,
+           "t" = {dotargs$coding_sum = F},
+           "fisher" = {dotargs$coding_sum = T})
+  }
+
+  ###switch fix effet
+  if (is.null(indError)) {
+    result <- clusterlm_fix( formula = formula, data = data, method = method, test = test, np = np,
+                             P = dotargs$P, rnd_rotation = dotargs$rnd_rotation, aggr_FUN = aggr_FUN,
+                             E = dotargs$E, H = dotargs$H, threshold = threshold,
+                             return_distribution = dotargs$return_distribution, cl = cl, multcomp = multcomp,
+                             alpha = dotargs$alpha, p_scale = dotargs$p_scale, coding_sum = dotargs$coding_sum,ndh = dotargs$ndh,
+                             new_method = dotargs$new_method)
+  } else if (!is.null(indError)){
+    if(test!="fisher"){
+      warning("Random effect model only accept fisher type test statitics. test statistic set to fisher")
+      test="fisher"}
+    result <- clusterlm_rnd( formula = formula, data = data, method = method, test = test, np = np,
+                             P = dotargs$P, rnd_rotation = dotargs$rnd_rotation, aggr_FUN = aggr_FUN,
+                             E = dotargs$E, H = dotargs$H, threshold = threshold,
+                             return_distribution = dotargs$return_distribution, cl = cl, multcomp = multcomp,
+                             alpha = dotargs$alpha, p_scale = dotargs$p_scale, coding_sum = dotargs$coding_sum,ndh = dotargs$ndh,
+                             new_method = dotargs$new_method)}
+
+  ###output
+  return(result)
+}
