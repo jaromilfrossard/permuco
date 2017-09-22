@@ -11,21 +11,30 @@ print.clusterlm <- function(x, laterality = "bilateral",...){
     "Cluster ", x$test,
     " test using ", x$method,
     " to handle nuisance variables \n with ", paste(np(x$P), sep= ", ", collapse = ", "),
-    " permutations and a threshold of ", x$threshold,".\n\n", sep = "")
+    " permutations.\n\n", sep = "")
   cat("Alternative Hypothesis : ",laterality,".\n \n",sep = "")
   switch(laterality,
          "bilateral" = {
-           print.cluster_table(x$cluster_table,...)},
+           print(x$cluster_table,...)},
          "right" = {
-           print.cluster_table(x$cluster_table_right,...)},
+           print(x$cluster_table_right,...)},
          "left" = {
-           print.cluster_table(x$cluster_table_left,...)})
+           print(x$cluster_table_left,...)})
   }
 
+
 #' @export
-print.cluster_table <- function(x, effect = names(x), ...) {
-  print.listof(x[effect],...)
+print.cluster_table <- function(x, ...) {
+  cat(attr(x,"effect_name"),", threshold = ",attr(x,"threshold"),".\n",sep="")
+  print.data.frame(x)
+  cat("\n")
+}
+
+print.listof_cluster_table<- function(x, ...){
+  for(i in 1:length(x)){
+    print(x[[i]])
   }
+}
 
 ###########################summary
 

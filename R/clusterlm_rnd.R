@@ -79,6 +79,17 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   length(multiple_comparison) <- max(attr(mm_f,"assign"))
   names(multiple_comparison) <- attr(attr(mf_f,"terms"),"term.labels")
 
+  ##adjust multiple threshold
+  if(is.null(threshold)){
+    df = compute_degree_freedom_rnd(test = test,mm = mm_f,assigni = attr(x,"assign"),mm_id = mm_id,link = link)
+    threshold = qf(p = 0.95, df1 = df[,1],df2 =df[,2])
+    }else if(length(threshold)==1){threshold = rep(threshold,length(multiple_comparison))
+    } else if(length(threshold)>1){
+    threshold = as.numeric(matrix(threshold,nrow=length(multiple_comparison)))
+  }
+
+
+
   for(i in 1:max(attr(mm_f,"assign"))){
     args$i = i
     distribution = funP(args = args)
@@ -96,7 +107,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
 
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
                                  switch_multcomp(multcomp = c("maris_oostenveld",multcomp),
-                                                 distribution = distribution, threshold = threshold,
+                                                 distribution = distribution, threshold = threshold[i],
                                                  aggr_FUN = aggr_FUN, laterality = "bilateral", E = E,
                                                  H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))}
 
@@ -106,7 +117,6 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   cluster_table = cluster_table[order(link[3,], link[1,])]
   multiple_comparison = multiple_comparison[order(link[3,], link[1,])]
 
-  attr(cluster_table,"type") <- paste("Permutation test using ",method," to handle noise variable and ",np, " permutations.")
 
   out=list()
   out$y = y

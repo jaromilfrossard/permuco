@@ -37,7 +37,8 @@ compute_maris_oostenveld <-  function(distribution, threshold, aggr_FUN, lateral
     compute_pvalue(stat = mi,distribution = mass_distribution, laterality = "right"))
   pvalue = c(NA,pvalue)[cl[1,]+1]
   out = list(main = cbind(statistic = statistic, pvalue = pvalue, cluster_id = cl[1,]),
-              distribution = mass_distribution)
+              distribution = mass_distribution,
+             threshold = threshold)
   return(out)
 }
 
@@ -164,7 +165,8 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,
 
 #######################################for multcomp output
 cluster_table = function(x,...){
-  ct = lapply(x, function(effect){
+  ct = lapply(1:length(x), function(j){
+    effect = x[[j]]
     unique_cluster = unique(effect$maris_oostenveld$main[,3])
     unique_cluster = unique_cluster[unique_cluster!=0]
     if(length(unique_cluster)==0){
@@ -181,9 +183,13 @@ cluster_table = function(x,...){
     tab = data.frame(tab)
     colnames(tab) = c("start","end", "cluster mass", "P(>mass)")
     rownames(tab) = unique_cluster
+    attr(tab,"threshold") = effect$maris_oostenveld$threshold
+    attr(tab,"effect_name") = names(x)[j]
+    class(tab) = append("cluster_table",class(tab))
     tab
   })
-  class(ct) = "cluster_table"
+  class(ct) = append("listof_cluster_table",class(ct))
+  names(ct) = names(x)
   ct
 }
 
@@ -198,6 +204,31 @@ distribution_to_pscale <- function(distribution, test, lateraltiy){
            "left" = {out <- apply(distribution,2,function(col){compute_all_pvalue(col,laterality = "right")})},
            "bilateral" = {out <- apply(abs(distribution),2,function(col){compute_all_pvalue(col,laterality = "left")})})}
   return(out)
+}
+
+#####
+
+#' computed degree of freedom for the fixed effect model
+#'
+#' @details used for the threshold based on the 95 quantile
+compute_degree_freedom_fix = function(test,mm,assigni){
+  switch(test,
+         "t" = {rep(NROW(mm)-NCOL(mm),length(assigni))},
+         "fisher" = {cbind(dfn = as.numeric(table(assigni[assigni!=0])), dfd =NROW(mm)-NCOL(mm))})
+}
+
+#' computed degree of freedom for the random effect model
+#'
+#' @details used for the threshold based on the 95 quantile
+compute_degree_freedom_rnd = function(test = "fisher",mm,mm_id,assigni,link){
+  qr_mm = qr(mm)
+  switch(test,
+         "t" = {},
+         "fisher" = {
+           cbind(dfn = as.numeric(table(assigni[assigni!=0])),
+                 dfd=sapply(1:max(assigni[assigni!=0]),function(i){
+                   qr(qr.resid(qr_mm,khatrirao(mm_id, mm[,attr(mm,"assign")==link[3,i],drop=F])))$rank}))
+         })
 }
 
 

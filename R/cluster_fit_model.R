@@ -6,7 +6,7 @@
 #' @param np The number of permutations. Default value is \code{5000}.
 #' @param method A character string indicating the method used to handle nuisance variables. Default is \code{NULL} and will switch to \code{"freedman_lane"} for the fixed effects model and to \code{"Rd_kheradPajouh_renaud"} for the repeated measures ANOVA. See \link{lmperm} or \link{aovperm} for details on the permutation methods.
 #' @param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
-#' @param threshold A numerical value that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. Default value is NULL and will switch to \code{4} for a \code{"fisher"} test and to \code{2} for a \code{"t"} test.
+#' @param threshold A numerical vector that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.
 #' @param aggr_FUN A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.
 #' @param multcomp A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are avaible : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.
 #' @param ... Futher arguments, see details.
@@ -77,11 +77,11 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fish
     dotargs$return_distribution = F
   }
 
-  if(is.null(threshold)){
-    switch(test,
-           "t" = {threshold = 2},
-           "fisher" = {threshold = 4})
-  }
+  # if(is.null(threshold)){
+  #   switch(test,
+  #          "t" = {threshold = 2},
+  #          "fisher" = {threshold = 4})
+  # }
 
   if(is.null(dotargs$new_method)){
     dotargs$new_method = F

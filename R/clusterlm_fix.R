@@ -141,6 +141,24 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       multiple_comparison_left <- multiple_comparison_right <- NULL
     }
 
+  ##adjust multiple threshold
+  if(is.null(threshold)){
+    switch(test,
+           "t" = {
+             df = compute_degree_freedom_fix(test = test,mm = mm,assigni = colx)
+             threshold = qt(p = 0.975,df = df)},
+           "fisher" = {
+             df = compute_degree_freedom_fix(test = test,mm = mm,assigni = attr(x,"assign"))
+             threshold = qf(p = 0.95, df1 = df[,1],df2 =df[,2])})
+  }else if(length(threshold)==1){
+    threshold = rep(threshold,length(colx))
+  }else if(length(threshold)>1){
+    threshold = as.numeric(matrix(threshold,nrow=length(colx)))
+    }
+
+
+
+
   args <- list(y = y, mm = mm, P = P, rnd_rotation = rnd_rotation, test = test)
 
   for(i in 1:length(colx)){
@@ -161,7 +179,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
     #compute multiple comparison for bilateral
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
-    switch_multcomp(multcomp = c("maris_oostenveld",multcomp),distribution = distribution, threshold = threshold,aggr_FUN = aggr_FUN,
+    switch_multcomp(multcomp = c("maris_oostenveld",multcomp),distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
                     laterality = "bilateral", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
     ##unilateral test
     if(test == "t"){
@@ -175,7 +193,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       multiple_comparison_right[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
       multiple_comparison_right[[i]] = c(multiple_comparison_right[[i]],
                                          switch_multcomp(multcomp = c("maris_oostenveld",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
-                                                         threshold = threshold,aggr_FUN = aggr_FUN,laterality = lateraltiy,
+                                                         threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
                                                          E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
       #left
       ##pscale change
@@ -188,7 +206,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       multiple_comparison_left[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
       multiple_comparison_left[[i]] = c(multiple_comparison_left[[i]],
                                          switch_multcomp(multcomp = c("maris_oostenveld",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
-                                                         threshold = threshold,aggr_FUN = aggr_FUN,laterality = lateraltiy,
+                                                         threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
                                                          E = E, H = H, ndh =ndh, pvalue = pvalue, alpha = alpha))}
   }
 
