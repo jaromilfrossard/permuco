@@ -81,7 +81,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
 
   ##adjust multiple threshold
   if(is.null(threshold)){
-    df = compute_degree_freedom_rnd(test = test,mm = mm_f,assigni = attr(x,"assign"),mm_id = mm_id,link = link)
+    df = compute_degree_freedom_rnd(test = test,mm = mm_f,assigni = attr(mm_f,"assign"),mm_id = mm_id,link = link)
     threshold = qf(p = 0.95, df1 = df[,1],df2 =df[,2])
     }else if(length(threshold)==1){threshold = rep(threshold,length(multiple_comparison))
     } else if(length(threshold)>1){

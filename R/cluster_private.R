@@ -208,18 +208,18 @@ distribution_to_pscale <- function(distribution, test, lateraltiy){
 
 #####
 
-#' computed degree of freedom for the fixed effect model
-#'
-#' @details used for the threshold based on the 95 quantile
+# computed degree of freedom for the fixed effect model
+#
+# used for the threshold based on the 95 quantile
 compute_degree_freedom_fix = function(test,mm,assigni){
   switch(test,
          "t" = {rep(NROW(mm)-NCOL(mm),length(assigni))},
          "fisher" = {cbind(dfn = as.numeric(table(assigni[assigni!=0])), dfd =NROW(mm)-NCOL(mm))})
 }
 
-#' computed degree of freedom for the random effect model
-#'
-#' @details used for the threshold based on the 95 quantile
+# computed degree of freedom for the random effect model
+#
+# used for the threshold based on the 95 quantile
 compute_degree_freedom_rnd = function(test = "fisher",mm,mm_id,assigni,link){
   qr_mm = qr(mm)
   switch(test,

@@ -19,7 +19,7 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
-\item{threshold}{A numerical value that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. Default value is NULL and will switch to \code{4} for a \code{"fisher"} test and to \code{2} for a \code{"t"} test.}
+\item{threshold}{A numerical vector that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.}
 
 \item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.}
 

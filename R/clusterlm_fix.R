@@ -1,4 +1,4 @@
-#' @importFrom stats rnorm
+#' @importFrom stats rnorm qf qt
 clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rotation, aggr_FUN, E, H,
                           cl, multcomp, alpha, p_scale, coding_sum, ndh, return_distribution, new_method){
 
@@ -148,7 +148,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
              df = compute_degree_freedom_fix(test = test,mm = mm,assigni = colx)
              threshold = qt(p = 0.975,df = df)},
            "fisher" = {
-             df = compute_degree_freedom_fix(test = test,mm = mm,assigni = attr(x,"assign"))
+             df = compute_degree_freedom_fix(test = test,mm = mm,assigni = attr(mm,"assign"))
              threshold = qf(p = 0.95, df1 = df[,1],df2 =df[,2])})
   }else if(length(threshold)==1){
     threshold = rep(threshold,length(colx))
