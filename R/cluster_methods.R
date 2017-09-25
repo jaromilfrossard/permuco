@@ -30,10 +30,17 @@ print.cluster_table <- function(x, ...) {
   cat("\n")
 }
 
-print.listof_cluster_table<- function(x, ...){
-  for(i in 1:length(x)){
-    print(x[[i]])
-  }
+#' @export
+print.listof_cluster_table<- function(x,...){
+  dotargs = list(...)
+  ei = NULL
+  if(!is.null(dotargs$effect)){
+    ei = which(names(x)%in%dotargs$effect)}
+  if(length(ei)>0){
+    for(i in ei){print(x[[i]])}
+    }else{
+      for(i in 1:length(x)){
+        print(x[[i]])}}
 }
 
 ###########################summary
