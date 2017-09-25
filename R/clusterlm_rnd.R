@@ -111,11 +111,10 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
                                                  aggr_FUN = aggr_FUN, laterality = "bilateral", E = E,
                                                  H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))}
 
-  cluster_table <- cluster_table(multiple_comparison)
+
+  cluster_table <- cluster_table(multiple_comparison[order(link[3,], link[1,])])
 
   ##sort effect
-  cluster_table = cluster_table[order(link[3,], link[1,])]
-  multiple_comparison = multiple_comparison[order(link[3,], link[1,])]
 
 
   out=list()
