@@ -101,6 +101,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   })
 
   distribution = matrix(distribution,nrow=np)
+  colnames(distribution) = names(colx)
 
 
 
