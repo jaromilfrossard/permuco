@@ -170,7 +170,10 @@ cluster_table = function(x,...){
     unique_cluster = unique(effect$maris_oostenveld$main[,3])
     unique_cluster = unique_cluster[unique_cluster!=0]
     if(length(unique_cluster)==0){
-      table = "no cluster above the threshold"
+      attr(table,"effect_name") = names(x)[j]
+      attr(table,"threshold") = effect$maris_oostenveld$threshold
+      table = paste(names(x)[j], ", no cluster above a threshold of : ", round(effect$maris_oostenveld$threshold, 5),
+                    sep= "")
       return(table)}
     tab = t(sapply(unique_cluster,function(i){
       cl_select = effect$maris_oostenveld$main[,3] == i

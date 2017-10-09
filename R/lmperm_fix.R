@@ -29,7 +29,11 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
 
   # #parametric LM=========================================
   mod_lm <- lm(formula = formula,data = data)
-  table <- summary(mod_lm)$coefficients
+  table <- matrix(NA,ncol = 4, nrow=NCOL(mm))
+  table[mod_lm$qr$pivot[1:mod_lm$qr$rank],] <- summary(mod_lm)$coefficients
+  colnames(table) <- c("Estimate", "Std. Error",  "t value",  "Pr(>|t|))")
+  rownames(table) <- name
+
 
   #check P argument
   if(!is.null(P)){
@@ -59,9 +63,9 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
 
   ####select test==============================
   # qr decomposition take care of the rank < dim
-  qr_mm = qr(mm)
-  colx <- which(qr_mm$pivot<=qr_mm$rank)
-  if(method != "huh_jhun"){colx <- colx[attr(mm,"assign")!=0]}
+  colx <- mod_lm$qr$pivot[1:mod_lm$qr$rank]
+
+  if(method != "huh_jhun"){colx <- colx[(attr(mm,"assign")[colx])!=0]}
   names(colx) = colnames(mm)[colx]
 
   ###compute distribution==============================
@@ -82,13 +86,14 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
   check_distribution(distribution = distribution, digits = 10, n_unique = 200)
 
 ######create table===========================
+
   table <-
     as.data.frame(cbind(table, l_pvalue ,r_pvalue,bi_pvalue))
   colnames(table)[3:7] = c("t value","parametric Pr(>|t|)",
                            "permutation Pr(<t)","permutation Pr(>t)","permutation Pr(>|t|)")
+  rownames(table) = colnames(mm)
   class(table) <- c("lmpermutation_table","data.frame")
-  attr(table,"heading") <-
-    c("Table of marginal t-test of the betas")
+  attr(table,"heading") <- c("Table of marginal t-test of the betas")
   attr(table,"type") = paste("Permutation test using",method,"to handle noise variable and",np, "permutations.")
 
 #####output==================================

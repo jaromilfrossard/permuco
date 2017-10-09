@@ -5,7 +5,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   if(is.null(method)){method = "freedman_lane"}
 
   if(!new_method){
-    method = match.arg(method,c("freedman_lane","kennedy","huh_jhun","manly",
+    method <- match.arg(method,c("freedman_lane","kennedy","huh_jhun","manly",
                                 "terBraak","draper_stoneman","dekker"))
   }
 
@@ -82,9 +82,9 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
          "t" = {
            col_ref <- 1:length(attr(mm,"assign"))
            qr_mm = qr(mm)
-           colx <- which(qr_mm$pivot<=qr_mm$rank)
+           colx <- qr_mm$pivot[1:qr_mm$rank]
            if(method != "huh_jhun"){
-             colx <- colx[attr(mm,"assign")!=0]}
+             colx <- colx[(attr(mm,"assign")[colx])!=0]}
            names(colx) <- colnames(mm)[colx]})
 
   #permutation matrix====================================
@@ -162,9 +162,11 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
   args <- list(y = y, mm = mm, P = P, rnd_rotation = rnd_rotation, test = test)
 
+
   for(i in 1:length(colx)){
     ##compute distribution
     args$colx <- which(col_ref == colx[i])
+
     if(method == "huh_jhun"&test =="fisher"){args$P = P[[i]]}
     distribution<- t(funP(args = args))
     pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col))
