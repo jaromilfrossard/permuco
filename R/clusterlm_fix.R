@@ -81,7 +81,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
          },
          "t" = {
            col_ref <- 1:length(attr(mm,"assign"))
-           colx <- 1:length(attr(mm,"assign"))
+           qr_mm = qr(mm)
+           colx <- which(qr_mm$pivot<=qr_mm$rank)
            if(method != "huh_jhun"){
              colx <- colx[attr(mm,"assign")!=0]}
            names(colx) <- colnames(mm)[colx]})

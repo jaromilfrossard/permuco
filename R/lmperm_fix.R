@@ -58,7 +58,9 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
   }
 
   ####select test==============================
-  colx <- 1:length(attr(mm,"assign"))
+  # qr decomposition take care of the rank < dim
+  qr_mm = qr(mm)
+  colx <- which(qr_mm$pivot<=qr_mm$rank)
   if(method != "huh_jhun"){colx <- colx[attr(mm,"assign")!=0]}
   names(colx) = colnames(mm)[colx]
 
