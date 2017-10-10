@@ -166,7 +166,7 @@ switch(laterality,
 
   #####
 
-  par0 <- list(par()$mfcol,par()$mar,par()$oma)
+  par0 <- list(mfcol = par()$mfcol,mar = par()$mar,oma = par()$oma)
 
   par(mfcol = c(p,1),mar = c(0,4,0,0),oma = c(4,0,4,1),...=...)
   for (i in 1:p) {
@@ -179,10 +179,10 @@ switch(laterality,
       col="red"
       #lines(x = x,y= y,lwd=par()$lwd*2,col=col)
       points(x = xi, y = y, pch=par()$pch,col=col)
-      if(multcomp=="maris_oostenveld"){abline(h=hl,lty=3)}
+      if(multcomp=="maris_oostenveld"){abline(h=hl[i],lty=3)}
   }}
   title(title,outer = T,cex = 2)
-  par(par0)
+  par(mfcol = par0$mfcol, mar = par0$mar, oma = par0$oma)
   axis(1)
   }
 
