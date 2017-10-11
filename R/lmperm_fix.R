@@ -56,6 +56,8 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
     warning("The number of permutations is below 2000, p-values might be unreliable")
   }
 
+  np = np(P)
+
   ####create rnd_rotation matrices==============================
   if(method=="huh_jhun" & is.null(rnd_rotation)){
     rnd_rotation <- matrix(rnorm(length(y)^2),ncol=length(y))
@@ -115,7 +117,8 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
   out$distribution = distribution
   out$P = P
   out$rnd_rotation = rnd_rotation
-
+  out$np = np
+  out$method = method
   class(out) <- "lmperm"
   return(out)
 
