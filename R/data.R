@@ -59,3 +59,24 @@ NULL
 #' @format A data frame with 38 rows and 8 variables.
 #' @references Cheval, B., Sarrazin, P., Pelletier, L., & Friese, M. (2016). Effect of retraining approach-avoidance tendencies on an exercise task: A randomized controlled trial. Journal of Physical Activity and Health, 13(12), 1396-1403.
 NULL
+
+
+
+
+#' Emergency patients data
+#'
+#' Observational data from 176 emergency patients with variables :
+#'
+#' \itemize{
+#' \item \code{sex}.
+#' \item \code{age}.
+#' \item \code{insurance} : the type of insurance, private or semi private (\code{semi_private}) or public (\code{public}).
+#' \item \code{LOS} : the length of the stay in days.
+#' \item \code{cost} : the cost in CHF.
+#' }
+#'
+#' @name emergencycost
+#' @docType data
+#' @usage data(emergencycost)
+#' @format A data frame with 176 rows and 5 variables.
+NULL
