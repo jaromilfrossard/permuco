@@ -76,7 +76,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
     warning("The number of permutations is below 2000, p-values might be unreliable")
   }
 
-  np=np(P)
+  np <- np(P)
 
   #create rnd_rotation matrices==============================
   if(method=="huh_jhun" & is.null(rnd_rotation)){
@@ -136,6 +136,8 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   out$P <- P
   out$rnd_rotation <- rnd_rotation
   out$coding_sum <- coding_sum
+  out$np = np
+  out$method = method
 
   class(out)<-"lmperm"
   return(out)
