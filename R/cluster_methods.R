@@ -184,7 +184,6 @@ switch(laterality,
   }}
   title(title,outer = T,cex = 2)
   par(mfcol = par0$mfcol, mar = par0$mar, oma = par0$oma)
-  axis(1)
   }
 
 
