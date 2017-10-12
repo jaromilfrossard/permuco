@@ -170,8 +170,9 @@ switch(laterality,
 
   par(mfcol = c(p,1),mar = c(0,4,0,0),oma = c(4,0,4,1),...=...)
   for (i in 1:p) {
+    if(i==p){xaxt = NULL}else{xaxt = "n"}
     plot(
-      data[i,],type = "l",xaxt = "n",xlab = "",ylab = rnames[i]
+      data[i,],type = "l",xaxt = xaxt,xlab = "",ylab = rnames[i]
     )
     if(type == "statistic"){
       xi = which(pvalue[i,]< x$alpha)
