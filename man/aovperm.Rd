@@ -47,6 +47,43 @@ Other arguments could be pass in \code{...} :\cr \cr
 \code{rnd_rotation} : a random matrix of size \eqn{n \times n} to compute the rotation used for the \code{"huh_jhun"} method.
 \code{coding_sum} : a logical set to \code{TRUE} defining the coding of the design matrix to \code{contr.sum} to test the main effects. If it is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe. The tests of simple effets are possible with a coding of the factors of the dataframe set to \code{contr.treatment}.\cr
 }
+\examples{
+\dontrun{
+
+## centrering the covariate to the mean
+emergencycost$LOSc <- scale(emergencycost$LOS, scale = F)
+
+## ANCOVA
+mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 100000)
+mod_cost_0
+
+## Testing at 14 days
+emergencycost$LOS14 <- emergencycost$LOS - 14
+
+mod_cost_14 <- aovperm(cost ~ LOS14*sex*insurance, data = emergencycost, np = 100000)
+mod_cost_14
+
+## Effect of sex within the public insured
+contrasts(emergencycost$insurance) <- contr.treatment
+contrasts(emergencycost$sex) <- contr.sum
+emergencycost$insurance <- relevel(emergencycost$insurance, ref = "public")
+
+mod_cost_se <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost,
+                        np = 100000, coding_sum = FALSE)
+mod_cost_se
+
+
+## Repeated measures ANCOVA
+
+## centrering the covariate
+jpah2016$bmic <- scale(jpah2016$bmi, scale = F)
+
+mod_jpah2016 <- aovperm(iapa ~ bmic*condition*time+ Error(id/(time)),
+                    data = jpah2016, method = "Rd_kheradPajouh_renaud")
+mod_jpah2016
+
+}
+}
 \seealso{
 \code{\link{lmperm}} \code{\link{plot.lmperm}}
 }

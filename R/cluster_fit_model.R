@@ -8,7 +8,7 @@
 #' @param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
 #' @param threshold A numerical vector that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.
 #' @param aggr_FUN A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.
-#' @param multcomp A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are avaible : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.
+#' @param multcomp A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.
 #' @param ... Futher arguments, see details.
 #' @return A list containing : a table of the \code{maris_oostenveld} clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
 #' @details
@@ -29,6 +29,39 @@
 #'Maris, E., & Oostenveld, R. (2007). Nonparametric statistical testing of EEG-and MEG-data. Journal of neuroscience methods, 164(1), 177-190.
 #'
 #'Smith, S. M., & Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98.
+#'
+#'@examples \dontrun{
+#'
+#' ## Cluster-mass for repeated measures ANOVA
+#' electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+#'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design)
+#'
+#' ## Results
+#' plot(electrod_O1)
+#'
+#' ## Tables of clusters
+#' electrod_O1
+#'
+#' ## Change the function of the aggregation
+#'
+#' ## Sum of F statistics
+#' electrod_O1_sum <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+#'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+#'          aggr_FUN = function(x)sum(x))
+#'
+#' ## Length of the cluster
+#' electrod_O1_length <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+#'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+#'          aggr_FUN = function(x)length(x))
+#'
+#'
+#' ## All multiple comparisons procedures for repeated measures ANOVA
+#' ## Permutation method "Rde_kheradPajouh_renaud"
+#' full_electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+#'           + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+#'           method = "Rde_kheradPajouh_renaud", multcomp = c("troendle", "tfce",
+#'           "maris_oostenveld", "bonferroni", "holm", "benjaminin_hochberg"))
+#'}
 #'
 #'@author jaromil.frossard@unige.ch
 #'@export
@@ -103,7 +136,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fish
                              new_method = dotargs$new_method)
   } else if (!is.null(indError)){
     if(test!="fisher"){
-      warning("Random effect model only accept fisher type test statitics. test statistic set to fisher")
+      warning("Random effects model only accept fisher type test statistics. Test statistic is set to fisher.")
       test="fisher"}
     result <- clusterlm_rnd( formula = formula, data = data, method = method, test = test, np = np,
                              P = dotargs$P, rnd_rotation = dotargs$rnd_rotation, aggr_FUN = aggr_FUN,

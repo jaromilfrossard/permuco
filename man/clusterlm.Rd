@@ -23,7 +23,7 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.}
 
-\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are avaible : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.}
+\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.}
 
 \item{...}{Futher arguments, see details.}
 }
@@ -44,6 +44,41 @@ Other arguments could be pass in \code{...} :\cr \cr
 \code{alpha = 0.05} : the type I error rate. Used for the \code{troendle} multiple comparisons procedure.\cr \cr
 \code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.\cr
 \code{coding_sum} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
+}
+\examples{
+\dontrun{
+
+## Cluster-mass for repeated measures ANOVA
+electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design)
+
+## Results
+plot(electrod_O1)
+
+## Tables of clusters
+electrod_O1
+
+## Change the function of the aggregation
+
+## Sum of F statistics
+electrod_O1_sum <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+         aggr_FUN = function(x)sum(x))
+
+## Length of the cluster
+electrod_O1_length <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+         aggr_FUN = function(x)length(x))
+
+
+## All multiple comparisons procedures for repeated measures ANOVA
+## Permutation method "Rde_kheradPajouh_renaud"
+full_electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
+          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+          method = "Rde_kheradPajouh_renaud", multcomp = c("troendle", "tfce",
+          "maris_oostenveld", "bonferroni", "holm", "benjaminin_hochberg"))
+}
+
 }
 \references{
 Maris, E., & Oostenveld, R. (2007). Nonparametric statistical testing of EEG-and MEG-data. Journal of neuroscience methods, 164(1), 177-190.

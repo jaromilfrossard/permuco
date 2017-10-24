@@ -34,6 +34,42 @@
 #' @seealso \code{\link{lmperm}} \code{\link{plot.lmperm}}
 #' @author jaromil.frossard@unige.ch
 #' @importFrom stats terms contr.sum
+#'
+#' @examples \dontrun{
+#'
+#' ## centrering the covariate to the mean
+#' emergencycost$LOSc <- scale(emergencycost$LOS, scale = F)
+#'
+#' ## ANCOVA
+#' mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 100000)
+#' mod_cost_0
+#'
+#' ## Testing at 14 days
+#' emergencycost$LOS14 <- emergencycost$LOS - 14
+#'
+#' mod_cost_14 <- aovperm(cost ~ LOS14*sex*insurance, data = emergencycost, np = 100000)
+#' mod_cost_14
+#'
+#' ## Effect of sex within the public insured
+#' contrasts(emergencycost$insurance) <- contr.treatment
+#' contrasts(emergencycost$sex) <- contr.sum
+#' emergencycost$insurance <- relevel(emergencycost$insurance, ref = "public")
+#'
+#' mod_cost_se <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost,
+#'                         np = 100000, coding_sum = FALSE)
+#' mod_cost_se
+#'
+#'
+#' ## Repeated measures ANCOVA
+#'
+#' ## centrering the covariate
+#' jpah2016$bmic <- scale(jpah2016$bmi, scale = F)
+#'
+#' mod_jpah2016 <- aovperm(iapa ~ bmic*condition*time+ Error(id/(time)),
+#'                     data = jpah2016, method = "Rd_kheradPajouh_renaud")
+#' mod_jpah2016
+#'
+#' }
 #' @export
 aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
   #method <- pmatch(method)
@@ -98,6 +134,15 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
 #' Winkler, A. M., Ridgway, G. R., Webster, M. A., Smith, S. M., & Nichols, T. E. (2014). Permutation inference for the general linear model. Neuroimage, 92, 381-397.
 #'
 #' @author jaromil.frossard@unige.ch
+#' @examples \dontrun{
+#'
+#' ## Univariate t test
+#' contrasts(emergencycost$insurance) <- contr.sum
+#' contrasts(emergencycost$sex) <- contr.sum
+#'
+#' modlm_cost_14 <- lmperm(cost ~ LOS14*sex*insurance, data = emergencycost, np = 100000)
+#' modlm_cost_14
+#' }
 #' @export
 lmperm<-function(formula, data = NULL, np = 5000, method = NULL,... ){
   if(is.null(data)){data <- model.frame(formula = formula)}

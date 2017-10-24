@@ -24,3 +24,25 @@ Compute a permutation matrix used as argument in \link{aovperm}, \link{lmperm}, 
 \code{"default"} : \code{np} random with replacement permutations among the \code{n!} permutations.\cr
 \code{"all"} : all \code{n!} possible permutations.\cr
 }
+\examples{
+\dontrun{
+
+## Create a set of 5000 the permutation
+set.seed(42)
+pmat = Pmat(np = 5000, n = nrow(emergencycost))
+
+## centrering the covariate to the mean
+emergencycost$LOSc <- scale(emergencycost$LOS, scale = F)
+
+## ANCOVA
+mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost)
+mod_cost_1 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
+mod_cost_2 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
+
+## Identical p-values for both models 1 and 2 but differents of model 0
+mod_cost_0
+mod_cost_1
+mod_cost_2
+
+}
+}
