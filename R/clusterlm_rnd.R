@@ -106,7 +106,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     }
 
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
-                                 switch_multcomp(multcomp = c("maris_oostenveld",multcomp),
+                                 switch_multcomp(multcomp = c("clustermass",multcomp),
                                                  distribution = distribution, threshold = threshold[i],
                                                  aggr_FUN = aggr_FUN, laterality = "bilateral", E = E,
                                                  H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))}

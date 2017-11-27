@@ -182,7 +182,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
     #compute multiple comparison for bilateral
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
-    switch_multcomp(multcomp = c("maris_oostenveld",multcomp),distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
+    switch_multcomp(multcomp = c("clustermass",multcomp),distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
                     laterality = "bilateral", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
     ##unilateral test
     if(test == "t"){
@@ -195,7 +195,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,laterality = lateraltiy))
       multiple_comparison_right[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
       multiple_comparison_right[[i]] = c(multiple_comparison_right[[i]],
-                                         switch_multcomp(multcomp = c("maris_oostenveld",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
+                                         switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
                                                          E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
       #left
@@ -208,7 +208,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,laterality = lateraltiy))
       multiple_comparison_left[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
       multiple_comparison_left[[i]] = c(multiple_comparison_left[[i]],
-                                         switch_multcomp(multcomp = c("maris_oostenveld",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
+                                         switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
                                                          E = E, H = H, ndh =ndh, pvalue = pvalue, alpha = alpha))}
   }
@@ -225,8 +225,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
   #reshape args
   multcomp = unique(c("uncorrected",
-                      "maris_oostenveld",multcomp))[unique(c("uncorrected","maris_oostenveld",
-                                                             multcomp))%in%c("uncorrected","maris_oostenveld",
+                      "clustermass",multcomp))[unique(c("uncorrected","clustermass",
+                                                             multcomp))%in%c("uncorrected","clustermass",
                                                                              "tfce","troendle","bonferroni","holm",
                                                                              "benjaminin_hochberg")]
 

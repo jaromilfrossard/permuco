@@ -101,13 +101,13 @@ summary_multcomp <- function(object, multcomp, laterality){
 #' @param x A \code{clusterlm} object.
 #' @param effect A vector of character naming the effects to display. Default is \code{"all"}.
 #' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}
-#' @param multcomp A character sting specifying the p-value to plot. Default is \code{"maris_oostenveld"}. See \link{clusterlm}.
+#' @param multcomp A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.
 #' @param laterality A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.
-#' @param uncorrected logical. Default is \code{TRUE}. If \code{TRUE}, the uncorrected statistic will be plotted overwise it will plot the corrected statistic. Change for the \code{"ftce"} or the \code{"maris_oostenveld"}, multiple comparisons method.
+#' @param uncorrected logical. Default is \code{TRUE}. If \code{TRUE}, the uncorrected statistic will be plotted overwise it will plot the corrected statistic. Change for the \code{"ftce"} or the \code{"clustermass"}, multiple comparisons method.
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "maris_oostenveld", laterality = "bilateral",uncorrected = T,...) {
+plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral",uncorrected = T,...) {
 
   ##select effect
   if("all" %in% effect){effect = names(x$multiple_comparison)}
@@ -145,7 +145,7 @@ switch(laterality,
          "statistic" ={
            data <- statistic
            title <- paste(x$test, " Statistic",sep="",collapse = "")
-           if(multcomp=="maris_oostenveld"){
+           if(multcomp=="clustermass"){
            switch(x$test,
                   "fisher"={hl <- x$threshold},
                   "t"={
@@ -180,7 +180,7 @@ switch(laterality,
       col="red"
       #lines(x = x,y= y,lwd=par()$lwd*2,col=col)
       points(x = xi, y = y, pch=par()$pch,col=col)
-      if(multcomp=="maris_oostenveld"){abline(h=hl[i],lty=3)}
+      if(multcomp=="clustermass"){abline(h=hl[i],lty=3)}
   }}
   title(title,outer = T,cex = 2)
   par(mfcol = par0$mfcol, mar = par0$mar, oma = par0$oma)

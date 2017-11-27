@@ -1,5 +1,5 @@
 ############################################################################################################
-compute_maris_oostenveld <-  function(distribution, threshold, aggr_FUN, laterality = "right"){
+compute_clustermass <-  function(distribution, threshold, aggr_FUN, laterality = "right"){
     switch(laterality,
            "right" = {
              threshold <- abs(threshold)
@@ -148,8 +148,8 @@ compute_benjaminin_hochberg <- function(statistic = NULL, pvalue){
 
 switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,E,H,ndh,pvalue,alpha){
   out= list()
-  if("maris_oostenveld"%in%multcomp){
-    out$maris_oostenveld <- compute_maris_oostenveld(distribution = distribution, threshold = threshold,
+  if("clustermass"%in%multcomp){
+    out$clustermass <- compute_clustermass(distribution = distribution, threshold = threshold,
                                                                           aggr_FUN = aggr_FUN, laterality = laterality)}
   if("tfce"%in%multcomp){
     out$tfce <- compute_tfce(distribution = distribution, E = E, H = H, ndh = ndh)}
@@ -167,26 +167,26 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,
 cluster_table = function(x,...){
   ct = lapply(1:length(x), function(j){
     effect = x[[j]]
-    unique_cluster = unique(effect$maris_oostenveld$main[,3])
+    unique_cluster = unique(effect$clustermass$main[,3])
     unique_cluster = unique_cluster[unique_cluster!=0]
     if(length(unique_cluster)==0){
       attr(table,"effect_name") = names(x)[j]
-      attr(table,"threshold") = effect$maris_oostenveld$threshold
-      table = paste(names(x)[j], ", no cluster above a threshold of : ", round(effect$maris_oostenveld$threshold, 5),
+      attr(table,"threshold") = effect$clustermass$threshold
+      table = paste(names(x)[j], ", no cluster above a threshold of : ", round(effect$clustermass$threshold, 5),
                     sep= "")
       return(table)}
     tab = t(sapply(unique_cluster,function(i){
-      cl_select = effect$maris_oostenveld$main[,3] == i
+      cl_select = effect$clustermass$main[,3] == i
       timepoint = c(1:length(cl_select))[cl_select]
       c(timepoint[1],timepoint[length(timepoint)],
-        effect$maris_oostenveld$main[timepoint[1],1],
-         effect$maris_oostenveld$main[timepoint[1],2])
+        effect$clustermass$main[timepoint[1],1],
+         effect$clustermass$main[timepoint[1],2])
 
     }))
     tab = data.frame(tab)
     colnames(tab) = c("start","end", "cluster mass", "P(>mass)")
     rownames(tab) = unique_cluster
-    attr(tab,"threshold") = effect$maris_oostenveld$threshold
+    attr(tab,"threshold") = effect$clustermass$threshold
     attr(tab,"effect_name") = names(x)[j]
     class(tab) = append("cluster_table",class(tab))
     tab
