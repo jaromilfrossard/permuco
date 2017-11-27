@@ -1,6 +1,6 @@
 #' Design for the data attentionshifting_signal
 #'
-#' @description Design of the an experiment measuring the brain response of 15 participants who have been shown images of neutral and angry faces. Those faces were shown at a different visibility 16ms and 166ms and were displayed either to the left or to the right of a screen. The laterality, sex, age, and 2 measures of anxiety of each subjects are also available. The value of the responses are located in the dataset \link{attentionshifting_signal}.
+#' @description Design of an experiment measuring the EEG brain activity of 15 participants who have been shown images of neutral and angry faces. Those faces were shown at a different visibility 16ms and 166ms and were displayed either to the left or to the right of a screen. The laterality, sex, age, and 2 measures of anxiety for each subjects are also available. The amplitude of the EEG recording are located in the dataset \link{attentionshifting_signal}.
 #'
 #' \itemize{
 #' \item id : identifier of the subject.
@@ -22,9 +22,9 @@ NULL
 
 
 
-#' Dataset containing th signal for a given electrod (O1) in an experiment using EEG
+#' Dataset containing the event-related potential of the electrod O1 of a control experiment
 #'
-#' The ERP (averaged EEG signal) for a given electrod (O1) in an experiment in attention shifting sampled at 1024 Hz. The design of the experiment is given in the dataset \link{attentionshifting_design}.
+#' The ERP of the electrod O1 of an experiment in attention shifting. This dataset contains the amplitude of the signals sampled at 1024 Hz. The design of the experiment is given in the dataset \link{attentionshifting_design}.
 #'
 #' \itemize{
 #' \item ERP (in muV) of the electrod O1 measured from -200 to 600 timeframes before and after the onset of the stimulus.
@@ -40,7 +40,7 @@ NULL
 
 #' Control study in psychology.
 #'
-#' A subset of a control experiment measuring the impulsive approach tendencies towrad physical activity or sedentary behaviors.
+#' A subset of a control experiment measuring the impulsive approach tendencies toward physical activity or sedentary behaviors.
 #'
 #' \itemize{
 #' \item id identifier of the subject.
@@ -79,4 +79,5 @@ NULL
 #' @docType data
 #' @usage data(emergencycost)
 #' @format A data frame with 176 rows and 5 variables.
+#' @references Heritier, S., Cantoni, E., Copt, S., & Victoria-Feser, M. P. (2009). Robust methods in Biostatistics (Vol. 825). John Wiley & Sons.
 NULL

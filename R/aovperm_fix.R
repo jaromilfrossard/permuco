@@ -25,7 +25,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
          "terBraak"={funP=function(...){fisher_terBraak(...)}},
          "draper_stoneman"={funP=function(...){fisher_draper_stoneman(...)}},
          "dekker"={funP=function(...){fisher_dekker(...)}},
-         {warning(paste("the method",method, "is not defined. Choose between freedman_lane, huh_jhun, dekker, terBraak or see help."))
+         {warning(paste("The method",method, "is not defined. Choose between freedman_lane, huh_jhun, dekker, terBraak or see help. Set new_method = TRUE to allow user-defined functions."))
            funP=function(...){eval(parse(text=paste("fisher_",method,"(...)",sep="",collpase="")))}})
 
 
@@ -57,7 +57,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
     if(!check_P){
       np = np(P)
       P = NULL
-      warnings("P argument is not valid and will be recomputed")
+      warnings("P argument is not valid and will be recomputed.")
     }
   }
 
@@ -73,7 +73,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   }
 
   if(sum(np(P) <= 1999)>0){
-    warning("The number of permutations is below 2000, p-values might be unreliable")
+    warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
 
   np <- np(P)
@@ -116,7 +116,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   table$pValue_Permutation=c(permutation_pvalue, NA)
   colnames(table)[4:5]=c("parametric P(>F)","permutation P(>F)")
 
-  attr(table,"type")=paste("Permutation test using",method,"to handle noise variable and",paste(np,sep=", ",collapse = ", "), "permutations.")
+  attr(table,"type")=paste("Permutation test using",method,"to handle noise variables and",paste(np,sep=", ",collapse = ", "), "permutations.")
 
   out=list()
   out$coefficients <- mod_lm$coefficients

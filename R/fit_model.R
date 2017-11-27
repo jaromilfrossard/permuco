@@ -81,7 +81,7 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
   indError <- attr(Terms, "specials")$Error
 
   #check for intercept
-  if(!attr(Terms,"intercept")){warning("intercept should be specified in the formula")}
+  if(!attr(Terms,"intercept")){warning("Intercept should be specified in the formula")}
 
   #dotargs
   dotargs=list(...)
@@ -161,7 +161,7 @@ lmperm<-function(formula, data = NULL, np = 5000, method = NULL,... ){
                           rnd_rotation = dotargs$rnd_rotation, new_method = dotargs$new_method)
   } else
   {
-    stop("the rand effet model is not implemented")
+    stop("the random effects model is not implemented yet.")
   }
 
   ###output

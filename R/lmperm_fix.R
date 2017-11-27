@@ -18,7 +18,7 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
          "terBraak"={funP=function(...){t_terBraak(...)}},
          "draper_stoneman"={funP=function(...){t_draper_stoneman(...)}},
          "dekker"={funP=function(...){t_dekker(...)}},
-         {warning(paste("the method",method, "is not defined. Choose between freedman_lane, huh_jhun, dekker, terBraak or see help."))
+         {warning(paste("The method",method, "is not defined. Choose between freedman_lane, huh_jhun, dekker, terBraak or see help. Set new_method = TRUE to allow user-defined functions."))
            funP=function(...){eval(parse(text=paste("t_",method,"(...)",sep="",collpase="")))}})
 
   #preprocess data=========================================
@@ -53,7 +53,7 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
                           P <- Pmat(np = np, n = length(y) - NCOL(mm) + 1)},
                         {P = Pmat(np = np, n = length(y))})}
   if(sum(np(P) <= 1999)>0){
-    warning("The number of permutations is below 2000, p-values might be unreliable")
+    warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
 
   np = np(P)

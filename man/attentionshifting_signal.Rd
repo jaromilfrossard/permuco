@@ -3,13 +3,13 @@
 \docType{data}
 \name{attentionshifting_signal}
 \alias{attentionshifting_signal}
-\title{Dataset containing th signal for a given electrod (O1) in an experiment using EEG}
+\title{Dataset containing the event-related potential of the electrod O1 of a control experiment}
 \format{A data frame with 120 rows and 819 variables.}
 \usage{
 data(attentionshifting_signal)
 }
 \description{
-The ERP (averaged EEG signal) for a given electrod (O1) in an experiment in attention shifting sampled at 1024 Hz. The design of the experiment is given in the dataset \link{attentionshifting_design}.
+The ERP of the electrod O1 of an experiment in attention shifting. This dataset contains the amplitude of the signals sampled at 1024 Hz. The design of the experiment is given in the dataset \link{attentionshifting_design}.
 }
 \details{
 \itemize{

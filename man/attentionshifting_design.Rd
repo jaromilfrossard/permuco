@@ -9,7 +9,7 @@
 data(attentionshifting_design)
 }
 \description{
-Design of the an experiment measuring the brain response of 15 participants who have been shown images of neutral and angry faces. Those faces were shown at a different visibility 16ms and 166ms and were displayed either to the left or to the right of a screen. The laterality, sex, age, and 2 measures of anxiety of each subjects are also available. The value of the responses are located in the dataset \link{attentionshifting_signal}.
+Design of an experiment measuring the EEG brain activity of 15 participants who have been shown images of neutral and angry faces. Those faces were shown at a different visibility 16ms and 166ms and were displayed either to the left or to the right of a screen. The laterality, sex, age, and 2 measures of anxiety for each subjects are also available. The amplitude of the EEG recording are located in the dataset \link{attentionshifting_signal}.
 
 \itemize{
 \item id : identifier of the subject.

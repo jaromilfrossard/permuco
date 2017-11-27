@@ -139,12 +139,12 @@ switch(laterality,
   switch(type,
          "coef"={
            data <- x$coef[effect_sel,]
-           title <- "Coefficients"
+           title <- "coefficients"
            hl <- NULL
          },
          "statistic" ={
            data <- statistic
-           title <- paste(x$test, " Statistic",sep="",collapse = "")
+           title <- paste(x$test, " statistic",sep="",collapse = "")
            if(multcomp=="clustermass"){
            switch(x$test,
                   "fisher"={hl <- x$threshold},

@@ -9,7 +9,7 @@
 data(jpah2016)
 }
 \description{
-A subset of a control experiment measuring the impulsive approach tendencies towrad physical activity or sedentary behaviors.
+A subset of a control experiment measuring the impulsive approach tendencies toward physical activity or sedentary behaviors.
 }
 \details{
 \itemize{

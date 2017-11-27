@@ -14,7 +14,7 @@ aovperm_rnd <- function( formula, data, method, np, P, coding_sum, rnd_rotation,
   switch(method,
          "Rd_kheradPajouh_renaud"={funP=function(...){fisher_Rd_kheradPajouh_renaud_rnd(...)}},
          "Rde_kheradPajouh_renaud"={funP=function(...){fisher_Rde_kheradPajouh_renaud_rnd(...)}},
-         {warning(paste("the method",method, "is not defined. Choose between Rd_kheradPajouh_renaud or Rde_kheradPajouh_renaud."))
+         {warning(paste("the method",method, "is not defined. Choose between Rd_kheradPajouh_renaud or Rde_kheradPajouh_renaud. Set new_method = TRUE to allow user-defined functions."))
            funP=function(...){eval(parse(text=paste("fisher_",method,"_rnd(...)",sep="",collpase="")))}})
 
   #Formula transforamtion

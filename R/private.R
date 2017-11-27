@@ -168,7 +168,7 @@ checkBalancedData <- function(fixed_formula,data){
   mmho=model.matrix(formula(paste("~",ho,collapse="")),data=data)
   dataPerGroup=colSums(matrix(mmho[,attr(mmho,"assign")==1],nrow=NROW(mmho)))
   if(!(sum(!(dataPerGroup==dataPerGroup[1]))==0)){
-    warning("The data are not balanced, the results are not exact.")
+    warning("The data are not balanced, the results may not be exact.")
   }
 }
 
@@ -205,7 +205,7 @@ check_distribution <- function(distribution, digits = 10, n_unique = 30){
     length(unique(round(d,digits = digits)))
   })
   if(sum(unique_d<n_unique)>0){
-    warning(paste("the distribution of ",paste(colnames(distribution)[unique_d<n_unique],sep =", ",collapse = ", "), " may be discrete", sep=" ",collapse = " "))
+    warning(paste("the distribution of ",paste(colnames(distribution)[unique_d<n_unique],sep =", ",collapse = ", "), " may be discrete.", sep=" ",collapse = " "))
   }
 }
 

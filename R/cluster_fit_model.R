@@ -136,7 +136,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fish
                              new_method = dotargs$new_method)
   } else if (!is.null(indError)){
     if(test!="fisher"){
-      warning("Random effects model only accept fisher type test statistics. Test statistic is set to fisher.")
+      warning("Random effects model only accept fisher test statistics. Test statistic is set to fisher.")
       test="fisher"}
     result <- clusterlm_rnd( formula = formula, data = data, method = method, test = test, np = np,
                              P = dotargs$P, rnd_rotation = dotargs$rnd_rotation, aggr_FUN = aggr_FUN,

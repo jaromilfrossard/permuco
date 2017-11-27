@@ -20,3 +20,6 @@ Observational data from 176 emergency patients with variables :
 \item \code{cost} : the cost in CHF.
 }
 }
+\references{
+Heritier, S., Cantoni, E., Copt, S., & Victoria-Feser, M. P. (2009). Robust methods in Biostatistics (Vol. 825). John Wiley & Sons.
+}
