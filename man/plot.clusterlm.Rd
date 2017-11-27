@@ -5,8 +5,8 @@
 \title{Plot cluster or parameters.}
 \usage{
 \method{plot}{clusterlm}(x, effect = "all", type = "statistic",
-  multcomp = "maris_oostenveld", laterality = "bilateral",
-  uncorrected = T, ...)
+  multcomp = "clustermass", laterality = "bilateral", enhanced_stat = T,
+  ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}
@@ -15,11 +15,11 @@
 
 \item{type}{A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}}
 
-\item{multcomp}{A character sting specifying the p-value to plot. Default is \code{"maris_oostenveld"}. See \link{clusterlm}.}
+\item{multcomp}{A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.}
 
 \item{laterality}{A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.}
 
-\item{uncorrected}{logical. Default is \code{TRUE}. If \code{TRUE}, the uncorrected statistic will be plotted overwise it will plot the corrected statistic. Change for the \code{"ftce"} or the \code{"maris_oostenveld"}, multiple comparisons method.}
+\item{enhanced_stat}{logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"ftce"} or the \code{"clustermass"}, multiple comparisons method.}
 
 \item{...}{further argument pass to plot.}
 }

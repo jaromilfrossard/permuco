@@ -103,11 +103,11 @@ summary_multcomp <- function(object, multcomp, laterality){
 #' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}
 #' @param multcomp A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.
 #' @param laterality A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.
-#' @param uncorrected logical. Default is \code{TRUE}. If \code{TRUE}, the uncorrected statistic will be plotted overwise it will plot the corrected statistic. Change for the \code{"ftce"} or the \code{"clustermass"}, multiple comparisons method.
+#' @param enhanced_stat logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"ftce"} or the \code{"clustermass"}, multiple comparisons method.
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral",uncorrected = T,...) {
+plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral", enhanced_stat = T,...) {
 
   ##select effect
   if("all" %in% effect){effect = names(x$multiple_comparison)}
@@ -128,7 +128,7 @@ switch(laterality,
 
   statistic = t(sapply(multiple_comparison,function(m){
     m[["uncorrected"]]$main[,1]}))
-  if(!uncorrected){
+  if(enhanced_stat){
     statistic = t(sapply(multiple_comparison,function(m){
       m[[multcomp]]$main[,1]}))
   }

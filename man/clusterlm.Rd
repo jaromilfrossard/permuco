@@ -6,7 +6,7 @@
 \usage{
 clusterlm(formula, data = NULL, np = 5000, method = NULL,
   test = "fisher", threshold = NULL, aggr_FUN = function(x) {     sum(x^2)
-  }, multcomp = "maris_oostenveld", ...)
+  }, multcomp = "clustermass", ...)
 }
 \arguments{
 \item{formula}{A formula object where the left part is a matrix defined in the global environnement.}
@@ -19,16 +19,16 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
-\item{threshold}{A numerical vector that specify the limit of a cluster for the \code{"maris_oostenveld"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.}
+\item{threshold}{A numerical vector that specify the limit of a cluster for the \code{"clustermass"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.}
 
 \item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.}
 
-\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"maris_oostenveld"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.}
+\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.}
 
 \item{...}{Futher arguments, see details.}
 }
 \value{
-A list containing : a table of the \code{maris_oostenveld} clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
+A list containing : a table of the clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
 }
 \description{
 Compute the cluster mass test for longitudinal linear model.
@@ -76,7 +76,7 @@ electrod_O1_length <- clusterlm(attentionshifting_signal ~ visibility*emotion*di
 full_electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
           + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
           method = "Rde_kheradPajouh_renaud", multcomp = c("troendle", "tfce",
-          "maris_oostenveld", "bonferroni", "holm", "benjaminin_hochberg"))
+          "clustermass", "bonferroni", "holm", "benjaminin_hochberg"))
 }
 
 }
