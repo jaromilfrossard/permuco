@@ -14,11 +14,11 @@
 \item{...}{Further arguments see details.}
 }
 \value{
-A table for each effect indicating the statistics and pvalues of the clusters.
+A table for each effect indicating the statistics and p-values of the clusters.
 }
 \description{
-Display the \code{"maaris_oostenveld"} clusters.
+Display the clusters with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 }
 \details{
-If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and pvalues in columns and multiple tests by rows.
+If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and p-values in columns and multiple tests by rows.
 }

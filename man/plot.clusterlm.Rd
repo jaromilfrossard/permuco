@@ -13,13 +13,13 @@
 
 \item{effect}{A vector of character naming the effects to display. Default is \code{"all"}.}
 
-\item{type}{A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}}
+\item{type}{A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}.}
 
 \item{multcomp}{A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.}
 
 \item{laterality}{A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.}
 
-\item{enhanced_stat}{logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"ftce"} or the \code{"clustermass"}, multiple comparisons method.}
+\item{enhanced_stat}{logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.}
 
 \item{...}{further argument pass to plot.}
 }

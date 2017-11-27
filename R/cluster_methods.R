@@ -1,6 +1,6 @@
 #' Print \code{clusterlm} object.
 #'
-#' @description Display the \code{"maaris_oostenveld"} clusters.
+#' @description Display with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 #'
 #' @param x A \code{clusterlm} object.
 #' @param laterality A character string indicating the laterality of the tests. Choose between \code{"bilateral"}, \code{"right"}, \code{"left"}. Default is \code{"bilateral"}.
@@ -47,13 +47,13 @@ print.listof_cluster_table<- function(x,...){
 
 #' Summarize a \code{clusterlm} object.
 #'
-#' @description Display the \code{"maaris_oostenveld"} clusters.
+#' @description Display the clusters with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 #'
 #' @param object A \code{clusterlm} object.
 #' @param laterality A character string indicating the laterality of the tests. Choose between \code{"bilateral"}, \code{"right"}, \code{"left"}. Default is \code{"bilateral"}.
 #' @param ... Further arguments see details.
-#' @return A table for each effect indicating the statistics and pvalues of the clusters.
-#' @details If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and pvalues in columns and multiple tests by rows.
+#' @return A table for each effect indicating the statistics and p-values of the clusters.
+#' @details If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and p-values in columns and multiple tests by rows.
 #' @export
 summary.clusterlm <- function(object, laterality = "bilateral",...){
   dotargs = list(...)
@@ -100,10 +100,10 @@ summary_multcomp <- function(object, multcomp, laterality){
 #'
 #' @param x A \code{clusterlm} object.
 #' @param effect A vector of character naming the effects to display. Default is \code{"all"}.
-#' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}
+#' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}.
 #' @param multcomp A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.
 #' @param laterality A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.
-#' @param enhanced_stat logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"ftce"} or the \code{"clustermass"}, multiple comparisons method.
+#' @param enhanced_stat logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
@@ -156,7 +156,7 @@ switch(laterality,
                     )})}
          })
 
-  title =paste(title," : ", multcomp, " pvalues",sep="", collapse = "")
+  title =paste(title," : ", multcomp, " p-values",sep="", collapse = "")
 
 
   #####

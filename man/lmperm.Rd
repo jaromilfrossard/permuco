@@ -21,7 +21,7 @@ lmperm(formula, data = NULL, np = 5000, method = NULL, ...)
 A \code{lmperm} object. see \link{aovperm}.
 }
 \description{
-Compute permutation marginal test for linear model. This function produces t statistics with univariate and bivariate pvalues. It gives the choice between multiple methods to handle nuisance variables.
+Compute permutation marginal test for linear model. This function produces t statistics with univariate and bivariate p-values. It gives the choice between multiple methods to handle nuisance variables.
 }
 \details{
 The following methods are available for the fixed effects model defined as \eqn{y = D\eta + X\beta + \epsilon}. If we want to test \eqn{\beta = 0} and take into account the effects of the nuisance variables \eqn{D}, we transform the data :

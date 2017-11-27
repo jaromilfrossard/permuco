@@ -14,5 +14,5 @@
 \item{...}{Further arguments pass to \code{print}.}
 }
 \description{
-Display the \code{"maaris_oostenveld"} clusters.
+Display with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 }

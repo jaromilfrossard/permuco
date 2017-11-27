@@ -102,7 +102,7 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
 
 #' Permutation test for regression parameters
 #'
-#' @description Compute permutation marginal test for linear model. This function produces t statistics with univariate and bivariate pvalues. It gives the choice between multiple methods to handle nuisance variables.
+#' @description Compute permutation marginal test for linear model. This function produces t statistics with univariate and bivariate p-values. It gives the choice between multiple methods to handle nuisance variables.
 #' @param formula A formula object.
 #' @param data A data frame or matrix.
 #' @param np The number of permutations. Default value is \code{5000}.
