@@ -5,7 +5,7 @@
 \title{Plot cluster or parameters.}
 \usage{
 \method{plot}{clusterlm}(x, effect = "all", type = "statistic",
-  multcomp = "clustermass", laterality = "bilateral", enhanced_stat = T,
+  multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,
   ...)
 }
 \arguments{

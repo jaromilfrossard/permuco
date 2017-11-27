@@ -107,7 +107,7 @@ summary_multcomp <- function(object, multcomp, laterality){
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral", enhanced_stat = T,...) {
+plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,...) {
 
   ##select effect
   if("all" %in% effect){effect = names(x$multiple_comparison)}
