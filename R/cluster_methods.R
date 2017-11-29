@@ -11,7 +11,7 @@ print.clusterlm <- function(x, laterality = "bilateral",...){
     "Cluster ", x$test,
     " test using ", x$method,
     " to handle nuisance variables \n with ", paste(np(x$P), sep= ", ", collapse = ", "),
-    " permutations and ",x$fun_name," as aggregative function.\n\n", sep = "")
+    " permutations and ",x$fun_name," as mass function.\n\n", sep = "")
   cat("Alternative Hypothesis : ",laterality,".\n \n",sep = "")
   switch(laterality,
          "bilateral" = {
