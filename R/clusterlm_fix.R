@@ -9,6 +9,19 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
                                 "terBraak","draper_stoneman","dekker"))
   }
 
+  if(is.null(aggr_FUN)){
+    switch(test,
+           "t"={
+             fun_name = "the sum of squares"
+             aggr_FUN = function(x)sum(x^2)},
+           "fisher"={
+             fun_name = "the sum"
+             aggr_FUN = function(x)sum(x)})
+  }else{
+    fun_name = "a user-defined function"
+  }
+
+
 
 
   switch(method,
@@ -119,7 +132,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
 
   if(sum(np(P) <= 1999)>0){
-    warning("The number of permutations is below 2000, p-values might be unreliable")
+    warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
   np <- np(P)
 
@@ -247,6 +260,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   out$test = test
   out$threshold = threshold
   out$P = P
+  out$np = np
   out$rnd_rotation = rnd_rotation
   out$multcomp = multcomp
   out$multiple_comparison = multiple_comparison
@@ -257,6 +271,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   out$cluster_table_left = cluster_table_left
   out$alpha = alpha
   out$method = method
+  out$fun_name = fun_name
   class(out) <- "clusterlm"
   return(out)
 }

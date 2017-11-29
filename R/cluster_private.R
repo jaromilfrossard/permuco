@@ -165,6 +165,7 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,
 
 #######################################for multcomp output
 cluster_table = function(x,...){
+  dotargs = list(...)
   ct = lapply(1:length(x), function(j){
     effect = x[[j]]
     unique_cluster = unique(effect$clustermass$main[,3])

@@ -5,8 +5,8 @@
 \title{Cluster test for longitudinal data}
 \usage{
 clusterlm(formula, data = NULL, np = 5000, method = NULL,
-  test = "fisher", threshold = NULL, aggr_FUN = function(x) {     sum(x^2)
-  }, multcomp = "clustermass", ...)
+  test = "fisher", threshold = NULL, aggr_FUN = NULL,
+  multcomp = "clustermass", ...)
 }
 \arguments{
 \item{formula}{A formula object where the left part is a matrix defined in the global environnement.}
@@ -21,7 +21,7 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{threshold}{A numerical vector that specify the limit of a cluster for the \code{"clustermass"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.}
 
-\item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares.}
+\item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
 
 \item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.}
 

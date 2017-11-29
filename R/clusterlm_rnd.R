@@ -7,6 +7,18 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     method = match.arg(method,c("Rd_kheradPajouh_renaud","Rde_kheradPajouh_renaud"))
   }
 
+  if(is.null(aggr_FUN)){
+    switch(test,
+           "t"={
+             fun_name = "the sum of squares"
+             aggr_FUN = function(x)sum(x^2)},
+           "fisher"={
+             fun_name = "the sum"
+             aggr_FUN = function(x)sum(x)})
+  }else{
+    fun_name = "a user-defined function"
+  }
+
 
   switch(
     paste(method,sep="_"),
@@ -71,6 +83,10 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
 
   #compute permutation
   if (is.null(P)) {P = Pmat(np = np, n = NROW(y))}
+  if(sum(np(P) <= 1999)>0){
+    warning("The number of permutations is below 2000, p-values might be unreliable.")
+  }
+  np <- np(P)
 
   ##distribution
   args <- list(y = y, mm = mm_f, mm_id = mm_id, link = link, P = P)
@@ -123,6 +139,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   out$model.matrix_id = mm_id = mm_id
   out$link = link
   out$P = P
+  out$np = np
   out$cluster_table = cluster_table
   out$multiple_comparison = multiple_comparison
   out$data=mf
@@ -131,6 +148,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   out$multcomp = multcomp
   out$threshold = threshold
   out$test = test
+  out$fun_name = fun_name
   class(out) <- "clusterlm"
   return(out)
 
