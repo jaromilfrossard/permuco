@@ -1,4 +1,4 @@
-#' Design for the data attentionshifting_signal
+#' Datatset of the design for the data attentionshifting_signal
 #'
 #' @description Design of an experiment measuring the EEG brain activity of 15 participants who have been shown images of neutral and angry faces. Those faces were shown at a different visibility 16ms and 166ms and were displayed either to the left or to the right of a screen. The laterality, sex, age, and 2 measures of anxiety for each subjects are also available. The amplitude of the EEG recording are located in the dataset \link{attentionshifting_signal}.
 #'
@@ -22,7 +22,7 @@ NULL
 
 
 
-#' Dataset containing the event-related potential of the electrod O1 of a control experiment
+#' Dataset containing the event-related potential of the electrod O1 of a control experiment.
 #'
 #' The ERP of the electrod O1 of an experiment in attention shifting. This dataset contains the amplitude of the signals sampled at 1024 Hz. The design of the experiment is given in the dataset \link{attentionshifting_design}.
 #'
@@ -38,7 +38,7 @@ NULL
 
 
 
-#' Control study in psychology.
+#' Dataset of a control study in psychology.
 #'
 #' A subset of a control experiment measuring the impulsive approach tendencies toward physical activity or sedentary behaviors.
 #'
@@ -63,7 +63,7 @@ NULL
 
 
 
-#' Emergency patients data
+#' Dataset of cost of emergency patients.
 #'
 #' Observational data from 176 emergency patients with variables :
 #'

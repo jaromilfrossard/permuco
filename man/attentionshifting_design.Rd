@@ -3,7 +3,7 @@
 \docType{data}
 \name{attentionshifting_design}
 \alias{attentionshifting_design}
-\title{Design for the data attentionshifting_signal}
+\title{Datatset of the design for the data attentionshifting_signal}
 \format{A data frame with 120 rows and 10 variables.}
 \usage{
 data(attentionshifting_design)

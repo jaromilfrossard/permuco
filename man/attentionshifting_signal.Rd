@@ -3,7 +3,7 @@
 \docType{data}
 \name{attentionshifting_signal}
 \alias{attentionshifting_signal}
-\title{Dataset containing the event-related potential of the electrod O1 of a control experiment}
+\title{Dataset containing the event-related potential of the electrod O1 of a control experiment.}
 \format{A data frame with 120 rows and 819 variables.}
 \usage{
 data(attentionshifting_signal)

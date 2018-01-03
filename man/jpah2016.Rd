@@ -3,7 +3,7 @@
 \docType{data}
 \name{jpah2016}
 \alias{jpah2016}
-\title{Control study in psychology.}
+\title{Dataset of a control study in psychology.}
 \format{A data frame with 38 rows and 8 variables.}
 \usage{
 data(jpah2016)

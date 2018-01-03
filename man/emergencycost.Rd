@@ -3,7 +3,7 @@
 \docType{data}
 \name{emergencycost}
 \alias{emergencycost}
-\title{Emergency patients data}
+\title{Dataset of cost of emergency patients.}
 \format{A data frame with 176 rows and 5 variables.}
 \usage{
 data(emergencycost)
