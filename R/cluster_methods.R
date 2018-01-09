@@ -156,7 +156,7 @@ switch(laterality,
                     )})}
          })
 
-  title =paste(title," : ", multcomp, " p-values",sep="", collapse = "")
+  title =paste(title," : ", multcomp, " correction",sep="", collapse = "")
 
 
   #####
