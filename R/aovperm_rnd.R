@@ -83,7 +83,7 @@ aovperm_rnd <- function( formula, data, method, np, P, coding_sum, rnd_rotation,
   table = table[order(link[3,], link[1,]),]
   distribution = distribution[,order(link[3,], link[1,])]
 
-  attr(table,"type") <- paste("Permutation test using",method,"to handle noise variable and",np, "permutations.")
+  attr(table,"type") <- paste("Permutation test using",method,"to handle nuisance variables and",np, "permutations.")
 
   out=list()
   out$y = y

@@ -96,7 +96,7 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
   rownames(table) = colnames(mm)
   class(table) <- c("lmpermutation_table","data.frame")
   attr(table,"heading") <- c("Table of marginal t-test of the betas")
-  attr(table,"type") = paste("Permutation test using",method,"to handle noise variable and",np, "permutations.")
+  attr(table,"type") = paste("Permutation test using",method,"to handle nuisance variables and",np, "permutations.")
 
 #####output==================================
   out <- list()

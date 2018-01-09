@@ -116,7 +116,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   table$pValue_Permutation=c(permutation_pvalue, NA)
   colnames(table)[4:5]=c("parametric P(>F)","permutation P(>F)")
 
-  attr(table,"type")=paste("Permutation test using",method,"to handle noise variables and",paste(np,sep=", ",collapse = ", "), "permutations.")
+  attr(table,"type")=paste("Permutation test using",method,"to handle nuisance variables and",paste(np,sep=", ",collapse = ", "), "permutations.")
 
   out=list()
   out$coefficients <- mod_lm$coefficients
