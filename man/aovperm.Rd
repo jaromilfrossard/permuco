@@ -55,6 +55,7 @@ data("emergencycost")
 emergencycost$LOSc <- scale(emergencycost$LOS, scale = FALSE)
 
 ## ANCOVA
+## Warning : np argument must be greater (recommendation: np>=5000)
 mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 2000)
 mod_cost_0
 
@@ -81,6 +82,7 @@ data(jpah2016)
 ## centrering the covariate
 jpah2016$bmic <- scale(jpah2016$bmi, scale = FALSE)
 
+## Warning : np argument must be greater (recommendation: np>=5000)
 mod_jpah2016 <- aovperm(iapa ~ bmic*condition*time+ Error(id/(time)),
                     data = jpah2016, method = "Rd_kheradPajouh_renaud")
 mod_jpah2016

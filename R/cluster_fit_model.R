@@ -33,6 +33,7 @@
 #'@examples
 #'
 #' ## Cluster-mass for repeated measures ANOVA
+#' ## Warning : np argument must be greater (recommendation: np>=5000)
 #' electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
 #'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
 #'          np = 50)
