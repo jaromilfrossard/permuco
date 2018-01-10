@@ -46,11 +46,11 @@ Other arguments could be pass in \code{...} :\cr \cr
 \code{coding_sum} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
 }
 \examples{
-\dontrun{
 
 ## Cluster-mass for repeated measures ANOVA
 electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
-         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design)
+         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+         np = 50)
 
 ## Results
 plot(electrod_O1)
@@ -58,12 +58,13 @@ plot(electrod_O1)
 ## Tables of clusters
 electrod_O1
 
+\dontrun{
 ## Change the function of the aggregation
 
-## Sum of F statistics
+## Sum of squares of F statistics
 electrod_O1_sum <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
-         aggr_FUN = function(x)sum(x))
+         aggr_FUN = function(x)sum(x^2))
 
 ## Length of the cluster
 electrod_O1_length <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction

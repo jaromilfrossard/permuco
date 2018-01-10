@@ -30,11 +30,12 @@
 #'
 #'Smith, S. M., & Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98.
 #'
-#'@examples \dontrun{
+#'@examples
 #'
 #' ## Cluster-mass for repeated measures ANOVA
 #' electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
-#'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design)
+#'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+#'          np = 50)
 #'
 #' ## Results
 #' plot(electrod_O1)
@@ -42,12 +43,13 @@
 #' ## Tables of clusters
 #' electrod_O1
 #'
+#' \dontrun{
 #' ## Change the function of the aggregation
 #'
-#' ## Sum of F statistics
+#' ## Sum of squares of F statistics
 #' electrod_O1_sum <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
 #'          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
-#'          aggr_FUN = function(x)sum(x))
+#'          aggr_FUN = function(x)sum(x^2))
 #'
 #' ## Length of the cluster
 #' electrod_O1_length <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction

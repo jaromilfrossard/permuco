@@ -41,15 +41,18 @@ Other arguments could be pass in \code{...} :\cr \cr
 \code{rnd_rotation} : a random matrix of size \eqn{n \times n} to compute the rotation used for the \code{"huh_jhun"} method.
 }
 \examples{
-\dontrun{
+## data
+data("emergencycost")
+
+## Testing at 14 days
+emergencycost$LOS14 <- emergencycost$LOS - 14
 
 ## Univariate t test
 contrasts(emergencycost$insurance) <- contr.sum
 contrasts(emergencycost$sex) <- contr.sum
 
-modlm_cost_14 <- lmperm(cost ~ LOS14*sex*insurance, data = emergencycost, np = 100000)
+modlm_cost_14 <- lmperm(cost ~ LOS14*sex*insurance, data = emergencycost, np = 2000)
 modlm_cost_14
-}
 }
 \references{
 Kherad-Pajouh, S., & Renaud, O. (2010). An exact permutation method for testing any effect in balanced and unbalanced fixed effect ANOVA. Computational Statistics & Data Analysis, 54(7), 1881-1893.
