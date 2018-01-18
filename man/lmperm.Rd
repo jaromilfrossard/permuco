@@ -32,7 +32,7 @@ The following methods are available for the fixed effects model defined as \eqn{
 \code{"manly"} \tab \eqn{Py} \tab \eqn{D} \tab \eqn{X}\cr
 \code{"terBraak"} \tab \eqn{(H_{X,D}+PR_{X,D})y} \tab \eqn{D} \tab \eqn{X}\cr
 \code{"kennedy"} \tab \eqn{PR_D y} \tab \tab \eqn{R_D X}\cr
-\code{"huh_jhun"} \tab \eqn{PV'R_Dy} \tab \tab \eqn{PV'R_D X}\cr
+\code{"huh_jhun"} \tab \eqn{PV'R_Dy} \tab \tab \eqn{V'R_D X}\cr
 \code{"dekker"} \tab \eqn{y} \tab \eqn{D} \tab \eqn{PR_D X}\cr
 }
 

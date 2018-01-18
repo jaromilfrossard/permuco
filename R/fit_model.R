@@ -18,14 +18,14 @@
 #' \code{"manly"} \tab \eqn{Py} \tab \eqn{D} \tab \eqn{X}\cr
 #' \code{"terBraak"} \tab \eqn{(H_{X,D}+PR_{X,D})y} \tab \eqn{D} \tab \eqn{X}\cr
 #' \code{"kennedy"} \tab \eqn{PR_D y} \tab \tab \eqn{R_D X}\cr
-#' \code{"huh_jhun"} \tab \eqn{PV'R_Dy} \tab \tab \eqn{PV'R_D X}\cr
+#' \code{"huh_jhun"} \tab \eqn{PV'R_Dy} \tab \tab \eqn{V'R_D X}\cr
 #' \code{"dekker"} \tab \eqn{y} \tab \eqn{D} \tab \eqn{PR_D X}\cr
 #' }
 #'The following methods are available for the random effects model \eqn{y = D\eta + X\beta + E\kappa + Z\gamma+ \epsilon}. If we want to test \eqn{\beta = 0} and take into account the effect of the nuisance variable \eqn{D} we can transform the data by permutation:
 #' \tabular{lccccc}{
 #' \code{method} argument \tab \eqn{y*} \tab \eqn{D*} \tab \eqn{X*} \tab \eqn{E*} \tab \eqn{Z*}\cr
-#' \code{"Rd_kheradPajouh_renaud"} \tab \eqn{R_D y} \tab  \tab \eqn{R_D X} \tab \eqn{R_D E} \tab \eqn{R_D Z}\cr
-#' \code{"Rde_kheradPajouh_renaud"} \tab \eqn{R_{D,E}y}  \tab  \tab \eqn{R_{D,E} X} \tab   \tab \eqn{R_{D,E}Z}\cr}
+#' \code{"Rd_kheradPajouh_renaud"} \tab \eqn{PR_D y} \tab  \tab \eqn{R_D X} \tab \eqn{R_D E} \tab \eqn{R_D Z}\cr
+#' \code{"Rde_kheradPajouh_renaud"} \tab \eqn{PR_{D,E}y}  \tab  \tab \eqn{R_{D,E} X} \tab   \tab \eqn{R_{D,E}Z}\cr}
 #'
 #' Other arguments could be pass in \code{...} :\cr \cr
 #' \code{P} : a matrix,  of class \code{matrix} or \code{Pmat}, containing the permutations (for the reproductibility of the results). The first column must be the identity permutation (not checked). \code{P} overwrites \code{np} argument. \cr
@@ -123,7 +123,7 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
 #' \code{"manly"} \tab \eqn{Py} \tab \eqn{D} \tab \eqn{X}\cr
 #' \code{"terBraak"} \tab \eqn{(H_{X,D}+PR_{X,D})y} \tab \eqn{D} \tab \eqn{X}\cr
 #' \code{"kennedy"} \tab \eqn{PR_D y} \tab \tab \eqn{R_D X}\cr
-#' \code{"huh_jhun"} \tab \eqn{PV'R_Dy} \tab \tab \eqn{PV'R_D X}\cr
+#' \code{"huh_jhun"} \tab \eqn{PV'R_Dy} \tab \tab \eqn{V'R_D X}\cr
 #' \code{"dekker"} \tab \eqn{y} \tab \eqn{D} \tab \eqn{PR_D X}\cr
 #' }
 #'
