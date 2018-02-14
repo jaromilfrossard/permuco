@@ -14,6 +14,6 @@ test.R
 testPackage.R
 test_function.R
 testcluster.R
-testclusterMLM.R
 probleme.docx
 lmpermutation.pdf
+inst/doc
