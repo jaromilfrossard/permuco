@@ -150,9 +150,9 @@ switch(laterality,
                   "fisher"={hl <- x$threshold},
                   "t"={
                     switch (laterality,
-                      "left" ={hl <- c(-abs(x$threshold))},
+                      "left" ={hl <- -c(abs(x$threshold))},
                       "right" ={hl <- c(abs(x$threshold))},
-                      "bilateral" ={hl <- c(-x$threshold,x$threshold)}
+                      "bilateral" ={hl <- c(abs(x$threshold))}
                     )})}
          })
 
@@ -180,7 +180,12 @@ switch(laterality,
       col="red"
       #lines(x = x,y= y,lwd=par()$lwd*2,col=col)
       points(x = xi, y = y, pch=par()$pch,col=col)
-      if(multcomp=="clustermass"){abline(h=hl[i],lty=3)}
+      if(multcomp=="clustermass"){
+        abline(h=hl[i],lty=3)
+        if(x$test=="t"&laterality=="bilateral"){
+          abline(h=-hl[i],lty=3)
+        }
+        }
   }}
   title(title,outer = T,cex = 2)
   par(mfcol = par0$mfcol, mar = par0$mar, oma = par0$oma)
