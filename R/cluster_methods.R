@@ -111,7 +111,7 @@ plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "cl
 
   ##select effect
   if("all" %in% effect){effect = names(x$multiple_comparison)}
-  else if((names(x$multiple_comparison)%in%effect) == 0){
+  else if(sum(names(x$multiple_comparison)%in%effect) == 0){
     warning(" the specified effects do not exist. Plot 'all' effects.")
     effect = names(x$multiple_comparison)
   }
