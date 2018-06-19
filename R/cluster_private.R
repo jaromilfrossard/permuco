@@ -133,7 +133,7 @@ compute_troendle <- function(distribution, pvalue, alpha, laterality){
 }
 
   ############################################################################################################
-compute_benjaminin_hochberg <- function(statistic = NULL, pvalue){
+compute_benjamini_hochberg <- function(statistic = NULL, pvalue){
   n <- length(pvalue)
   i <- n:1L
   o <- order(pvalue, decreasing = TRUE)
@@ -159,8 +159,8 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,
     out$holm <- compute_holm(pvalue = pvalue, statistic = distribution[1,])}
   if("troendle"%in%multcomp){
     out$troendle <- compute_troendle(distribution = distribution, pvalue = pvalue, alpha = alpha, laterality = laterality)}
-  if("benjaminin_hochberg"%in%multcomp){
-    out$benjaminin_hochberg <- compute_benjaminin_hochberg(pvalue = pvalue, statistic = distribution[1,])}
+  if("benjamini_hochberg"%in%multcomp){
+    out$benjamini_hochberg <- compute_benjamini_hochberg(pvalue = pvalue, statistic = distribution[1,])}
   return(out)}
 
 #######################################for multcomp output

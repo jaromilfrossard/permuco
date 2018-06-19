@@ -241,7 +241,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
                       "clustermass",multcomp))[unique(c("uncorrected","clustermass",
                                                              multcomp))%in%c("uncorrected","clustermass",
                                                                              "tfce","troendle","bonferroni","holm",
-                                                                             "benjaminin_hochberg")]
+                                                                             "benjamini_hochberg")]
 
   #output
   out = list()

@@ -8,7 +8,7 @@
 #' @param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
 #' @param threshold A numerical vector that specify the limit of a cluster for the \code{"clustermass"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.
 #' @param aggr_FUN A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.
-#' @param multcomp A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.
+#' @param multcomp A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjamini_hochberg"}.
 #' @param ... Futher arguments, see details.
 #' @return A list containing : a table of the clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
 #' @details
@@ -63,7 +63,7 @@
 #' full_electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
 #'           + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
 #'           method = "Rde_kheradPajouh_renaud", multcomp = c("troendle", "tfce",
-#'           "clustermass", "bonferroni", "holm", "benjaminin_hochberg"))
+#'           "clustermass", "bonferroni", "holm", "benjamini_hochberg"))
 #'}
 #'
 #'@author jaromil.frossard@unige.ch
