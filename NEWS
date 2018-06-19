@@ -2,6 +2,7 @@ permuco github version
 --------------------------------------
 
  * correction benjaminin to benjamini
+ * adding parametric (uncorrected) pvalues for signal
 
 
 permuco 1.0.1

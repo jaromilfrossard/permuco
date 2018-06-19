@@ -96,8 +96,8 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   names(multiple_comparison) <- attr(attr(mf_f,"terms"),"term.labels")
 
   ##adjust multiple threshold
+  df = compute_degree_freedom_rnd(test = test,mm = mm_f,assigni = attr(mm_f,"assign"),mm_id = mm_id,link = link)
   if(is.null(threshold)){
-    df = compute_degree_freedom_rnd(test = test,mm = mm_f,assigni = attr(mm_f,"assign"),mm_id = mm_id,link = link)
     threshold = qf(p = 0.95, df1 = df[,1],df2 =df[,2])
     }else if(length(threshold)==1){threshold = rep(threshold,length(multiple_comparison))
     } else if(length(threshold)>1){
@@ -110,9 +110,10 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     args$i = i
     distribution = funP(args = args)
     pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col))
+    pvalue_para <- pf(distribution[1,],df1 =  df[i,1],df2 =  df[i,2],lower.tail = F)
 
     #####uncorrected
-    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
+    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue, pvalue_para = pvalue_para))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
     ##pscale change

@@ -156,13 +156,18 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
     }
 
   ##adjust multiple threshold
+  switch(test,
+         "t" = {
+           df = compute_degree_freedom_fix(test = test,mm = mm,assigni = colx)},
+         "fisher" = {
+           df = compute_degree_freedom_fix(test = test,mm = mm,assigni = attr(mm,"assign"))})
+
+
   if(is.null(threshold)){
     switch(test,
            "t" = {
-             df = compute_degree_freedom_fix(test = test,mm = mm,assigni = colx)
              threshold = qt(p = 0.975,df = df)},
            "fisher" = {
-             df = compute_degree_freedom_fix(test = test,mm = mm,assigni = attr(mm,"assign"))
              threshold = qf(p = 0.95, df1 = df[,1],df2 =df[,2])})
   }else if(length(threshold)==1){
     threshold = rep(threshold,length(colx))
@@ -184,8 +189,12 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
     distribution<- t(funP(args = args))
     pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col))
 
+    switch (test,
+      "t" = {pvalue_para = 2*pt(abs(distribution[1,]),df = df[i],lower.tail = F)},
+      "fisher" = {pvalue_para = pf(distribution[1,],df1 =  df[i,1],df2 =  df[i,2],lower.tail = F)})
+
     #####uncorrected
-    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
+    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
     ##pscale change
@@ -203,10 +212,13 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       ##pscale change
       lateraltiy = "right"
       if(p_scale){
-        distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = lateraltiy)}
+        distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = lateraltiy)
+        pvalue_para = pt(distribution0[1,],df = df[i],lower.tail = F)}else{
+        pvalue_para = pt(distribution[1,],df = df[i],lower.tail = F)}
 
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,laterality = lateraltiy))
-      multiple_comparison_right[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
+
+      multiple_comparison_right[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
       multiple_comparison_right[[i]] = c(multiple_comparison_right[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
@@ -217,9 +229,13 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       if(p_scale){
         distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = "left")
         lateraltiy = "right"
-      }
+        pvalue_para = pt(distribution0[1,],df = df[i],lower.tail = T)}else{
+          pvalue_para = pt(distribution[1,],df = df[i],lower.tail = T)}
+
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,laterality = lateraltiy))
-      multiple_comparison_left[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue))
+
+
+      multiple_comparison_left[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
       multiple_comparison_left[[i]] = c(multiple_comparison_left[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
