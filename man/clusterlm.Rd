@@ -23,7 +23,7 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
 
-\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjaminin_hochberg"}.}
+\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjamini_hochberg"}.}
 
 \item{...}{Futher arguments, see details.}
 }
@@ -78,7 +78,7 @@ electrod_O1_length <- clusterlm(attentionshifting_signal ~ visibility*emotion*di
 full_electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
           + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
           method = "Rde_kheradPajouh_renaud", multcomp = c("troendle", "tfce",
-          "clustermass", "bonferroni", "holm", "benjaminin_hochberg"))
+          "clustermass", "bonferroni", "holm", "benjamini_hochberg"))
 }
 
 }
