@@ -104,10 +104,12 @@ summary_multcomp <- function(object, multcomp, laterality){
 #' @param multcomp A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.
 #' @param laterality A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.
 #' @param enhanced_stat logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.
+#' @param nbbaselinepts integer. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points (Default=0).
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,...) {
+plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,
+                           nbbaselinepts=0, ...) {
 
   ##select effect
   if("all" %in% effect){effect = names(x$multiple_comparison)}
@@ -171,7 +173,7 @@ switch(laterality,
   par(mfcol = c(p,1),mar = c(0,4,0,0),oma = c(4,0,4,1),...=...)
   for (i in 1:p) {
     if(i==p){xaxt = NULL}else{xaxt = "n"}
-    plot(
+    plot(1:ncol(data)-nbbaselinepts,
       data[i,],type = "l",xaxt = xaxt,xlab = "",ylab = rnames[i]
     )
     if(type == "statistic"){
@@ -179,7 +181,7 @@ switch(laterality,
       y = data[i,xi]
       col="red"
       #lines(x = x,y= y,lwd=par()$lwd*2,col=col)
-      points(x = xi, y = y, pch=par()$pch,col=col)
+      points(x = xi-nbbaselinepts, y = y, pch=par()$pch,col=col)
       if(multcomp=="clustermass"){
         abline(h=hl[i],lty=3)
         if(x$test=="t"&laterality=="bilateral"){
