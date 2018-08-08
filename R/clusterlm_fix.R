@@ -1,4 +1,4 @@
-#' @importFrom stats rnorm qf qt
+#' @importFrom stats rnorm qf qt pt pf
 clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rotation, aggr_FUN, E, H,
                           cl, multcomp, alpha, p_scale, coding_sum, ndh, return_distribution, new_method){
 

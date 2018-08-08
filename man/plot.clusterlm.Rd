@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{clusterlm}(x, effect = "all", type = "statistic",
   multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,
-  ...)
+  nbbaselinepts = 0, ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}
@@ -20,6 +20,8 @@
 \item{laterality}{A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.}
 
 \item{enhanced_stat}{logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.}
+
+\item{nbbaselinepts}{integer. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points (Default=0).}
 
 \item{...}{further argument pass to plot.}
 }
