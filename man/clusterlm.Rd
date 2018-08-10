@@ -56,6 +56,9 @@ electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
 ## Results
 plot(electrod_O1)
 
+## Results with labels on the x axis that represent seconds from time-locked event:
+plot(electrod_O1, nbbaselinepts = 200, nbptsperunit = 1024)
+
 ## Tables of clusters
 electrod_O1
 

@@ -5,8 +5,8 @@
 \title{Plot cluster or parameters.}
 \usage{
 \method{plot}{clusterlm}(x, effect = "all", type = "statistic",
-  multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,
-  nbbaselinepts = 0, ...)
+  multcomp = "clustermass", laterality = "bilateral",
+  enhanced_stat = F, nbbaselinepts = 0, nbptsperunit = 1, ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}
@@ -22,6 +22,8 @@
 \item{enhanced_stat}{logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.}
 
 \item{nbbaselinepts}{integer. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points (Default=0).}
+
+\item{nbptsperunit}{Default=1. Modify this value to change the scale of the label from the number of points to the desired unit. If points are e.g. sampled at 1024Hz, set to 1024 to scale into seconds and to 1.024 to scale into milliseconds.}
 
 \item{...}{further argument pass to plot.}
 }
