@@ -19,7 +19,6 @@ This function compute cluster-mass statistics for multiple comparisons. It is de
 If you need help to use the package or want to report errors, contact Jaromil Frossard at <jaromil.frossard@unige.ch>.
 
 
-
 # References
 For permutation tests with nuisance variables :
 
@@ -38,6 +37,9 @@ For the Threshold-free cluster enhancement method :
 
 * Smith, S. M., & Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98.
 
+# Academic works using permuco
 
+* Bürki, A., Frossard, J., & Renaud, O. (2018). Accounting for stimulus and participant effects in event-related potential analyses to increase the replicability of studies. Journal of neuroscience methods, 309, 218-227.
 
+* Soler, J., Arias, B., Moya, J., Ibáñez, M. I., Ortet, G., Fañanás, L., & Fatjó-Vilas, M. (2019). The interaction between the ZNF804A gene and cannabis use on the risk of psychosis in a non-clinical sample. Progress in Neuro-Psychopharmacology and Biological Psychiatry, 89, 174-180.
 
