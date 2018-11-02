@@ -39,6 +39,8 @@ For the Threshold-free cluster enhancement method :
 
 # Academic works using permuco
 
+*Allen, S. L., Bonduriansky, R., & Chenoweth, S. F. (2018). Genetic constraints on microevolutionary divergence of sex-biased gene expression. Phil. Trans. R. Soc. B, 373(1757), 20170427.
+
 * Bürki, A., Frossard, J., & Renaud, O. (2018). Accounting for stimulus and participant effects in event-related potential analyses to increase the replicability of studies. Journal of neuroscience methods, 309, 218-227.
 
 * Musariri, T., Pegg, N., Muvengwi, J., & Muzama, F. (2018). Differing patterns of plant spinescence affect blue duiker (Bovidae: Philantomba monticola) browsing behavior and intake rates. Ecology and Evolution.
