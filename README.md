@@ -41,5 +41,7 @@ For the Threshold-free cluster enhancement method :
 
 * Bürki, A., Frossard, J., & Renaud, O. (2018). Accounting for stimulus and participant effects in event-related potential analyses to increase the replicability of studies. Journal of neuroscience methods, 309, 218-227.
 
+* Musariri, T., Pegg, N., Muvengwi, J., & Muzama, F. (2018). Differing patterns of plant spinescence affect blue duiker (Bovidae: Philantomba monticola) browsing behavior and intake rates. Ecology and Evolution.
+
 * Soler, J., Arias, B., Moya, J., Ibáñez, M. I., Ortet, G., Fañanás, L., & Fatjó-Vilas, M. (2019). The interaction between the ZNF804A gene and cannabis use on the risk of psychosis in a non-clinical sample. Progress in Neuro-Psychopharmacology and Biological Psychiatry, 89, 174-180.
 
