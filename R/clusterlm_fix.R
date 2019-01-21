@@ -148,11 +148,11 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   names(multiple_comparison) <-names(colx)
 
     if(test == "t"){
-    multiple_comparison_left <- multiple_comparison_right <- list()
-    length(multiple_comparison_left)<- length(multiple_comparison_right) <- length(colx)
-    names(multiple_comparison_left)<- names(multiple_comparison_right) <-names(colx)
+    multiple_comparison_less <- multiple_comparison_greater <- list()
+    length(multiple_comparison_less)<- length(multiple_comparison_greater) <- length(colx)
+    names(multiple_comparison_less)<- names(multiple_comparison_greater) <-names(colx)
     }else{
-      multiple_comparison_left <- multiple_comparison_right <- NULL
+      multiple_comparison_less <- multiple_comparison_greater <- NULL
     }
 
   ##adjust multiple threshold
@@ -200,54 +200,54 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
     ##pscale change
     if(p_scale){
       distribution0 <- distribution
-      distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = "bilateral")}
+      distribution <- distribution_to_pscale(distribution0, test = test, alternative = "two.sided")}
 
-    #compute multiple comparison for bilateral
+    #compute multiple comparison for two.sided
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
     switch_multcomp(multcomp = c("clustermass",multcomp),distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
-                    laterality = "bilateral", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
+                    alternative = "two.sided", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
     ##unilateral test
     if(test == "t"){
-      #right
+      #greater
       ##pscale change
-      lateraltiy = "right"
+      alternative = "greater"
       if(p_scale){
-        distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = lateraltiy)
+        distribution <- distribution_to_pscale(distribution0, test = test, alternative = alternative)
         pvalue_para = pt(distribution0[1,],df = df[i],lower.tail = F)}else{
         pvalue_para = pt(distribution[1,],df = df[i],lower.tail = F)}
 
-      pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,laterality = lateraltiy))
+      pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,alternative = alternative))
 
-      multiple_comparison_right[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
-      multiple_comparison_right[[i]] = c(multiple_comparison_right[[i]],
+      multiple_comparison_greater[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
+      multiple_comparison_greater[[i]] = c(multiple_comparison_greater[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
-                                                         threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
+                                                         threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
                                                          E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
-      #left
+      #less
       ##pscale change
-      lateraltiy = "left"
+      alternative = "less"
       if(p_scale){
-        distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = "left")
-        lateraltiy = "right"
+        distribution <- distribution_to_pscale(distribution0, test = test, alternative = "less")
+        alternative = "greater"
         pvalue_para = pt(distribution0[1,],df = df[i],lower.tail = T)}else{
           pvalue_para = pt(distribution[1,],df = df[i],lower.tail = T)}
 
-      pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,laterality = lateraltiy))
+      pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,alternative = alternative))
 
 
-      multiple_comparison_left[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
-      multiple_comparison_left[[i]] = c(multiple_comparison_left[[i]],
+      multiple_comparison_less[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
+      multiple_comparison_less[[i]] = c(multiple_comparison_less[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
-                                                         threshold = threshold[i],aggr_FUN = aggr_FUN,laterality = lateraltiy,
+                                                         threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
                                                          E = E, H = H, ndh =ndh, pvalue = pvalue, alpha = alpha))}
   }
 
   ####create table
   cluster_table <- cluster_table(multiple_comparison)
-  cluster_table_right <- cluster_table_left <- NULL
+  cluster_table_greater <- cluster_table_less <- NULL
   if(test=="t"){
-    cluster_table_right <- cluster_table(multiple_comparison_right)
-    cluster_table_left <- cluster_table(multiple_comparison_left)}
+    cluster_table_greater <- cluster_table(multiple_comparison_greater)
+    cluster_table_less <- cluster_table(multiple_comparison_less)}
 
   ###parametic model
   mod_lm = lm.fit(x =mm, y = y)
@@ -280,11 +280,11 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   out$rnd_rotation = rnd_rotation
   out$multcomp = multcomp
   out$multiple_comparison = multiple_comparison
-  out$multiple_comparison_right = multiple_comparison_right
-  out$multiple_comparison_left = multiple_comparison_left
+  out$multiple_comparison_greater = multiple_comparison_greater
+  out$multiple_comparison_less = multiple_comparison_less
   out$cluster_table = cluster_table
-  out$cluster_table_right = cluster_table_right
-  out$cluster_table_left = cluster_table_left
+  out$cluster_table_greater = cluster_table_greater
+  out$cluster_table_less = cluster_table_less
   out$alpha = alpha
   out$method = method
   out$fun_name = fun_name

@@ -5,7 +5,7 @@
 \title{Plot cluster or parameters.}
 \usage{
 \method{plot}{clusterlm}(x, effect = "all", type = "statistic",
-  multcomp = "clustermass", laterality = "bilateral",
+  multcomp = "clustermass", alternative = "two.sided",
   enhanced_stat = F, nbbaselinepts = 0, nbptsperunit = 1, ...)
 }
 \arguments{
@@ -17,7 +17,7 @@
 
 \item{multcomp}{A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.}
 
-\item{laterality}{A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.}
+\item{alternative}{A character string specifying the alternative hypothesis for the t-test. Avaible options are \code{"greater"}, \code{"less"} and \code{"two.sided"}. Default is \code{"two.sided"}.}
 
 \item{enhanced_stat}{logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.}
 

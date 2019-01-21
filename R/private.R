@@ -174,26 +174,26 @@ checkBalancedData <- function(fixed_formula,data){
 
 
 
-compute_pvalue <- function(distribution, stat = distribution[1], laterality="bilateral", na.rm = T, digits = 10){
+compute_pvalue <- function(distribution, stat = distribution[1], alternative="two.sided", na.rm = T, digits = 10){
   if(na.rm){distribution = as.numeric(na.omit(distribution))}
   distribution=round(distribution,digits = digits)
   stat=round(stat, digits = digits)
   stat=matrix(stat,nrow = 1)
-  switch(laterality,
-         "bilateral" = {apply(stat,2, function(val)mean(abs(distribution) >= abs(val) , na.rm = na.rm))},
-         "left" = {apply(stat,2, function(val)mean(distribution <= val , na.rm = na.rm))},
-         "right" = {apply(stat,2, function(val)mean(distribution >= val, na.rm = na.rm))})
+  switch(alternative,
+         "two.sided" = {apply(stat,2, function(val)mean(abs(distribution) >= abs(val) , na.rm = na.rm))},
+         "less" = {apply(stat,2, function(val)mean(distribution <= val , na.rm = na.rm))},
+         "greater" = {apply(stat,2, function(val)mean(distribution >= val, na.rm = na.rm))})
 }
 
 #' @importFrom stats na.omit
-compute_all_pvalue <- function(distribution, laterality="bilateral", na.rm = T, digits = 10){
+compute_all_pvalue <- function(distribution, alternative="two.sided", na.rm = T, digits = 10){
   if(na.rm){distribution = na.omit(distribution)}
   distribution=round(distribution,digits = digits)
   np = length(distribution)
-  switch(laterality,
-         "bilateral" = {distribution = - abs(distribution)},
-         "left" = {},
-         "right" = {distribution = - distribution})
+  switch(alternative,
+         "two.sided" = {distribution = - abs(distribution)},
+         "less" = {},
+         "greater" = {distribution = - distribution})
   ceiling(rank(distribution))/np
 }
 

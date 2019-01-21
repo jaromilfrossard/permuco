@@ -1,16 +1,16 @@
 ############################################################################################################
-compute_clustermass <-  function(distribution, threshold, aggr_FUN, laterality = "right"){
-    switch(laterality,
-           "right" = {
+compute_clustermass <-  function(distribution, threshold, aggr_FUN, alternative = "greater"){
+    switch(alternative,
+           "greater" = {
              threshold <- abs(threshold)
              selected <- distribution > threshold
              extreme = function(x)max(x,na.rm = T)
            },
-           "left" = {
+           "less" = {
              threshold <- -abs(threshold)
              selected <- distribution < threshold
              extreme = function(x)max(x,na.rm = T)},
-           "bilateral" = {
+           "two.sided" = {
              distribution <- abs(distribution)
              threshold <- abs(threshold)
              selected <- distribution > threshold
@@ -34,7 +34,7 @@ compute_clustermass <-  function(distribution, threshold, aggr_FUN, laterality =
 
 
   pvalue = sapply(mass_statistic,function(mi)
-    compute_pvalue(stat = mi,distribution = mass_distribution, laterality = "right"))
+    compute_pvalue(stat = mi,distribution = mass_distribution, alternative = "greater"))
   pvalue = c(NA,pvalue)[cl[1,]+1]
   out = list(main = cbind(statistic = statistic, pvalue = pvalue, cluster_id = cl[1,]),
               distribution = mass_distribution,
@@ -111,8 +111,8 @@ compute_holm <- function(statistic = NULL,pvalue){
 }
 
 ############################################################################################################
-compute_troendle <- function(distribution, pvalue, alpha, laterality){
-  distribution_rank = apply(distribution,2,function(col){compute_all_pvalue(col,laterality = laterality)})
+compute_troendle <- function(distribution, pvalue, alpha, alternative){
+  distribution_rank = apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
 
   p_corrected <- rep(1,length(pvalue))
   rank_uncorr <- rank(pvalue)
@@ -121,7 +121,7 @@ compute_troendle <- function(distribution, pvalue, alpha, laterality){
     which_test <- which(urank==rank_uncorr)
     pvali <- distribution_rank[,which(urank<=rank_uncorr)]
     distr_min <- apply(pvali,1,min)
-    p_corri <- compute_pvalue(distribution = distr_min, stat = matrix(pvalue[which_test],nrow=1), laterality = "left")
+    p_corri <- compute_pvalue(distribution = distr_min, stat = matrix(pvalue[which_test],nrow=1), alternative = "less")
     p_corrected[which_test] <- p_corri
     if(sum(p_corri > alpha)>=1){
       return(list(main = cbind(statistic = distribution[1,],pvalue = p_corrected),
@@ -146,11 +146,11 @@ compute_benjamini_hochberg <- function(statistic = NULL, pvalue){
 ############################################################################################################
 
 
-switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,E,H,ndh,pvalue,alpha){
+switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative,E,H,ndh,pvalue,alpha){
   out= list()
   if("clustermass"%in%multcomp){
     out$clustermass <- compute_clustermass(distribution = distribution, threshold = threshold,
-                                                                          aggr_FUN = aggr_FUN, laterality = laterality)}
+                                                                          aggr_FUN = aggr_FUN, alternative = alternative)}
   if("tfce"%in%multcomp){
     out$tfce <- compute_tfce(distribution = distribution, E = E, H = H, ndh = ndh)}
   if("bonferroni"%in%multcomp){
@@ -158,7 +158,7 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,laterality,
   if("holm"%in%multcomp){
     out$holm <- compute_holm(pvalue = pvalue, statistic = distribution[1,])}
   if("troendle"%in%multcomp){
-    out$troendle <- compute_troendle(distribution = distribution, pvalue = pvalue, alpha = alpha, laterality = laterality)}
+    out$troendle <- compute_troendle(distribution = distribution, pvalue = pvalue, alpha = alpha, alternative = alternative)}
   if("benjamini_hochberg"%in%multcomp){
     out$benjamini_hochberg <- compute_benjamini_hochberg(pvalue = pvalue, statistic = distribution[1,])}
   return(out)}
@@ -199,14 +199,14 @@ cluster_table = function(x,...){
 
 ###### distribution to p_scale
 
-distribution_to_pscale <- function(distribution, test, lateraltiy){
+distribution_to_pscale <- function(distribution, test, alternative){
   if(test == "fisher"){
-    out <- apply(distribution,2,function(col){compute_all_pvalue(col,laterality = "left")})
+    out <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = "less")})
   }else if (test == "t"){
-    switch(lateraltiy,
-           "right" = {out <- apply(distribution,2,function(col){compute_all_pvalue(col,laterality = "left")})},
-           "left" = {out <- apply(distribution,2,function(col){compute_all_pvalue(col,laterality = "right")})},
-           "bilateral" = {out <- apply(abs(distribution),2,function(col){compute_all_pvalue(col,laterality = "left")})})}
+    switch(alternative,
+           "greater" = {out <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = "less")})},
+           "less" = {out <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = "greater")})},
+           "two.sided" = {out <- apply(abs(distribution),2,function(col){compute_all_pvalue(col,alternative = "less")})})}
   return(out)
 }
 

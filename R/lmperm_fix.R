@@ -81,9 +81,9 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
   ### compute p_value============================
   r_pvalue <- l_pvalue <- bi_pvalue <- rep(NA, length(attr(mm,"assign")))
 
-  r_pvalue[colx] = apply(distribution,2,function(d){compute_pvalue(distribution = d,laterality="right", na.rm = T)})
-  l_pvalue[colx] = apply(distribution,2,function(d){compute_pvalue(distribution = d,laterality="left", na.rm = T)})
-  bi_pvalue[colx] = apply(distribution,2,function(d){compute_pvalue(distribution = d,laterality="bilateral", na.rm = T)})
+  r_pvalue[colx] = apply(distribution,2,function(d){compute_pvalue(distribution = d, alternative="greater", na.rm = T)})
+  l_pvalue[colx] = apply(distribution,2,function(d){compute_pvalue(distribution = d, alternative="less", na.rm = T)})
+  bi_pvalue[colx] = apply(distribution,2,function(d){compute_pvalue(distribution = d, alternative="two.sided", na.rm = T)})
 
   check_distribution(distribution = distribution, digits = 10, n_unique = 200)
 

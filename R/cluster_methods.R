@@ -3,23 +3,23 @@
 #' @description Display with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 #'
 #' @param x A \code{clusterlm} object.
-#' @param laterality A character string indicating the laterality of the tests. Choose between \code{"bilateral"}, \code{"right"}, \code{"left"}. Default is \code{"bilateral"}.
+#' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
 #' @param ... Further arguments pass to \code{print}.
 #' @export
-print.clusterlm <- function(x, laterality = "bilateral",...){
+print.clusterlm <- function(x, alternative = "two.sided",...){
   cat(
     "Cluster ", x$test,
     " test using ", x$method,
     " to handle nuisance variables \n with ", paste(np(x$P), sep= ", ", collapse = ", "),
     " permutations and ",x$fun_name," as mass function.\n\n", sep = "")
-  cat("Alternative Hypothesis : ",laterality,".\n \n",sep = "")
-  switch(laterality,
-         "bilateral" = {
+  cat("Alternative Hypothesis : ",alternative,".\n \n",sep = "")
+  switch(alternative,
+         "two.sided" = {
            print(x$cluster_table,...)},
-         "right" = {
-           print(x$cluster_table_right,...)},
-         "left" = {
-           print(x$cluster_table_left,...)})
+         "greater" = {
+           print(x$cluster_table_greater,...)},
+         "less" = {
+           print(x$cluster_table_less,...)})
   }
 
 
@@ -50,22 +50,22 @@ print.listof_cluster_table<- function(x,...){
 #' @description Display the clusters with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 #'
 #' @param object A \code{clusterlm} object.
-#' @param laterality A character string indicating the laterality of the tests. Choose between \code{"bilateral"}, \code{"right"}, \code{"left"}. Default is \code{"bilateral"}.
+#' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
 #' @param ... Further arguments see details.
 #' @return A table for each effect indicating the statistics and p-values of the clusters.
 #' @details If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and p-values in columns and multiple tests by rows.
 #' @export
-summary.clusterlm <- function(object, laterality = "bilateral",...){
+summary.clusterlm <- function(object, alternative = "two.sided",...){
   dotargs = list(...)
   if(is.null(dotargs$multcomp)){
-    switch(laterality,
-           "bilateral" = {
+    switch(alternative,
+           "two.sided" = {
              return(object$cluster_table)},
-           "right" = {
-             return(object$cluster_table_right)},
-           "left" = {
-             return(object$cluster_table_left)})
-    }else{summary_multcomp(object = object, multcomp = dotargs$multcomp, laterality = laterality)}
+           "greater" = {
+             return(object$cluster_table_greater)},
+           "less" = {
+             return(object$cluster_table_less)})
+    }else{summary_multcomp(object = object, multcomp = dotargs$multcomp, alternative = alternative)}
 }
 
 #' @export
@@ -74,15 +74,15 @@ summary.cluster_table <- function(object,...){
 }
 
 
-summary_multcomp <- function(object, multcomp, laterality){
+summary_multcomp <- function(object, multcomp, alternative){
   if(!(multcomp %in% object$multcomp)){
     stop(paste("The choosen multiple comparisons procedure does not match with the ones computed in the object.
                   Choose between ", paste(object$multcomp,sep=" "),".", sep=""))
   }
-  switch(laterality,
-         "bilateral" = {mc = object$multiple_comparison},
-         "right" = {mc = object$multiple_comparison_right},
-         "left" = {mc = object$multiple_comparison_left})
+  switch(alternative,
+         "two.sided" = {mc = object$multiple_comparison},
+         "greater" = {mc = object$multiple_comparison_greater},
+         "less" = {mc = object$multiple_comparison_less})
 
   out = lapply(seq_along(mc),function(i){
     out = mc[[i]][[multcomp]]$main[,1:2,drop = F]
@@ -102,14 +102,14 @@ summary_multcomp <- function(object, multcomp, laterality){
 #' @param effect A vector of character naming the effects to display. Default is \code{"all"}.
 #' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}.
 #' @param multcomp A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.
-#' @param laterality A character string specifying the laterality of the test when t-test are computed. Avaible options are \code{"right"}, \code{"left"} and \code{"bilateral"}. Default is \code{"bilateral"}.
+#' @param alternative A character string specifying the alternative hypothesis for the t-test. Avaible options are \code{"greater"}, \code{"less"} and \code{"two.sided"}. Default is \code{"two.sided"}.
 #' @param enhanced_stat logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.
 #' @param nbbaselinepts integer. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points (Default=0).
 #' @param nbptsperunit Default=1. Modify this value to change the scale of the label from the number of points to the desired unit. If points are e.g. sampled at 1024Hz, set to 1024 to scale into seconds and to 1.024 to scale into milliseconds.
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", laterality = "bilateral", enhanced_stat = F,
+plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", alternative = "two.sided", enhanced_stat = F,
                            nbbaselinepts=0, nbptsperunit=1, ...) {
 
   ##select effect
@@ -121,10 +121,10 @@ plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "cl
   effect_sel <- names(x$multiple_comparison)%in%effect
 
   ###switch mult comp
-switch(laterality,
-       "bilateral" = {multiple_comparison = x$multiple_comparison[effect_sel]},
-       "right" = {multiple_comparison = x$multiple_comparison_right[effect_sel]},
-       "left" = {multiple_comparison = x$multiple_comparison_left[effect_sel]})
+switch(alternative,
+       "two.sided" = {multiple_comparison = x$multiple_comparison[effect_sel]},
+       "greater" = {multiple_comparison = x$multiple_comparison_greater[effect_sel]},
+       "less" = {multiple_comparison = x$multiple_comparison_less[effect_sel]})
 
   pvalue = t(sapply(multiple_comparison,function(m){
     m[[multcomp]]$main[,2]}))
@@ -152,10 +152,10 @@ switch(laterality,
            switch(x$test,
                   "fisher"={hl <- x$threshold},
                   "t"={
-                    switch (laterality,
-                      "left" ={hl <- -c(abs(x$threshold))},
-                      "right" ={hl <- c(abs(x$threshold))},
-                      "bilateral" ={hl <- c(abs(x$threshold))}
+                    switch (alternative,
+                      "less" ={hl <- -c(abs(x$threshold))},
+                      "greater" ={hl <- c(abs(x$threshold))},
+                      "two.sided" ={hl <- c(abs(x$threshold))}
                     )})}
          })
 
@@ -185,7 +185,7 @@ switch(laterality,
       points(x = (xi-nbbaselinepts)/nbptsperunit, y = y, pch=par()$pch,col=col)
       if(multcomp=="clustermass"){
         abline(h=hl[i],lty=3)
-        if(x$test=="t"&laterality=="bilateral"){
+        if(x$test=="t"&alternative=="two.sided"){
           abline(h=-hl[i],lty=3)
         }
         }

@@ -119,13 +119,13 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     ##pscale change
     if(p_scale){
       distribution0 <- distribution
-      distribution <- distribution_to_pscale(distribution0, test = test, lateraltiy = "bilateral")
+      distribution <- distribution_to_pscale(distribution0, test = test, alternative = "two.sided")
     }
 
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
                                  switch_multcomp(multcomp = c("clustermass",multcomp),
                                                  distribution = distribution, threshold = threshold[i],
-                                                 aggr_FUN = aggr_FUN, laterality = "bilateral", E = E,
+                                                 aggr_FUN = aggr_FUN, alternative = "two.sided", E = E,
                                                  H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))}
 
 

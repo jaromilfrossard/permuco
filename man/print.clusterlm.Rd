@@ -4,12 +4,12 @@
 \alias{print.clusterlm}
 \title{Print \code{clusterlm} object.}
 \usage{
-\method{print}{clusterlm}(x, laterality = "bilateral", ...)
+\method{print}{clusterlm}(x, alternative = "two.sided", ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}
 
-\item{laterality}{A character string indicating the laterality of the tests. Choose between \code{"bilateral"}, \code{"right"}, \code{"left"}. Default is \code{"bilateral"}.}
+\item{alternative}{A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.}
 
 \item{...}{Further arguments pass to \code{print}.}
 }

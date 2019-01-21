@@ -106,7 +106,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
 
 
   ##compute p value
-  permutation_pvalue = apply(distribution,2,function(d){compute_pvalue(distribution = d,laterality="bilateral", na.rm = T)})
+  permutation_pvalue = apply(distribution,2,function(d){compute_pvalue(distribution = d,alternative="two.sided", na.rm = T)})
   check_distribution(distribution = distribution, digits = 10, n_unique = 200)
 
 

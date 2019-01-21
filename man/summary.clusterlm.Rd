@@ -4,12 +4,12 @@
 \alias{summary.clusterlm}
 \title{Summarize a \code{clusterlm} object.}
 \usage{
-\method{summary}{clusterlm}(object, laterality = "bilateral", ...)
+\method{summary}{clusterlm}(object, alternative = "two.sided", ...)
 }
 \arguments{
 \item{object}{A \code{clusterlm} object.}
 
-\item{laterality}{A character string indicating the laterality of the tests. Choose between \code{"bilateral"}, \code{"right"}, \code{"left"}. Default is \code{"bilateral"}.}
+\item{alternative}{A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.}
 
 \item{...}{Further arguments see details.}
 }
