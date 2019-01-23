@@ -1,6 +1,6 @@
 #' P-values based on permutation tests for ANOVA and repeated measures ANOVA designs.
 #'
-#' @description  Provides p-values for omnibus tests based on permutations for factorial and repeated measures ANOVA. This function produces the F statistics, the parametric, p-values based on Gaussian and sphericity assumptions and p-values based on the permutation method that handle nuisance variables.
+#' @description  Provides p-values for omnibus tests based on permutations for factorial and repeated measures ANOVA. This function produces the F statistics, parametric p-values (based, on Gaussian and sphericity assumptions) and p-values based on the permutation methods that handle nuisance variables.
 #' @param formula A formula object. The formula for repeated measures ANOVA should be written using the same notation as \link{aov} by adding
 #' \code{+Error(id/within)}, where \code{id} is the factor that identify the subjects and \code{within} is the within factors.
 #' @param data A data frame or matrix.
@@ -106,18 +106,18 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
   return(result)
 }
 
-#' Permutation test for regression parameters
+#' Permutation tests for regression parameters
 #'
-#' @description Compute permutation marginal test for linear model. This function produces t statistics with univariate and bivariate p-values. It gives the choice between multiple methods to handle nuisance variables.
+#' @description Compute permutation marginal tests for linear models. This function produces t statistics with univariate and bivariate p-values. It gives the choice between multiple methods to handle nuisance variables.
 #' @param formula A formula object.
 #' @param data A data frame or matrix.
 #' @param np The number of permutations. Default value is \code{5000}.
-#' @param method A character string indicating the method use to handle nuisance variables. Default is \code{"freedman_lane"}. Se details for the other methods.
+#' @param method A character string indicating the method use to handle nuisance variables. Default is \code{"freedman_lane"}. For the other methods, see details.
 #' @param ... Futher arguments, see details.
-#' @return A \code{lmperm} object. see \link{aovperm}.
+#' @return A \code{lmperm} object. See \link{aovperm}.
 #' @details The following methods are available for the fixed effects model defined as \eqn{y = D\eta + X\beta + \epsilon}. If we want to test \eqn{\beta = 0} and take into account the effects of the nuisance variables \eqn{D}, we transform the data :
 #' \tabular{lccc}{
-#' \code{method} argument \tab \eqn{y} \tab \eqn{D} \tab \eqn{X}\cr
+#' \code{method} argument \tab \eqn{y*} \tab \eqn{D*} \tab \eqn{X*}\cr
 #' \code{"draper_stoneman"} \tab \eqn{y} \tab \eqn{D} \tab \eqn{PX}\cr
 #' \code{"freedman_lane"} \tab \eqn{(H_D+PR_D)y} \tab \eqn{D} \tab \eqn{X}\cr
 #' \code{"manly"} \tab \eqn{Py} \tab \eqn{D} \tab \eqn{X}\cr

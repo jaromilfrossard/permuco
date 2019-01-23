@@ -9,7 +9,7 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
   multcomp = "clustermass", ...)
 }
 \arguments{
-\item{formula}{A formula object where the left part is a matrix defined in the global environnement.}
+\item{formula}{A formula object where the left part is a matrix defined in the global environment.}
 
 \item{data}{A data frame for the independant variables.}
 
@@ -19,9 +19,9 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
-\item{threshold}{A numerical vector that specify the limit of a cluster for the \code{"clustermass"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is vector the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.}
+\item{threshold}{A numerical value that specify the threshold for the \code{"clustermass"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is scalar the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.}
 
-\item{aggr_FUN}{A function that will be used to aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
+\item{aggr_FUN}{A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
 
 \item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjamini_hochberg"}.}
 
@@ -31,13 +31,13 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 A list containing : a table of the clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
 }
 \description{
-Compute the cluster mass test for longitudinal linear model.
+Compute the cluster-mass test for longitudinal linear model.
 }
 \details{
 The random effects model is only avaible with a F statistic.\cr
 
 Other arguments could be pass in \code{...} :\cr \cr
-\code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat} for the reproductibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
+\code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat}; which is used for the reproductibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
 \code{rnd_rotation} : A matrix of random value to compute a rotation of size \eqn{n \times n} that will be used for the \code{"huh_jhun"} method. \cr \cr
 \code{p_scale = FALSE} : if set to \code{TRUE}, the several multiple comparisons procedures are compute on the \code{1 - p} scale, where \code{p} is the p-value. The threshold have to be set between 0 and 1 (eg: \code{threshold = 0.95}). The function \code{aggr_FUN} should be big when there is evidence against the null (eg: \code{aggr_FUN = function(p)sum(abs(log(1-p)))}. Moreover under the probability scale the cluster mass statistics is sensitive to the number permutations.\cr \cr
 \code{H}, \code{E}, \code{ndh} : the parameters used for the \code{"tfce"} method. Default values are set to \code{H = 2} for the height parameter, to \code{E = 0.5} for the extend parameter and to \code{ndh = 500} for the number terms to approximate the integral.\cr \cr
@@ -48,7 +48,7 @@ Other arguments could be pass in \code{...} :\cr \cr
 \examples{
 
 ## Cluster-mass for repeated measures ANOVA
-## Warning : np argument must be greater (recommendation: np>=5000)
+## Warning : np argument must be greater (recommendation: np >= 5000)
 electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction
          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
          np = 50)

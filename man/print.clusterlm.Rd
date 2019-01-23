@@ -14,5 +14,5 @@
 \item{...}{Further arguments pass to \code{print}.}
 }
 \description{
-Display with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
+Display the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 }

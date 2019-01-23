@@ -1,12 +1,12 @@
 #' Print \code{clusterlm} object.
 #'
-#' @description Display with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
+#' @description Display the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 #'
 #' @param x A \code{clusterlm} object.
 #' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
 #' @param ... Further arguments pass to \code{print}.
 #' @export
-print.clusterlm <- function(x, alternative = "two.sided",...){
+print.clusterlm <- function(x, alternative = "two.sided", ...){
   cat(
     "Cluster ", x$test,
     " test using ", x$method,
@@ -101,15 +101,15 @@ summary_multcomp <- function(object, multcomp, alternative){
 #' @param x A \code{clusterlm} object.
 #' @param effect A vector of character naming the effects to display. Default is \code{"all"}.
 #' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}.
-#' @param multcomp A character sting specifying the p-value to plot. Default is \code{"clustermass"}. See \link{clusterlm}.
-#' @param alternative A character string specifying the alternative hypothesis for the t-test. Avaible options are \code{"greater"}, \code{"less"} and \code{"two.sided"}. Default is \code{"two.sided"}.
-#' @param enhanced_stat logical. Default is \code{F}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"}, multiple comparisons method.
-#' @param nbbaselinepts integer. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points (Default=0).
-#' @param nbptsperunit Default=1. Modify this value to change the scale of the label from the number of points to the desired unit. If points are e.g. sampled at 1024Hz, set to 1024 to scale into seconds and to 1.024 to scale into milliseconds.
+#' @param multcomp A character string specifying the method use to correct the p-value. It should match the one computed in the object. Default is \code{"clustermass"}. See \link{clusterlm}.
+#' @param alternative A character string specifying the alternative hypothesis for the t-test. The available options are \code{"greater"}, \code{"less"} and \code{"two.sided"}. Default is \code{"two.sided"}.
+#' @param enhanced_stat A logical. Default is \code{FALSE}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"} multiple comparisons procedures.
+#' @param nbbaselinepts An integer. Default is 0. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points.
+#' @param nbptsperunit An integer. Default is 1. Modify this value to change the scale of the label from the number of points to the desired unit. If points are e.g. sampled at 1024Hz, set to 1024 to scale into seconds and to 1.024 to scale into milliseconds.
 #' @param ... further argument pass to plot.
 #' @importFrom graphics points axis
 #' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", alternative = "two.sided", enhanced_stat = F,
+plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = "clustermass", alternative = "two.sided", enhanced_stat = FALSE,
                            nbbaselinepts=0, nbptsperunit=1, ...) {
 
   ##select effect

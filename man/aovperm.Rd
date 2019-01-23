@@ -22,7 +22,7 @@ aovperm(formula, data = NULL, np = 5000, method = NULL, ...)
 A \code{lmperm} object containing most of the objects given in an \link{lm} object, an ANOVA table with parametric and permutation p-values, the test statistics and the permutation distributions.
 }
 \description{
-Provides p-values for omnibus tests based on permutations for factorial and repeated measures ANOVA. This function produces the F statistics, the parametric, p-values based on Gaussian and sphericity assumptions and p-values based on the permutation method that handle nuisance variables.
+Provides p-values for omnibus tests based on permutations for factorial and repeated measures ANOVA. This function produces the F statistics, parametric p-values (based, on Gaussian and sphericity assumptions) and p-values based on the permutation methods that handle nuisance variables.
 }
 \details{
 The following methods are available for the fixed effects model defined as \eqn{y = D\eta + X\beta + \epsilon}. If we want to test \eqn{\beta = 0} and take into account the effects of the nuisance variables \eqn{D}, we transform the data :

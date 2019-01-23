@@ -5,6 +5,7 @@ permuco github version
  * adding parametric (uncorrected) pvalues for signal
  * add argument "nbbaselinepts" and "nbptsperunit" in plot.clusterlm
  * change argument names: bilateral in two.sided, left in less,right in greater
+ * update vignette permuco_tutorial.pdf
 
 
 permuco 1.0.1

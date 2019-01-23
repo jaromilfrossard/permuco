@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_model.R
 \name{lmperm}
 \alias{lmperm}
-\title{Permutation test for regression parameters}
+\title{Permutation tests for regression parameters}
 \usage{
 lmperm(formula, data = NULL, np = 5000, method = NULL, ...)
 }
@@ -13,20 +13,20 @@ lmperm(formula, data = NULL, np = 5000, method = NULL, ...)
 
 \item{np}{The number of permutations. Default value is \code{5000}.}
 
-\item{method}{A character string indicating the method use to handle nuisance variables. Default is \code{"freedman_lane"}. Se details for the other methods.}
+\item{method}{A character string indicating the method use to handle nuisance variables. Default is \code{"freedman_lane"}. For the other methods, see details.}
 
 \item{...}{Futher arguments, see details.}
 }
 \value{
-A \code{lmperm} object. see \link{aovperm}.
+A \code{lmperm} object. See \link{aovperm}.
 }
 \description{
-Compute permutation marginal test for linear model. This function produces t statistics with univariate and bivariate p-values. It gives the choice between multiple methods to handle nuisance variables.
+Compute permutation marginal tests for linear models. This function produces t statistics with univariate and bivariate p-values. It gives the choice between multiple methods to handle nuisance variables.
 }
 \details{
 The following methods are available for the fixed effects model defined as \eqn{y = D\eta + X\beta + \epsilon}. If we want to test \eqn{\beta = 0} and take into account the effects of the nuisance variables \eqn{D}, we transform the data :
 \tabular{lccc}{
-\code{method} argument \tab \eqn{y} \tab \eqn{D} \tab \eqn{X}\cr
+\code{method} argument \tab \eqn{y*} \tab \eqn{D*} \tab \eqn{X*}\cr
 \code{"draper_stoneman"} \tab \eqn{y} \tab \eqn{D} \tab \eqn{PX}\cr
 \code{"freedman_lane"} \tab \eqn{(H_D+PR_D)y} \tab \eqn{D} \tab \eqn{X}\cr
 \code{"manly"} \tab \eqn{Py} \tab \eqn{D} \tab \eqn{X}\cr

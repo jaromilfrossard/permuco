@@ -127,45 +127,7 @@ np.list <- function(object){
 
 
 
-# #'Plot method for class \code{"aovperm"}.
-# #'
-# #'@description show the density of statistics and the test statistic
-# #'
-# #'@param x A \code{"aovperm"} object.
-# #'@param FUN A function to compute the density. Default is \link{density}.
-# #'@param ... futher arguments pass to plot.
-# #'@importFrom stats na.omit
-# #'@export
-# plot.aovperm<-function(x, FUN = density, ...){
-#   par0=par()
-#   #data
-#   distr=x$distribution
-#   #subplot
-#   p=NCOL(distr)
-#   div <- seq_len(abs(p))
-#   factors <- div[p %% div == 0L]
-#   mfrow1<-factors[round(length(factors)/2)]
-#   mfrow<-c(mfrow1,p/mfrow1)
-#   par(mfrow=mfrow)
-#   #plot
-#   for(i in 1:NCOL(distr)){
-#     plot(FUN(na.omit(distr[,i])),main=colnames(distr)[i],...)
-#     abline(v=distr[1,i])
-#   }
-#   par(mfrow=par0$mfrow)
-# }
-#
-# #SUMMARY methods=============================
-# #' @export
-#summary.aovperm <- function(object,...){
-#   object$table
-# }
 
-# #' @export
-# print.aovperm <- function(x,...){
-#   print(x$table,...)
-#}
-#
 
 
 
