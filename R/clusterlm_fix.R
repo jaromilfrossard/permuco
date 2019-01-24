@@ -206,7 +206,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
     switch_multcomp(multcomp = c("clustermass",multcomp),distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
                     alternative = "two.sided", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
-    ##unilateral test
+    ##one-sided test
     if(test == "t"){
       #greater
       ##pscale change
