@@ -47,5 +47,7 @@ For the threshold-free cluster-enhancement method :
 
 * Musariri, T., Pegg, N., Muvengwi, J., & Muzama, F. (2018). Differing patterns of plant spinescence affect blue duiker (Bovidae: Philantomba monticola) browsing behavior and intake rates. Ecology and Evolution.
 
+* Podofillini, S., Cecere, J. G., Griggio, M., Corti, M., Capua, E. L. D., Parolini, M., ... & Rubolini, D. (2019). Benefits of extra food to reproduction depend on maternal condition. Oikos.
+
 * Soler, J., Arias, B., Moya, J., Ibáñez, M. I., Ortet, G., Fañanás, L., & Fatjó-Vilas, M. (2019). The interaction between the ZNF804A gene and cannabis use on the risk of psychosis in a non-clinical sample. Progress in Neuro-Psychopharmacology and Biological Psychiatry, 89, 174-180.
 
