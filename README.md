@@ -45,6 +45,8 @@ For the threshold-free cluster-enhancement method :
 
 * Hartmann, M., Sommer, N. R., Diana, L., Müri, R. M., & Eberhard-Moscicka, A. K. (2018). Further to the right: Viewing distance modulates attentional asymmetries (‘pseudoneglect’) during visual exploration. Brain and Cognition.
 
+* Kern, E. M. A., & Langerhans, R. B. (2019). Urbanization Alters Swimming Performance of a Stream Fish. Front. Ecol. Evol. 6: 229. doi: 10.3389/fevo.
+
 * Musariri, T., Pegg, N., Muvengwi, J., & Muzama, F. (2018). Differing patterns of plant spinescence affect blue duiker (Bovidae: Philantomba monticola) browsing behavior and intake rates. Ecology and Evolution.
 
 * Podofillini, S., Cecere, J. G., Griggio, M., Corti, M., Capua, E. L. D., Parolini, M., ... & Rubolini, D. (2019). Benefits of extra food to reproduction depend on maternal condition. Oikos.
