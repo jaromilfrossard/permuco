@@ -43,6 +43,8 @@ For the threshold-free cluster-enhancement method :
 
 * Bürki, A., Frossard, J., & Renaud, O. (2018). Accounting for stimulus and participant effects in event-related potential analyses to increase the replicability of studies. Journal of neuroscience methods, 309, 218-227.
 
+* Godfrey, M., Hepburn, S., Fidler, D. J., Tapera, T., Zhang, F., Rosenberg, C. R., & Lee, N. R. (2019). Autism spectrum disorder (ASD) symptom profiles of children with comorbid Down syndrome (DS) and ASD: A comparison with children with DS-only and ASD-only. Research in Developmental Disabilities, 89, 83-93.
+
 * Hartmann, M., Sommer, N. R., Diana, L., Müri, R. M., & Eberhard-Moscicka, A. K. (2018). Further to the right: Viewing distance modulates attentional asymmetries (‘pseudoneglect’) during visual exploration. Brain and Cognition.
 
 * Kern, E. M. A., & Langerhans, R. B. (2019). Urbanization Alters Swimming Performance of a Stream Fish. Front. Ecol. Evol. 6: 229. doi: 10.3389/fevo.
