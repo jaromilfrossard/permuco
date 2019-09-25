@@ -23,6 +23,7 @@ If you need help to use the package or want to report errors, contact Jaromil Fr
 For permutation tests with nuisance variables :
 
 * Kherad-Pajouh, S., & Renaud, O. (2010). An exact permutation method for testing any effect in balanced and unbalanced fixed effect ANOVA. Computational Statistics & Data Analysis, 54(7), 1881-1893.
+
 * Winkler, A. M., Ridgway, G. R., Webster, M. A., Smith, S. M., & Nichols, T. E. (2014). Permutation inference for the general linear model. Neuroimage, 92, 381-397.
 
 For permutation test in repeated measures ANOVA :
@@ -41,7 +42,15 @@ For the threshold-free cluster-enhancement method :
 
 * Allen, S. L., Bonduriansky, R., & Chenoweth, S. F. (2018). Genetic constraints on microevolutionary divergence of sex-biased gene expression. Phil. Trans. R. Soc. B, 373(1757), 20170427.
 
+* Almodóvar-Rivera, I., & Maitra, R. (2019). FAST adaptive smoothing and thresholding for improved activation detection in low-signal fMRI. IEEE transactions on medical imaging.
+
 * Bürki, A., Frossard, J., & Renaud, O. (2018). Accounting for stimulus and participant effects in event-related potential analyses to increase the replicability of studies. Journal of neuroscience methods, 309, 218-227.
+
+* Christie, B. R., Trivino‐Paredes, J., Pinar, C., Neale, K. J., Meconi, A., Reid, H., & Hutton, C. P. (2019). A Rapid Neurological Assessment Protocol for Repeated Mild Traumatic Brain Injury in Awake Rats. Current protocols in neuroscience, 89(1), e80.
+
+* Destro, G. F. G., de Fernandes, V., de Andrade, A. F. A., De Marco, P., & Terribile, L. C. (2019). Back home? Uncertainties for returning seized animals to the source‐areas under climate change. Global change biology.
+
+* Drexl, K., Kunze, A. E., & Werner, G. G. (2019). The German version of the Fear of Sleep Inventory-Short Form: A psychometric study. European Journal of Trauma & Dissociation.
 
 * Godfrey, M., Hepburn, S., Fidler, D. J., Tapera, T., Zhang, F., Rosenberg, C. R., & Lee, N. R. (2019). Autism spectrum disorder (ASD) symptom profiles of children with comorbid Down syndrome (DS) and ASD: A comparison with children with DS-only and ASD-only. Research in Developmental Disabilities, 89, 83-93.
 
@@ -55,3 +64,4 @@ For the threshold-free cluster-enhancement method :
 
 * Soler, J., Arias, B., Moya, J., Ibáñez, M. I., Ortet, G., Fañanás, L., & Fatjó-Vilas, M. (2019). The interaction between the ZNF804A gene and cannabis use on the risk of psychosis in a non-clinical sample. Progress in Neuro-Psychopharmacology and Biological Psychiatry, 89, 174-180.
 
+* Swanson, K., Goldbach, H. C., & Laubach, M. (2019). The rat medial frontal cortex controls pace, but not breakpoint, in a progressive ratio licking task. Behavioral neuroscience, 133(4), 385.
