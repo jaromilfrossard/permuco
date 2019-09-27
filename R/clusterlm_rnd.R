@@ -131,7 +131,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
 
   cluster_table <- cluster_table(multiple_comparison[order(link[3,], link[1,])])
 
-  ##sort effect
+  ##sort effects
 
 
   out=list()
