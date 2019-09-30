@@ -111,26 +111,64 @@ compute_holm <- function(statistic = NULL,pvalue){
 }
 
 ############################################################################################################
-compute_troendle <- function(distribution, pvalue, alpha, alternative){
+# compute_troendle_old <- function(distribution, pvalue, alpha, alternative){
+#   distribution_rank = apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
+#
+#   p_corrected <- rep(1,length(pvalue))
+#   rank_uncorr <- rank(pvalue)
+#   #loop to recompute minimal value
+#   for(urank in sort(unique(rank_uncorr))){
+#     which_test <- which(urank==rank_uncorr)
+#     pvali <- distribution_rank[,which(urank<=rank_uncorr)]
+#     distr_min <- apply(pvali,1,min)
+#     p_corri <- compute_pvalue(distribution = distr_min, stat = matrix(pvalue[which_test],nrow=1), alternative = "less")
+#     p_corrected[which_test] <- p_corri
+#     if(sum(p_corri > alpha)>=1){
+#       return(list(main = cbind(statistic = distribution[1,],pvalue = p_corrected),
+#                   alpha = alpha))
+#   }}
+#   out = list(main = cbind(statistic = distribution[1,],pvalue = p_corrected),
+#               alpha = alpha)
+#   return(out)
+# }
+compute_troendle = function (distribution, alternative) {
   distribution_rank = apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
 
-  p_corrected <- rep(1,length(pvalue))
+  pvalue = distribution_rank[1,]
+
   rank_uncorr <- rank(pvalue)
-  #loop to recompute minimal value
-  for(urank in sort(unique(rank_uncorr))){
-    which_test <- which(urank==rank_uncorr)
-    pvali <- distribution_rank[,which(urank<=rank_uncorr)]
-    distr_min <- apply(pvali,1,min)
-    p_corri <- compute_pvalue(distribution = distr_min, stat = matrix(pvalue[which_test],nrow=1), alternative = "less")
-    p_corrected[which_test] <- p_corri
-    if(sum(p_corri > alpha)>=1){
-      return(list(main = cbind(statistic = distribution[1,],pvalue = p_corrected),
-                  alpha = alpha))
-  }}
-  out = list(main = cbind(statistic = distribution[1,],pvalue = p_corrected),
-              alpha = alpha)
+
+
+  # order test from low to high
+  test_order = sort(unique(rank_uncorr))
+  order_test_list = lapply(1:length(test_order),function(testi){
+    ri = test_order[testi]
+    list(infos = cbind(order=testi,col=which(rank_uncorr==ri)),
+         mins = apply(distribution_rank[,which(rank_uncorr==ri),drop=F],1,min))
+  })
+
+  # take cumulative minimum of the ordered distributions of p's
+
+  cummins = t(apply(do.call("cbind",lapply(order_test_list,function(oi)(oi$mins))),
+                    1,function(coli){rev(cummin(rev(coli)))}))
+
+  # Compute p-value
+
+  p_corrected = apply(cummins,2,
+                      function(coli)compute_pvalue(coli,alternative = "less"))
+
+  # Compute inverse order
+
+  infos = do.call("rbind",lapply(order_test_list,function(oi)(oi$infos)))
+
+  # Inverse order of the increasing p-values.
+  p_corrected = (cummax(p_corrected) [infos[,1]])[order(infos[,2])]
+
+  out = list(main = cbind(statistic = distribution[1, ], pvalue = p_corrected))
   return(out)
 }
+
+
 
   ############################################################################################################
 compute_benjamini_hochberg <- function(statistic = NULL, pvalue){
@@ -158,7 +196,7 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative
   if("holm"%in%multcomp){
     out$holm <- compute_holm(pvalue = pvalue, statistic = distribution[1,])}
   if("troendle"%in%multcomp){
-    out$troendle <- compute_troendle(distribution = distribution, pvalue = pvalue, alpha = alpha, alternative = alternative)}
+    out$troendle <- compute_troendle(distribution = distribution, alternative = alternative)}
   if("benjamini_hochberg"%in%multcomp){
     out$benjamini_hochberg <- compute_benjamini_hochberg(pvalue = pvalue, statistic = distribution[1,])}
   return(out)}
