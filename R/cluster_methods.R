@@ -13,7 +13,7 @@ print.clusterlm <- function(x, multcomp = NULL, alternative = "two.sided", ...){
 
 
 #' @export
-print.cluster_table <- function(x, ...) {
+print.multcomp_table <- function(x, ...) {
   cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
   cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
   cat("Permutation Method: ",attr(x,"method"), ".\n",sep="")
@@ -34,7 +34,7 @@ print.cluster_table <- function(x, ...) {
 }
 
 #' @export
-print.listof_cluster_table<- function(x,...){
+print.listof_multcomp_table<- function(x,...){
   dotargs = list(...)
   ei = NULL
   if(!is.null(dotargs$effect)){
@@ -77,11 +77,11 @@ summary.clusterlm <- function(object, alternative = "two.sided", multcomp = NULL
 
   switch(alternative,
            "two.sided" = {
-             return(cluster_table(object$multiple_comparison, multcomp = multcomp, ... = ...))},
+             return(getTable(object$multiple_comparison, multcomp = multcomp, ... = ...))},
            "greater" = {
-             return(cluster_table(object$multiple_comparison, multcomp = multcomp, ... = ...))},
+             return(getTable(object$multiple_comparison_greater, multcomp = multcomp, ... = ...))},
            "less" = {
-             return(cluster_table(object$multiple_comparison, multcomp = multcomp, ... = ...))})
+             return(getTable(object$multiple_comparison_less, multcomp = multcomp, ... = ...))})
 
 }
 

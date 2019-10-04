@@ -40,10 +40,10 @@ cluster_table = function(x, multcomp = NULL, alpha = 0.05, ...){
     attr(tab,"alternative") = info$alternative
     attr(tab,"df") = info$df
     attr(tab,"np") = info$np
-    class(tab) = append("cluster_table",class(tab))
+    class(tab) = append("multcomp_table",class(tab))
     tab
   })
-  class(ct) = append("listof_cluster_table",class(ct))
+  class(ct) = append("listof_multcomp_table",class(ct))
   names(ct) = names(x)
   ct
 }
