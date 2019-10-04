@@ -10,8 +10,28 @@ attentionshifting_design2 = attentionshifting_design
 contrasts(attentionshifting_design2$visibility) = contr.sum
 attentionshifting_design2$visibility = as.numeric(attentionshifting_design2$visibility)
 t0=proc.time()
-electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion*direction, data = attentionshifting_design2,
-                         np = 1000,test="t",multcomp = "troendle")
+electrod_O1 <- clusterlm(attentionshifting_signal ~ visibility*emotion, data = attentionshifting_design2,
+                         np = 10,test="fisher",multcomp = c("clustermass", "troendle"))
+
+a = summary(electrod_O1)
+summary(electrod_O1,multcomp = "troendle")
+
+x = electrod_O1$multiple_comparison
+
+class(a$visibility)
+
+electrod_O1$multiple_comparison$visibility$uncorrected$test_info
+cm =  cluster_table(electrod_O1$multiple_comparison,"troendle")
+x = electrod_O1$multiple_comparison
+
+multcomp= "troendle"
+
+cluster_table(electrod_O1$multiple_comparison,"clustermass")
+attributes(cm$visibility)
+cm$visibility
+multcomp="troendle"
+
+
 
 proc.time()-t0
 

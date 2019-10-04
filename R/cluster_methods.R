@@ -3,31 +3,34 @@
 #' @description Display the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
 #'
 #' @param x A \code{clusterlm} object.
+#' @param multcomp A character string indicating the multiple comparison procedure to print. Default is NULL a print the first multiple comparisons procedure of the \code{clusterlm} object.
 #' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
 #' @param ... Further arguments pass to \code{print}.
 #' @export
-print.clusterlm <- function(x, alternative = "two.sided", ...){
-  cat(
-    "Cluster ", x$test,
-    " test using ", x$method,
-    " to handle nuisance variables \n with ", paste(np(x$P), sep= ", ", collapse = ", "),
-    " permutations and ",x$fun_name," as mass function.\n\n", sep = "")
-  cat("Alternative Hypothesis : ",alternative,".\n \n",sep = "")
-  switch(alternative,
-         "two.sided" = {
-           print(x$cluster_table,...)},
-         "greater" = {
-           print(x$cluster_table_greater,...)},
-         "less" = {
-           print(x$cluster_table_less,...)})
-  }
+print.clusterlm <- function(x, multcomp = NULL, alternative = "two.sided", ...){
+  print(summary(x, multcomp = multcomp, alternative = alternative, ... = ...))
+}
 
 
 #' @export
 print.cluster_table <- function(x, ...) {
-  cat(attr(x,"effect_name"),", threshold = ",attr(x,"threshold"),".\n",sep="")
-  print.data.frame(x)
+  cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
+  cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
+  cat("Permutation Method: ",attr(x,"method"), ".\n",sep="")
+  cat("Number of Permutations: ",attr(x,"np"), ".\n",sep="")
+  cat("Multiple Comparisons Procedure: ",attr(x,"multcomp"), ".\n",sep="")
+  if(attr(x,"multcomp") == "clustermass"){
+    cat("Threshold: ",attr(x,"threshold"),".\n",sep="")}else{
+    cat("Table of pseudo-clusters.\n")
+    }
   cat("\n")
+  if(!is.null(attr(x,"nocluster"))){
+    if(attr(x,"nocluster")){
+    cat("No cluster above the threshold.")}else{
+      print.data.frame(x)}
+  }else{
+  print.data.frame(x)}
+  cat("\n\n")
 }
 
 #' @export
@@ -55,42 +58,56 @@ print.listof_cluster_table<- function(x,...){
 #' @return A table for each effect indicating the statistics and p-values of the clusters.
 #' @details If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and p-values in columns and multiple tests by rows.
 #' @export
-summary.clusterlm <- function(object, alternative = "two.sided",...){
+summary.clusterlm <- function(object, alternative = "two.sided", multcomp = NULL, table_type = NULL, ...){
   dotargs = list(...)
-  if(is.null(dotargs$multcomp)){
-    switch(alternative,
-           "two.sided" = {
-             return(object$cluster_table)},
-           "greater" = {
-             return(object$cluster_table_greater)},
-           "less" = {
-             return(object$cluster_table_less)})
-    }else{summary_multcomp(object = object, multcomp = dotargs$multcomp, alternative = alternative)}
-}
-
-#' @export
-summary.cluster_table <- function(object,...){
-  object
-}
-
-
-summary_multcomp <- function(object, multcomp, alternative){
-  if(!(multcomp %in% object$multcomp)){
-    stop(paste("The choosen multiple comparisons procedure does not match with the ones computed in the object.
-                  Choose between ", paste(object$multcomp,sep=" "),".", sep=""))
+  if(is.null(table_type)){
+    if(ncol(object$y)>15){
+      table_type = "cluster"
+    }else{
+      table_type = "full"
+    }
   }
-  switch(alternative,
-         "two.sided" = {mc = object$multiple_comparison},
-         "greater" = {mc = object$multiple_comparison_greater},
-         "less" = {mc = object$multiple_comparison_less})
 
-  out = lapply(seq_along(mc),function(i){
-    out = mc[[i]][[multcomp]]$main[,1:2,drop = F]
-    colnames(out) = paste(names(mc)[i], colnames(out))
-    out})
-  out = do.call("cbind",out)
-  return(out)
+  if(is.null(multcomp)){multcomp <- object$multcomp[1]}
+
+  switch(table_type,
+    "cluster" = {getTable = function(x, multcomp,... ){cluster_table(x, multcomp = multcomp, ... = ...)}},
+    "full" = {getTable = function(x, multcomp,... ){full_table(x, multcomp = multcomp, ... = ...)}}
+  )
+
+  switch(alternative,
+           "two.sided" = {
+             return(cluster_table(object$multiple_comparison, multcomp = multcomp, ... = ...))},
+           "greater" = {
+             return(cluster_table(object$multiple_comparison, multcomp = multcomp, ... = ...))},
+           "less" = {
+             return(cluster_table(object$multiple_comparison, multcomp = multcomp, ... = ...))})
+
 }
+
+# #' @export
+# summary.cluster_table <- function(object,...){
+#   object
+# }
+
+
+# summary_multcomp <- function(object, multcomp, alternative){
+#   if(!(multcomp %in% object$multcomp)){
+#     stop(paste("The choosen multiple comparisons procedure does not match with the ones computed in the object.
+#                   Choose between ", paste(object$multcomp,sep=" "),".", sep=""))
+#   }
+#   switch(alternative,
+#          "two.sided" = {mc = object$multiple_comparison},
+#          "greater" = {mc = object$multiple_comparison_greater},
+#          "less" = {mc = object$multiple_comparison_less})
+#
+#   out = lapply(seq_along(mc),function(i){
+#     out = mc[[i]][[multcomp]]$main[,1:2,drop = F]
+#     colnames(out) = paste(names(mc)[i], colnames(out))
+#     out})
+#   out = do.call("cbind",out)
+#   return(out)
+# }
 
 
 

@@ -175,26 +175,33 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
     threshold = as.numeric(matrix(threshold,nrow=length(colx)))
     }
 
+  multcomp = unique(multcomp[multcomp%in%c("clustermass", "tfce", "troendle", "bonferroni", "holm", "benjamini_hochberg")])
 
 
 
   args <- list(y = y, mm = mm, P = P, rnd_rotation = rnd_rotation, test = test)
 
 
+
   for(i in 1:length(colx)){
     ##compute distribution
     args$colx <- which(col_ref == colx[i])
+    switch(test,
+      "t" = {dfi = df[i]},
+      "fisher" = {dfi = df[i,]}
+    )
 
     if(method == "huh_jhun"&test =="fisher"){args$P = P[[i]]}
     distribution<- t(funP(args = args))
     pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col))
 
     switch (test,
-      "t" = {pvalue_para = 2*pt(abs(distribution[1,]),df = df[i],lower.tail = F)},
-      "fisher" = {pvalue_para = pf(distribution[1,],df1 =  df[i,1],df2 =  df[i,2],lower.tail = F)})
+      "t" = {pvalue_para = 2*pt(abs(distribution[1,]),df = dfi,lower.tail = F)},
+      "fisher" = {pvalue_para = pf(distribution[1,],df1 =  dfi[1],df2 =  dfi[2],lower.tail = F)})
 
     #####uncorrected
-    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
+    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para),
+                                                test_info = list(test = test, df = dfi, alternative = "two.sided", method = method, np = np))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
     ##pscale change
@@ -204,7 +211,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
     #compute multiple comparison for two.sided
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
-    switch_multcomp(multcomp = c("clustermass",multcomp),distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
+    switch_multcomp(multcomp = multcomp, distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
                     alternative = "two.sided", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
     ##one-sided test
     if(test == "t"){
@@ -218,7 +225,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,alternative = alternative))
 
-      multiple_comparison_greater[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
+      multiple_comparison_greater[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para),
+                                                          test_info = list(test = test, df = df, alternative = alternative, method = method, np = np))
       multiple_comparison_greater[[i]] = c(multiple_comparison_greater[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
@@ -229,13 +237,14 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       if(p_scale){
         distribution <- distribution_to_pscale(distribution0, test = test, alternative = "less")
         alternative = "greater"
-        pvalue_para = pt(distribution0[1,],df = df[i],lower.tail = T)}else{
-          pvalue_para = pt(distribution[1,],df = df[i],lower.tail = T)}
+        pvalue_para = pt(distribution0[1,],df = dfi,lower.tail = T)}else{
+          pvalue_para = pt(distribution[1,],df = dfi,lower.tail = T)}
 
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,alternative = alternative))
 
 
-      multiple_comparison_less[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para))
+      multiple_comparison_less[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,], pvalue = pvalue, pvalue_para = pvalue_para),
+                                                       test_info = list(test = test, df = dfi, alternative = alternative, method = method, np = np))
       multiple_comparison_less[[i]] = c(multiple_comparison_less[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
@@ -243,24 +252,27 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   }
 
   ####create table
-  cluster_table <- cluster_table(multiple_comparison)
-  cluster_table_greater <- cluster_table_less <- NULL
-  if(test=="t"){
-    cluster_table_greater <- cluster_table(multiple_comparison_greater)
-    cluster_table_less <- cluster_table(multiple_comparison_less)}
+  # cluster_table <- NULL
+  # cluster_table_greater <- cluster_table_less <- NULL
+  # cluster_table <- cluster_table(multiple_comparison)
+  # cluster_table_greater <- cluster_table_less <- NULL
+  # if(test=="t"){
+  #   cluster_table_greater <- cluster_table(multiple_comparison_greater)
+  #   cluster_table_less <- cluster_table(multiple_comparison_less)}
 
   ###parametic model
   mod_lm = lm.fit(x =mm, y = y)
 
   #reshape args
-  multcomp = unique(c("uncorrected",
-                      "clustermass",multcomp))[unique(c("uncorrected","clustermass",
-                                                             multcomp))%in%c("uncorrected","clustermass",
-                                                                             "tfce","troendle","bonferroni","holm",
-                                                                             "benjamini_hochberg")]
+  # multcomp = unique(c("uncorrected",
+  #                     "clustermass",multcomp))[unique(c("uncorrected","clustermass",
+  #                                                            multcomp))%in%c("uncorrected","clustermass",
+  #                                                                            "tfce","troendle","bonferroni","holm",
+  #                                                                            "benjamini_hochberg")]
 
   #output
   out = list()
+  out$y = y
   out$coefficients = mod_lm$coefficients
   out$residuals = mod_lm$residuals
   out$effects = mod_lm$effects
@@ -277,14 +289,15 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   out$threshold = threshold
   out$P = P
   out$np = np
+  out$df = df
   out$rnd_rotation = rnd_rotation
   out$multcomp = multcomp
   out$multiple_comparison = multiple_comparison
   out$multiple_comparison_greater = multiple_comparison_greater
   out$multiple_comparison_less = multiple_comparison_less
-  out$cluster_table = cluster_table
-  out$cluster_table_greater = cluster_table_greater
-  out$cluster_table_less = cluster_table_less
+  # out$cluster_table = cluster_table
+  # out$cluster_table_greater = cluster_table_greater
+  # out$cluster_table_less = cluster_table_less
   out$alpha = alpha
   out$method = method
   out$fun_name = fun_name

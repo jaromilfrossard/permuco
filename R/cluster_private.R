@@ -202,31 +202,39 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative
   return(out)}
 
 #######################################for multcomp output
-cluster_table = function(x,...){
+
+cluster_table_old = function(x, multcomp, ...){
   dotargs = list(...)
   ct = lapply(1:length(x), function(j){
     effect = x[[j]]
+    info = effect$uncorrected$test_info
     unique_cluster = unique(effect$clustermass$main[,3])
     unique_cluster = unique_cluster[unique_cluster!=0]
     if(length(unique_cluster)==0){
-      attr(table,"effect_name") = names(x)[j]
-      attr(table,"threshold") = effect$clustermass$threshold
-      table = paste(names(x)[j], ", no cluster above a threshold of : ", round(effect$clustermass$threshold, 5),
-                    sep= "")
-      return(table)}
+      tab = data.frame()
+      attr(tab,"nocluster") = T
+      }else{
     tab = t(sapply(unique_cluster,function(i){
       cl_select = effect$clustermass$main[,3] == i
       timepoint = c(1:length(cl_select))[cl_select]
       c(timepoint[1],timepoint[length(timepoint)],
         effect$clustermass$main[timepoint[1],1],
-         effect$clustermass$main[timepoint[1],2])
+        effect$clustermass$main[timepoint[1],2])
 
     }))
     tab = data.frame(tab)
     colnames(tab) = c("start","end", "cluster mass", "P(>mass)")
     rownames(tab) = unique_cluster
+    attr(tab,"nocluster") = F
+    }
     attr(tab,"threshold") = effect$clustermass$threshold
     attr(tab,"effect_name") = names(x)[j]
+    attr(tab,"multcomp") = "clustermass"
+    attr(tab,"method") = info$method
+    attr(tab,"test") = info$test
+    attr(tab,"alternative") = info$alternative
+    attr(tab,"df") = info$df
+    attr(tab,"np") = info$np
     class(tab) = append("cluster_table",class(tab))
     tab
   })
@@ -234,6 +242,10 @@ cluster_table = function(x,...){
   names(ct) = names(x)
   ct
 }
+
+
+
+
 
 ###### distribution to p_scale
 
