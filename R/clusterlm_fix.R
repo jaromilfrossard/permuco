@@ -201,7 +201,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
     #####uncorrected
     multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para),
-                                                test_info = list(test = test, df = dfi, alternative = "two.sided", method = method, np = np))
+                                                test_info = list(test = test, df = dfi, alternative = "two.sided", method = method, np = np,
+                                                                 nDV = ncol(y)))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
     ##pscale change
@@ -226,7 +227,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,alternative = alternative))
 
       multiple_comparison_greater[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para),
-                                                          test_info = list(test = test, df = df, alternative = alternative, method = method, np = np))
+                                                          test_info = list(test = test, df = df, alternative = alternative, method = method, np = np,
+                                                                           nDV = ncol(y)))
       multiple_comparison_greater[[i]] = c(multiple_comparison_greater[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
@@ -244,7 +246,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
 
       multiple_comparison_less[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,], pvalue = pvalue, pvalue_para = pvalue_para),
-                                                       test_info = list(test = test, df = dfi, alternative = alternative, method = method, np = np))
+                                                       test_info = list(test = test, df = dfi, alternative = alternative, method = method, np = np,
+                                                                        nDV = ncol(y)))
       multiple_comparison_less[[i]] = c(multiple_comparison_less[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,

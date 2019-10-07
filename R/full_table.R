@@ -15,11 +15,15 @@ full_table = function(x, multcomp = NULL, ...){
 
     attr(tab,"effect_name") = names(x)[j]
     attr(tab,"multcomp") = multcomp
+    attr(tab,"nDV") = info$nDV
     attr(tab,"method") = info$method
     attr(tab,"test") = info$test
     attr(tab,"alternative") = info$alternative
     attr(tab,"df") = info$df
     attr(tab,"np") = info$np
+    if(multcomp=="clustermass"){
+      attr(tab,"threshold") = effect$clustermass$threshold
+    }
     class(tab) = append("multcomp_table",class(tab))
     tab
   })

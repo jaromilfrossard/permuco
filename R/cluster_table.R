@@ -35,6 +35,7 @@ cluster_table = function(x, multcomp = NULL, alpha = 0.05, ...){
     rownames(tab) = unique_cluster
     attr(tab,"effect_name") = names(x)[j]
     attr(tab,"multcomp") = multcomp
+    attr(tab,"nDV") = info$nDV
     attr(tab,"method") = info$method
     attr(tab,"test") = info$test
     attr(tab,"alternative") = info$alternative

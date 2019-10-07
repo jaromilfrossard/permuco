@@ -17,6 +17,7 @@ print.multcomp_table <- function(x, ...) {
   cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
   cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
   cat("Permutation Method: ",attr(x,"method"), ".\n",sep="")
+  cat("Number of Dependant Variables: ",attr(x,"nDV"), ".\n",sep="")
   cat("Number of Permutations: ",attr(x,"np"), ".\n",sep="")
   cat("Multiple Comparisons Procedure: ",attr(x,"multcomp"), ".\n",sep="")
   if(attr(x,"multcomp") == "clustermass"){
@@ -26,7 +27,7 @@ print.multcomp_table <- function(x, ...) {
   cat("\n")
   if(!is.null(attr(x,"nocluster"))){
     if(attr(x,"nocluster")){
-    cat("No cluster above the threshold.")}else{
+    cat("No cluster above the threshold.\n")}else{
       print.data.frame(x)}
   }else{
   print.data.frame(x)}
@@ -54,9 +55,11 @@ print.listof_multcomp_table<- function(x,...){
 #'
 #' @param object A \code{clusterlm} object.
 #' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
+#' @param multcomp A character string indicating the multiple comparison procedure to display.
+#' @param table_type A character string indicating the type of table to display. Choose between \code{"cluster"}, which aggregates test into pseudo-clusters (see details for the interpretations) or \code{"full"} which displays the p-values for all tests. See details for default values.
 #' @param ... Further arguments see details.
 #' @return A table for each effect indicating the statistics and p-values of the clusters.
-#' @details If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and p-values in columns and multiple tests by rows.
+#' @details It creates the full tables for when the number of test is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
 #' @export
 summary.clusterlm <- function(object, alternative = "two.sided", multcomp = NULL, table_type = NULL, ...){
   dotargs = list(...)
