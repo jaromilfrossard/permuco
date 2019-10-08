@@ -21,9 +21,19 @@ print.multcomp_table <- function(x, ...) {
   cat("Number of Permutations: ",attr(x,"np"), ".\n",sep="")
   cat("Multiple Comparisons Procedure: ",attr(x,"multcomp"), ".\n",sep="")
   if(attr(x,"multcomp") == "clustermass"){
-    cat("Threshold: ",attr(x,"threshold"),".\n",sep="")}else{
-    cat("Table of pseudo-clusters.\n")
-    }
+    cat("Threshold: ",attr(x,"threshold"),".\n",sep="")
+    cat("Mass Function: ",attr(x,"fun_name"),".\n",sep="")
+  }
+  if(attr(x,"table_type")=="cluster"){
+    if(attr(x,"multcomp")=="clustermass"){
+      cat("Table of clusters.\n")
+    }else if(attr(x,"multcomp")!="clustermass"){
+      cat("Table of pseudo-clusters.\n")
+      }
+    }else if(attr(x,"table_type")=="full"){
+    cat("Table of all tests.\n")
+  }
+
   cat("\n")
   if(!is.null(attr(x,"nocluster"))){
     if(attr(x,"nocluster")){

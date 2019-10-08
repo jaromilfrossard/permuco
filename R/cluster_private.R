@@ -228,6 +228,7 @@ cluster_table_old = function(x, multcomp, ...){
     attr(tab,"nocluster") = F
     }
     attr(tab,"threshold") = effect$clustermass$threshold
+    attr(tab,"fun_name") = info$fun_name
     attr(tab,"effect_name") = names(x)[j]
     attr(tab,"multcomp") = "clustermass"
     attr(tab,"nDV") = info$nDV
@@ -236,6 +237,8 @@ cluster_table_old = function(x, multcomp, ...){
     attr(tab,"alternative") = info$alternative
     attr(tab,"df") = info$df
     attr(tab,"np") = info$np
+    attr(tab,"table_type") = "cluster"
+
     class(tab) = append("multcomp_table",class(tab))
     tab
   })

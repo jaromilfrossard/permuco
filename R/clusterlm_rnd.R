@@ -113,7 +113,9 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     pvalue_para <- pf(distribution[1,],df1 =  df[i,1],df2 =  df[i,2],lower.tail = F)
 
     #####uncorrected
-    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue, pvalue_para = pvalue_para))
+    multiple_comparison[[i]]$uncorrected = list(main = cbind(statistic = distribution[1,],pvalue = pvalue, pvalue_para = pvalue_para),
+                                                test_info = list(test = test, df = df[i,], alternative = "two.sided", method = method, np = np,
+                                                                 nDV = ncol(y), fun_name = fun_name))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
     ##pscale change
@@ -123,13 +125,13 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     }
 
     multiple_comparison[[i]] = c(multiple_comparison[[i]],
-                                 switch_multcomp(multcomp = c("clustermass",multcomp),
+                                 switch_multcomp(multcomp = multcomp,
                                                  distribution = distribution, threshold = threshold[i],
                                                  aggr_FUN = aggr_FUN, alternative = "two.sided", E = E,
                                                  H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))}
 
 
-  cluster_table <- cluster_table(multiple_comparison[order(link[3,], link[1,])])
+  # cluster_table <- cluster_table(multiple_comparison[order(link[3,], link[1,])])
 
   ##sort effects
 
@@ -141,7 +143,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   out$link = link
   out$P = P
   out$np = np
-  out$cluster_table = cluster_table
+  # out$cluster_table = cluster_table
   out$multiple_comparison = multiple_comparison
   out$data=mf
   out$method = method

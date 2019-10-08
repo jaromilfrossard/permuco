@@ -1,4 +1,5 @@
 library(permuco)
+library(Matrix)
 
 lf= list.files("R")
 for(lfi in lf){source(paste0("R/",lfi))}
@@ -11,14 +12,17 @@ contrasts(attentionshifting_design2$visibility) = contr.sum
 attentionshifting_design2$visibility = as.numeric(attentionshifting_design2$visibility)
 t0=proc.time()
 
-signi = attentionshifting_signal[,400:420]
-electrod_O1 <- clusterlm(signi ~ visibility*emotion, data = attentionshifting_design2,
-                         np = 10,test="fisher",multcomp = c("clustermass", "troendle"))
-
-
+signi = attentionshifting_signal[,350:370]
+electrod_O1 <- clusterlm(signi ~ visibility*emotion+Error(id/(visibility*emotion)),
+                         data = attentionshifting_design2,
+                         np = 10,test="fisher",multcomp = c("clustermass", "troendle","tfce"))
 a = summary(electrod_O1)
-summary(electrod_O1,multcomp = "troendle")
+attributes(a$visibility)
+electrod_O1$multiple_comparison$visibility$uncorrected$test_info
 
+a = summary(electrod_O1,multcomp = "troendle",table_type = "full")
+summary(electrod_O1,multcomp = "troendle")
+summary(electrod_O1,table_type = "full",multcomp = "tfce")
 full_table(electrod_O1$multiple_comparison)
 
 class(a$visibility)

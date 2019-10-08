@@ -41,6 +41,7 @@ cluster_table = function(x, multcomp = NULL, alpha = 0.05, ...){
     attr(tab,"alternative") = info$alternative
     attr(tab,"df") = info$df
     attr(tab,"np") = info$np
+    attr(tab,"table_type") = "cluster"
     class(tab) = append("multcomp_table",class(tab))
     tab
   })

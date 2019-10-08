@@ -4,10 +4,13 @@
 \alias{print.clusterlm}
 \title{Print \code{clusterlm} object.}
 \usage{
-\method{print}{clusterlm}(x, alternative = "two.sided", ...)
+\method{print}{clusterlm}(x, multcomp = NULL,
+  alternative = "two.sided", ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}
+
+\item{multcomp}{A character string indicating the multiple comparison procedure to print. Default is NULL a print the first multiple comparisons procedure of the \code{clusterlm} object.}
 
 \item{alternative}{A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.}
 
