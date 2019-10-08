@@ -1,43 +1,54 @@
 ############################################################################################################
+#' Clustermass test correction
+#'
+#' @description Compute the clustermass test correction given a matrix a permuted statistical signals.
+#'
+#' @param distribution A matrix of permuted statistical signal. The first row indicating the observed statistics.
+#' @param threshold A scalar that respresents the threshold to create the clusters.
+#' @param aggr_FUN A function to compute the clustermasses. See details for examples.
+#' @param alternative A character string indicating the alternative hypothesis. Default is \code{"greater"}. Choose between \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#'
+#' @details The \code{aggr_FUN} argument may take predefined function as the sum: \code{aggr_FUN = sum} and also user-defined function as the sum of squares: \code{aggr_FUN = function(x){sum(x^2)}}
+#' @export
 compute_clustermass <-  function(distribution, threshold, aggr_FUN, alternative = "greater"){
     switch(alternative,
            "greater" = {
              threshold <- abs(threshold)
              selected <- distribution > threshold
-             extreme = function(x)max(x,na.rm = T)
+             extreme <- function(x)max(x,na.rm = T)
            },
            "less" = {
              threshold <- -abs(threshold)
              selected <- distribution < threshold
-             extreme = function(x)max(x,na.rm = T)},
+             extreme <- function(x)max(x,na.rm = T)},
            "two.sided" = {
              distribution <- abs(distribution)
              threshold <- abs(threshold)
              selected <- distribution > threshold
-             extreme = function(x)max(x,na.rm = T)
+             extreme <- function(x)max(x,na.rm = T)
            })
 
   ##create connected component labeling
-  cl = (selected-cbind(0,selected[,-NCOL(selected)]))==1
-  cl = t(apply(cl,1,cumsum))
-  cl[!selected] = 0
+  cl <- (selected-cbind(0,selected[,-NCOL(selected)]))==1
+  cl <- t(apply(cl,1,cumsum))
+  cl[!selected] <- 0
 
-  mass_distribution = sapply(1:NROW(cl),function(rowi){
+  mass_distribution <- sapply(1:NROW(cl),function(rowi){
     extreme(sapply(1:max(1,max(cl[rowi,])),function(i){
       aggr_FUN(distribution[rowi,cl[rowi,] == i])
     }))
   })
-  mass_statistic =sapply(1:max(cl[1,]),function(i){
+  mass_statistic <- sapply(1:max(cl[1,]),function(i){
       aggr_FUN(distribution[1,cl[1,] == i])
     })
-  statistic = c(NA,mass_statistic)[cl[1,]+1]
+  statistic <- c(NA,mass_statistic)[cl[1,]+1]
 
 
-  pvalue = sapply(mass_statistic,function(mi)
+  pvalue <- sapply(mass_statistic,function(mi)
     compute_pvalue(stat = mi,distribution = mass_distribution, alternative = "greater"))
-  pvalue = c(NA,pvalue)[cl[1,]+1]
-  out = list(main = cbind(statistic = statistic, pvalue = pvalue, cluster_id = cl[1,]),
-              distribution = mass_distribution,
+  pvalue <- c(NA,pvalue)[cl[1,]+1]
+  out <- list(main = cbind(statistic = statistic, pvalue = pvalue, cluster_id = cl[1,]),
+             distribution = mass_distribution,
              threshold = threshold)
   return(out)
 }
@@ -49,22 +60,32 @@ compute_clustermass <-  function(distribution, threshold, aggr_FUN, alternative 
 
 compute_tfce_statistic <- function(signal, E, H, dh, dhi){
   ##reduce dhi to signal max
-  dhi = dhi[dhi<=max(signal)]
+  dhi <- dhi[dhi<=max(signal)]
   ##compute cluster by dh
   cl_log <- t(sapply(dhi,function(hi){signal > hi}))
   cl_beg <- (cl_log-cbind(F,cl_log[,-NCOL(cl_log), drop=F]))==1
   cl_num <- t(apply(cl_beg,1,cumsum));cl_num[!cl_log]<-0 ##unique integer by cluster by row
-  extend_by_h=t(apply(cl_num,1,function(cl_row){
+  extend_by_h <- t(apply(cl_num,1,function(cl_row){
     c(0,sapply(1:max(cl_row),function(i){
       (sum(cl_row==i))^E
     }))[cl_row+1]
   }))
   ###multiple extend by height
-  statistic = colSums(extend_by_h*dhi^H)*dh
+  statistic <- colSums(extend_by_h*dhi^H)*dh
   statistic
 }
 
 
+#' Threshold-Free Cluster-Enhancement correction
+#'
+#' @description Compute the TFCE correction given a matrix a permuted statistical signals.
+#'
+#' @param distribution A matrix of permuted statistical signal. The first row indicating the observed statistics.
+#' @param E A scalar that represent the extend parameter of the TFCE transformation. Default is \code{E = 0.5}.
+#' @param H A scalar that represent the height parameter of the TFCE transformation. Default is \code{H = 1}.
+#' @param ndh The number of terms in the approximation of the integral.
+#'
+#' @export
 compute_tfce <- function(distribution, E, H, ndh){
   range_d <- range(abs(distribution))
   dhi <- seq(from = range_d[1], to =range_d[2], length.out = ndh)
@@ -79,7 +100,7 @@ compute_tfce <- function(distribution, E, H, ndh){
 
   pvalue <- sapply(statistic,function(s)compute_pvalue(distribution = distribution_tfce,stat=s))
 
-  out = list(main = cbind(statistic = statistic, pvalue = pvalue),
+  out <- list(main = cbind(statistic = statistic, pvalue = pvalue),
               distribution = distribution_tfce,
               dhi = dhi)
   return(out)
@@ -93,14 +114,14 @@ compute_tfce <- function(distribution, E, H, ndh){
 
 compute_bonferroni <- function(statistic = NULL,pvalue){
   pvalue <- pmin(pvalue*length(pvalue),1)
-  out = list(main = cbind(statistic = statistic,pvalue = pvalue))
+  out <- list(main = cbind(statistic = statistic,pvalue = pvalue))
   return(out)
 }
 
 ############################################################################################################
 
 compute_holm <- function(statistic = NULL,pvalue){
-  n = length(pvalue)
+  n <- length(pvalue)
   i <- seq_len(n)
   o <- order(pvalue)
   ro <- order(o)
@@ -131,40 +152,72 @@ compute_holm <- function(statistic = NULL,pvalue){
 #               alpha = alpha)
 #   return(out)
 # }
-compute_troendle = function (distribution, alternative) {
-  distribution_rank = apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
 
-  pvalue = distribution_rank[1,]
+
+#' The Troendle's correction
+#'
+#' @description Compute the Troendle's correction given a matrix a permuted statistics.
+#'
+#' @param distribution A matrix of permuted statistical signal. The first row indicating the observed statistics.
+#' @param alternative A character string indicating the alternative hypothesis. Default is \code{"greater"}. Choose between \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#'
+#' @export
+compute_troendle = function (distribution, alternative) {
+  distribution_rank <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
+
+  pvalue <- distribution_rank[1,]
 
   rank_uncorr <- rank(pvalue)
 
 
   # order test from low to high
-  test_order = sort(unique(rank_uncorr))
-  order_test_list = lapply(1:length(test_order),function(testi){
-    ri = test_order[testi]
+  test_order <- sort(unique(rank_uncorr))
+  order_test_list <- lapply(1:length(test_order),function(testi){
+    ri <- test_order[testi]
     list(infos = cbind(order=testi,col=which(rank_uncorr==ri)),
          mins = apply(distribution_rank[,which(rank_uncorr==ri),drop=F],1,min))
   })
 
   # take cumulative minimum of the ordered distributions of p's
 
-  cummins = t(apply(do.call("cbind",lapply(order_test_list,function(oi)(oi$mins))),
+  cummins <- t(apply(do.call("cbind",lapply(order_test_list,function(oi)(oi$mins))),
                     1,function(coli){rev(cummin(rev(coli)))}))
 
   # Compute p-value
 
-  p_corrected = apply(cummins,2,
+  p_corrected <- apply(cummins,2,
                       function(coli)compute_pvalue(coli,alternative = "less"))
 
   # Compute inverse order
 
-  infos = do.call("rbind",lapply(order_test_list,function(oi)(oi$infos)))
+  infos <- do.call("rbind",lapply(order_test_list,function(oi)(oi$infos)))
 
   # Inverse order of the increasing p-values.
-  p_corrected = (cummax(p_corrected) [infos[,1]])[order(infos[,2])]
+  p_corrected <- (cummax(p_corrected) [infos[,1]])[order(infos[,2])]
 
-  out = list(main = cbind(statistic = distribution[1, ], pvalue = p_corrected))
+  out <- list(main = cbind(statistic = distribution[1, ], pvalue = p_corrected))
+  return(out)
+}
+
+
+########################################################################################
+
+
+#' The min-P correction
+#'
+#' @description Compute the min-P correction given a matrix a permuted statistics.
+#'
+#' @param distribution A matrix of permuted statistical signal. The first row indicating the observed statistics.
+#' @param alternative A character string indicating the alternative hypothesis. Default is \code{"greater"}. Choose between \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#'
+#' @export
+compute_minP <- function(distribution, alternative) {
+  distribution_rank <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
+  minp <- apply(distribution_rank,1,min)
+  pvalue <- distribution_rank[1,]
+  p_corrected <- sapply(pvalue,function(pi)compute_pvalue(distribution = minp,
+                                                          stat = pi,alternative = "less"))
+  out <- list(main = cbind(statistic = distribution[1, ], pvalue = p_corrected))
   return(out)
 }
 
@@ -177,7 +230,7 @@ compute_benjamini_hochberg <- function(statistic = NULL, pvalue){
   o <- order(pvalue, decreasing = TRUE)
   ro <- order(o)
   pvalue <- pmin(1, cummin(n/i * pvalue[o]))[ro]
-  out = list(main = cbind(statistic = statistic,pvalue = pvalue))
+  out <- list(main = cbind(statistic = statistic,pvalue = pvalue))
   return(out)
 }
 
@@ -185,7 +238,7 @@ compute_benjamini_hochberg <- function(statistic = NULL, pvalue){
 
 
 switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative,E,H,ndh,pvalue,alpha){
-  out= list()
+  out <- list()
   if("clustermass"%in%multcomp){
     out$clustermass <- compute_clustermass(distribution = distribution, threshold = threshold,
                                                                           aggr_FUN = aggr_FUN, alternative = alternative)}
@@ -197,53 +250,55 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative
     out$holm <- compute_holm(pvalue = pvalue, statistic = distribution[1,])}
   if("troendle"%in%multcomp){
     out$troendle <- compute_troendle(distribution = distribution, alternative = alternative)}
+  if("minP"%in%multcomp){
+    out$minP <- compute_minP(distribution = distribution, alternative = alternative)}
   if("benjamini_hochberg"%in%multcomp){
     out$benjamini_hochberg <- compute_benjamini_hochberg(pvalue = pvalue, statistic = distribution[1,])}
   return(out)}
 
 #######################################for multcomp output
 
-cluster_table_old = function(x, multcomp, ...){
-  dotargs = list(...)
-  ct = lapply(1:length(x), function(j){
-    effect = x[[j]]
-    info = effect$uncorrected$test_info
-    unique_cluster = unique(effect$clustermass$main[,3])
-    unique_cluster = unique_cluster[unique_cluster!=0]
+cluster_table_clustermass = function(x, ...){
+  dotargs <- list(...)
+  ct <- lapply(1:length(x), function(j){
+    effect <- x[[j]]
+    info <- effect$uncorrected$test_info
+    unique_cluster <- unique(effect$clustermass$main[,3])
+    unique_cluster <- unique_cluster[unique_cluster!=0]
     if(length(unique_cluster)==0){
       tab = data.frame()
       attr(tab,"nocluster") = T
       }else{
-    tab = t(sapply(unique_cluster,function(i){
-      cl_select = effect$clustermass$main[,3] == i
-      timepoint = c(1:length(cl_select))[cl_select]
+    tab <- t(sapply(unique_cluster,function(i){
+      cl_select <- effect$clustermass$main[,3] == i
+      timepoint <- c(1:length(cl_select))[cl_select]
       c(timepoint[1],timepoint[length(timepoint)],
         effect$clustermass$main[timepoint[1],1],
         effect$clustermass$main[timepoint[1],2])
 
     }))
-    tab = data.frame(tab)
-    colnames(tab) = c("start","end", "cluster mass", "P(>mass)")
-    rownames(tab) = unique_cluster
-    attr(tab,"nocluster") = F
+    tab <- data.frame(tab)
+    colnames(tab) <- c("start","end", "cluster mass", "P(>mass)")
+    rownames(tab) <- unique_cluster
+    attr(tab,"nocluster") <- F
     }
-    attr(tab,"threshold") = effect$clustermass$threshold
-    attr(tab,"fun_name") = info$fun_name
-    attr(tab,"effect_name") = names(x)[j]
-    attr(tab,"multcomp") = "clustermass"
-    attr(tab,"nDV") = info$nDV
-    attr(tab,"method") = info$method
-    attr(tab,"test") = info$test
-    attr(tab,"alternative") = info$alternative
-    attr(tab,"df") = info$df
-    attr(tab,"np") = info$np
-    attr(tab,"table_type") = "cluster"
+    attr(tab,"threshold") <- effect$clustermass$threshold
+    attr(tab,"fun_name") <- info$fun_name
+    attr(tab,"effect_name") <- names(x)[j]
+    attr(tab,"multcomp") <- "clustermass"
+    attr(tab,"nDV") <- info$nDV
+    attr(tab,"method") <- info$method
+    attr(tab,"test") <- info$test
+    attr(tab,"alternative") <- info$alternative
+    attr(tab,"df") <- info$df
+    attr(tab,"np") <- info$np
+    attr(tab,"table_type") <- "cluster"
 
-    class(tab) = append("multcomp_table",class(tab))
+    class(tab) <- append("multcomp_table", class(tab))
     tab
   })
-  class(ct) = append("listof_multcomp_table",class(ct))
-  names(ct) = names(x)
+  class(ct) <- append("listof_multcomp_table", class(ct))
+  names(ct) <- names(x)
   ct
 }
 
@@ -270,7 +325,7 @@ distribution_to_pscale <- function(distribution, test, alternative){
 #
 # used for the threshold based on the 95 quantile
 compute_degree_freedom_fix = function(test,mm,assigni){
-  qr_mm = qr(mm)
+  qr_mm <- qr(mm)
   switch(test,
          "t" = {rep(NROW(mm)-qr_mm$rank,length(assigni))},
          "fisher" = {cbind(dfn = as.numeric(table(assigni[assigni!=0])), dfd =NROW(mm)-qr_mm$rank)})
@@ -280,12 +335,12 @@ compute_degree_freedom_fix = function(test,mm,assigni){
 #
 # used for the threshold based on the 95 quantile
 compute_degree_freedom_rnd = function(test = "fisher",mm,mm_id,assigni,link){
-  qr_mm = qr(mm)
+  qr_mm <- qr(mm)
   switch(test,
          "t" = {},
          "fisher" = {
-           cbind(dfn = as.numeric(table(assigni[assigni!=0])),
-                 dfd=sapply(1:max(assigni[assigni!=0]),function(i){
+           cbind(dfn <- as.numeric(table(assigni[assigni!=0])),
+                 dfd <- sapply(1:max(assigni[assigni!=0]),function(i){
                    qr(qr.resid(qr_mm,khatrirao(mm_id, mm[,attr(mm,"assign")==link[3,i],drop=F])))$rank}))
          })
 }

@@ -3,7 +3,7 @@ cluster_table = function(x, multcomp = NULL, alpha = 0.05, ...){
   if(is.null(multcomp)){multcomp="clustermass"}
 
   if(multcomp=="clustermass"){
-    return(cluster_table_old(x))
+    return(cluster_table_clustermass(x, ...))
   }
 
 
