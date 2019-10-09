@@ -2,7 +2,7 @@
 % Please edit documentation in R/cluster_methods.R
 \name{summary.clusterlm}
 \alias{summary.clusterlm}
-\title{Summarize a \code{clusterlm} object.}
+\title{Summarize of a \code{clusterlm} object.}
 \usage{
 \method{summary}{clusterlm}(object, alternative = "two.sided",
   multcomp = NULL, table_type = NULL, ...)
@@ -22,8 +22,8 @@
 A table for each effect indicating the statistics and p-values of the clusters.
 }
 \description{
-Display the clusters with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
+Display the corrected p-values for each effects.
 }
 \details{
-It creates the full tables for when the number of test is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
+It creates the full table when the number of tests is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
 }

@@ -1,6 +1,10 @@
 permuco 1.0.2 (github)
 --------------------------------------
  * correction troendle: pvalue for all test
+ * New multiple comparison procedure: min-P.
+ * new display the output on signals or multiples tests.
+ * delete element table of the output of clusterlm. Compute table using summary(clusterlm(...))
+ * user acces to functions compute_tfce, compute_clustermass, compute_troendle, compute_minP
 
 permuco 1.0.2 (cran)
 --------------------------------------

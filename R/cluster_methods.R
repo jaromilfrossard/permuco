@@ -59,9 +59,9 @@ print.listof_multcomp_table<- function(x,...){
 
 ###########################summary
 
-#' Summarize a \code{clusterlm} object.
+#' Summarize of a \code{clusterlm} object.
 #'
-#' @description Display the clusters with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
+#' @description Display the corrected p-values for each effects.
 #'
 #' @param object A \code{clusterlm} object.
 #' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
@@ -69,7 +69,7 @@ print.listof_multcomp_table<- function(x,...){
 #' @param table_type A character string indicating the type of table to display. Choose between \code{"cluster"}, which aggregates test into pseudo-clusters (see details for the interpretations) or \code{"full"} which displays the p-values for all tests. See details for default values.
 #' @param ... Further arguments see details.
 #' @return A table for each effect indicating the statistics and p-values of the clusters.
-#' @details It creates the full tables for when the number of test is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
+#' @details It creates the full table when the number of tests is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
 #' @export
 summary.clusterlm <- function(object, alternative = "two.sided", multcomp = NULL, table_type = NULL, ...){
   dotargs = list(...)

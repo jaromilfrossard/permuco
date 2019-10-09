@@ -17,9 +17,13 @@ t0=proc.time()
 signi = attentionshifting_signal[,350:370]
 fx <- clusterlm(signi ~ visibility*emotion,
                          data = attentionshifting_design2,
-                         np = npe,test="fisher",multcomp = c("clustermass", "troendl","tfce","minP"))
+                         np = npe,test="fisher",multcomp = c("clustermass", "troendl","tfce","minP"),return_distribution = T)
 
-summary(fx,multcomp = "minP",table_type="full")[[3]]
+d = fx$multiple_comparison$visibility$uncorrected$distribution
+
+compute_minP(d,alternative = "two.sided")
+
+summary(fx,multcomp = "minP",table_type="full")[[1]]
 summary(fx,multcomp = "troendle",table_type="full")[[3]]
 fx$multiple_comparison$visibility$
 
