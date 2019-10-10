@@ -220,7 +220,7 @@ plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = x$m
       plot((1:ncol(data)-nbbaselinepts)/nbptsperunit,
            data[i,],type = "p", xaxt = "n",xlab = "",ylab = rnames[i], pch=18, cex=2,
       )
-      if(i==p) axis(1, at= (1:ncol(data)-nbbaselinepts)/nbptsperunit, label=cnames)
+      if(i==p) axis(1, at= (1:ncol(data)-nbbaselinepts)/nbptsperunit, labels=cnames)
     }
     else{
       if(i==p){xaxt = NULL}else{xaxt = "n"}

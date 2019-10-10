@@ -5,8 +5,9 @@
 \title{Plot cluster or parameters.}
 \usage{
 \method{plot}{clusterlm}(x, effect = "all", type = "statistic",
-  multcomp = "clustermass", alternative = "two.sided",
-  enhanced_stat = FALSE, nbbaselinepts = 0, nbptsperunit = 1, ...)
+  multcomp = x$multcomp[1], alternative = "two.sided",
+  enhanced_stat = FALSE, nbbaselinepts = 0, nbptsperunit = 1,
+  distinctDVs = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}
@@ -15,7 +16,7 @@
 
 \item{type}{A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}.}
 
-\item{multcomp}{A character string specifying the method use to correct the p-value. It should match the one computed in the object. Default is \code{"clustermass"}. See \link{clusterlm}.}
+\item{multcomp}{A character string specifying the method use to correct the p-value. It should match the one computed in the object. Default is the (first) method in the call to \link{clusterlm}. See \link{clusterlm}.}
 
 \item{alternative}{A character string specifying the alternative hypothesis for the t-test. The available options are \code{"greater"}, \code{"less"} and \code{"two.sided"}. Default is \code{"two.sided"}.}
 
@@ -24,6 +25,8 @@
 \item{nbbaselinepts}{An integer. Default is 0. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points.}
 
 \item{nbptsperunit}{An integer. Default is 1. Modify this value to change the scale of the label from the number of points to the desired unit. If points are e.g. sampled at 1024Hz, set to 1024 to scale into seconds and to 1.024 to scale into milliseconds.}
+
+\item{distinctDVs}{Boolean. Should the DVs be plotted distictively, i.e. should the points be unlinked and should the name of the DVs be printed on the x axis ? Default is FALSE if the number of DV is large thant 15 or if the method is "clustermass" or "tfce".}
 
 \item{...}{further argument pass to plot.}
 }

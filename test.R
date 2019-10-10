@@ -12,12 +12,23 @@ contrasts(attentionshifting_design2$visibility) = contr.sum
 attentionshifting_design2$visibility = as.numeric(attentionshifting_design2$visibility)
 
 
-npe = 4000
+npe = 400
 t0=proc.time()
 signi = attentionshifting_signal[,350:370]
 fx <- clusterlm(signi ~ visibility*emotion,
                          data = attentionshifting_design2,
                          np = npe,test="fisher",multcomp = c("clustermass", "troendl","tfce","minP"),return_distribution = T)
+
+
+
+
+plot(fx,multcomp = "troendle",distinctDVs=T)
+
+a = c("12345")
+b = c("12")
+nchar(b)<-5
+
+
 
 d = fx$multiple_comparison$visibility$uncorrected$distribution
 
