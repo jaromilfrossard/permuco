@@ -11,12 +11,12 @@ attentionshifting_design2 = attentionshifting_design
 contrasts(attentionshifting_design2$visibility) = contr.sum
 attentionshifting_design2$visibility = as.numeric(attentionshifting_design2$visibility)
 
-
+cluster_fisher_myfunp = permuco:::cluster_kennedy
 npe = 400
 t0=proc.time()
 signi = attentionshifting_signal[,350:370]
 fx <- clusterlm(signi ~ visibility*emotion,
-                         data = attentionshifting_design2,
+                         data = attentionshifting_design2,method = "myfunp",new_method=T,
                          np = npe,test="fisher",multcomp = c("clustermass", "troendl","tfce","minP"),return_distribution = T)
 
 

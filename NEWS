@@ -1,4 +1,4 @@
-permuco 1.0.2 (github)
+permuco 1.1.0 (github)
 --------------------------------------
  * correction of compute_troendle: pvalue for all tests
  * New multiple comparisons procedure: min-P.
