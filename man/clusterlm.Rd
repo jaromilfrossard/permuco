@@ -23,12 +23,12 @@ clusterlm(formula, data = NULL, np = 5000, method = NULL,
 
 \item{aggr_FUN}{A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
 
-\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"} and \code{"benjamini_hochberg"}.}
+\item{multcomp}{A vector of character defining the methods of multiple comparisons to compute. Default is \code{"clustermass"}, and the additional options are available : \code{"tfce"},\code{"bonferroni"}, \code{"holm"}, \code{"troendle"}, \code{"minP"} and \code{"benjamini_hochberg"}.}
 
 \item{...}{Futher arguments, see details.}
 }
 \value{
-A list containing : a table of the clusters, or a \code{multcomp} object for the other multiple comparison procedures. Use the \link{plot.clusterlm} method to have a quick overview of the results.
+A \code{clusterlm} object. Use the \link{plot.clusterlm} or \link{summary.clusterlm} method to see results of the tests.
 }
 \description{
 Compute the cluster-mass test for longitudinal linear model.
@@ -91,7 +91,7 @@ Maris, E., & Oostenveld, R. (2007). Nonparametric statistical testing of EEG-and
 Smith, S. M., & Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98.
 }
 \seealso{
-\code{\link{plot.clusterlm}}
+\code{\link{plot.clusterlm}} \code{\link{summary.clusterlm}}
 }
 \author{
 jaromil.frossard@unige.ch

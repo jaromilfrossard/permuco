@@ -2,14 +2,19 @@
 % Please edit documentation in R/cluster_methods.R
 \name{summary.clusterlm}
 \alias{summary.clusterlm}
-\title{Summarize a \code{clusterlm} object.}
+\title{Summarize of a \code{clusterlm} object.}
 \usage{
-\method{summary}{clusterlm}(object, alternative = "two.sided", ...)
+\method{summary}{clusterlm}(object, alternative = "two.sided",
+  multcomp = NULL, table_type = NULL, ...)
 }
 \arguments{
 \item{object}{A \code{clusterlm} object.}
 
 \item{alternative}{A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.}
+
+\item{multcomp}{A character string indicating the multiple comparison procedure to display.}
+
+\item{table_type}{A character string indicating the type of table to display. Choose between \code{"cluster"}, which aggregates test into pseudo-clusters (see details for the interpretations) or \code{"full"} which displays the p-values for all tests. See details for default values.}
 
 \item{...}{Further arguments see details.}
 }
@@ -17,8 +22,8 @@
 A table for each effect indicating the statistics and p-values of the clusters.
 }
 \description{
-Display the clusters with the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
+Display the corrected p-values for each effects.
 }
 \details{
-If the \code{multcomp} argument is a character string that matches the \code{multcomp} argument of the \code{clusterlm} object, this method returns a matrix with the corrected statistics and p-values in columns and multiple tests by rows.
+It creates the full table when the number of tests is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
 }
