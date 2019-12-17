@@ -180,8 +180,8 @@ compute_troendle = function (distribution, alternative) {
 
   # take cumulative minimum of the ordered distributions of p's
   cummins <- do.call("cbind",lapply(order_test_list,function(oi)(oi$mins)))
-  cummins <- lapply(1:ncol(cummins),function(coli){rev(cummin(rev(cummins[,coli])))})
-  cummins <- do.call("cbind",cummins)
+  cummins <- lapply(1:nrow(cummins),function(rowi){rev(cummin(rev(cummins[rowi,,drop=F])))})
+  cummins <- do.call("rbind",cummins)
 
   # Compute p-value
 
