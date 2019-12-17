@@ -4,8 +4,7 @@
 \alias{compute_clustermass}
 \title{Clustermass test correction}
 \usage{
-compute_clustermass(distribution, threshold, aggr_FUN,
-  alternative = "greater")
+compute_clustermass(distribution, threshold, aggr_FUN, alternative = "greater")
 }
 \arguments{
 \item{distribution}{A matrix of permuted statistical signal. The first row indicating the observed statistics.}

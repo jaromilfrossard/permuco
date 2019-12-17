@@ -4,8 +4,7 @@
 \alias{print.clusterlm}
 \title{Print \code{clusterlm} object.}
 \usage{
-\method{print}{clusterlm}(x, multcomp = NULL,
-  alternative = "two.sided", ...)
+\method{print}{clusterlm}(x, multcomp = NULL, alternative = "two.sided", ...)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}

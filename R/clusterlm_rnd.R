@@ -1,8 +1,7 @@
 clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np, P, rnd_rotation,
                           aggr_FUN, E, H, cl, multcomp, alpha, p_scale, return_distribution, ndh, new_method){
 
-  multcomp <- match.arg(multcomp, c("clustermass", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
-                        several.ok = T)
+
 
   if(is.null(method)){method <- "Rd_kheradPajouh_renaud"}
 

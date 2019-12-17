@@ -4,8 +4,13 @@
 \alias{summary.clusterlm}
 \title{Summarize of a \code{clusterlm} object.}
 \usage{
-\method{summary}{clusterlm}(object, alternative = "two.sided",
-  multcomp = NULL, table_type = NULL, ...)
+\method{summary}{clusterlm}(
+  object,
+  alternative = "two.sided",
+  multcomp = NULL,
+  table_type = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{A \code{clusterlm} object.}

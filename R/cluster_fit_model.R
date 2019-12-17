@@ -132,6 +132,9 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fish
            "fisher" = {dotargs$coding_sum = T})
   }
 
+  multcomp <- match.arg(multcomp, c("clustermass", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
+                        several.ok = T)
+
   ###switch fix effet
   if (is.null(indError)) {
     result <- clusterlm_fix( formula = formula, data = data, method = method, test = test, np = np,

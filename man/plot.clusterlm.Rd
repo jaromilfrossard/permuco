@@ -4,10 +4,18 @@
 \alias{plot.clusterlm}
 \title{Plot cluster or parameters.}
 \usage{
-\method{plot}{clusterlm}(x, effect = "all", type = "statistic",
-  multcomp = x$multcomp[1], alternative = "two.sided",
-  enhanced_stat = FALSE, nbbaselinepts = 0, nbptsperunit = 1,
-  distinctDVs = NULL, ...)
+\method{plot}{clusterlm}(
+  x,
+  effect = "all",
+  type = "statistic",
+  multcomp = x$multcomp[1],
+  alternative = "two.sided",
+  enhanced_stat = FALSE,
+  nbbaselinepts = 0,
+  nbptsperunit = 1,
+  distinctDVs = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{clusterlm} object.}

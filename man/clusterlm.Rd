@@ -4,9 +4,17 @@
 \alias{clusterlm}
 \title{Cluster test for longitudinal data}
 \usage{
-clusterlm(formula, data = NULL, np = 5000, method = NULL,
-  test = "fisher", threshold = NULL, aggr_FUN = NULL,
-  multcomp = "clustermass", ...)
+clusterlm(
+  formula,
+  data = NULL,
+  np = 5000,
+  method = NULL,
+  test = "fisher",
+  threshold = NULL,
+  aggr_FUN = NULL,
+  multcomp = "clustermass",
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula object where the left part is a matrix defined in the global environment.}

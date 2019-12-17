@@ -3,9 +3,6 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
                           cl, multcomp, alpha, p_scale, coding_sum, ndh, return_distribution, new_method){
 
 
-  multcomp <- match.arg(multcomp, c("clustermass", "tfce", "troendle","minP", "bonferroni", "holm", "benjamini_hochberg"),
-                        several.ok = T)
-
 
   if(is.null(method)){method <- "freedman_lane"}
 
