@@ -2,7 +2,7 @@ Package: permuco
 Type: Package
 Title: Permutation Tests for Regression, (Repeated Measures) ANOVA/ANCOVA and Comparison of Signals
 Version: 1.1.0
-Date: 2019-11-14
+Date: 2019-12-19
 Authors@R: c(
   person("Jaromil","Frossard", email = "jaromil.frossard@unige.ch",role = c("aut", "cre")),
   person("Olivier","Renaud",email="olivier.renaud@unige.ch",role=c("aut")))
@@ -10,6 +10,6 @@ Description: Functions to compute p-values based on permutation tests. Regressio
 License: GPL (>= 2)
 Imports: permute,Matrix,stats,graphics
 LazyData: TRUE
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 Suggests: R.rsp
 VignetteBuilder: R.rsp

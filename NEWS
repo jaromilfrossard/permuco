@@ -1,12 +1,13 @@
-permuco 1.1.0 (github)
+permuco 1.1.0 (cran)
 --------------------------------------
  * correction of compute_troendle: pvalue for all tests
  * New multiple comparisons procedure: min-P.
  * new display of the output of clusterlm():all test or pseudo-clusters
  * delete the table of the output of clusterlm. Access the table using summary(clusterlm(...))
  * user access to functions compute_tfce, compute_clustermass, compute_troendle, compute_minP
+ * update vignette permuco_tutorial.pdf
 
-permuco 1.0.2 (cran)
+permuco 1.0.2
 --------------------------------------
 
  * correction benjaminin to benjamini
