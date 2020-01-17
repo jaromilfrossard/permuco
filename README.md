@@ -1,7 +1,3 @@
----
-title: `permuco`
----
-
 # `permuco`
 
 This package provides functions to compute permutation tests in linear models with nuisances variables. The package has several goals :
