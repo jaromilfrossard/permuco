@@ -1,3 +1,8 @@
+permuco 1.1.1 (github)
+--------------------------------------
+ * add coinflip test
+ * change Pmat(): argument "type" and "counting"
+
 permuco 1.1.0 (cran)
 --------------------------------------
  * correction of compute_troendle: pvalue for all tests

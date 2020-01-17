@@ -39,6 +39,7 @@ cluster_table = function(x, multcomp = NULL, alpha = 0.05, ...){
     attr(tab,"method") = info$method
     attr(tab,"test") = info$test
     attr(tab,"alternative") = info$alternative
+    attr(tab,"type") = info$type
     attr(tab,"df") = info$df
     attr(tab,"np") = info$np
     attr(tab,"table_type") = "cluster"

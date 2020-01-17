@@ -4,14 +4,16 @@
 \alias{Pmat}
 \title{Create a set of permutations.}
 \usage{
-Pmat(np = 5000, n, type = "default")
+Pmat(np = 5000, n, type = "permutation", counting = "random")
 }
 \arguments{
 \item{np}{A numeric value for the number of permutations. Default is 5000.}
 
 \item{n}{A numeric value for the number of observations.}
 
-\item{type}{A character string to specify the type of matrix. See Details.}
+\item{type}{A character string to specify the type of transformations: "permutation" and "coinflip" are available.}
+
+\item{counting}{A character string to specify the selection of the transformations. "all" and "random" are available. see details.}
 }
 \value{
 A matrix n x np containing the permutations/coinflips. First permutation is the identity.
@@ -20,9 +22,9 @@ A matrix n x np containing the permutations/coinflips. First permutation is the 
 Compute a permutation matrix used as argument in \link{aovperm}, \link{lmperm}, \link{clusterlm} functions. The first column represents the identity permutation.
 }
 \details{
-\code{type} can set to :\cr
-\code{"default"} : \code{np} random with replacement permutations among the \code{n!} permutations.\cr
-\code{"all"} : all \code{n!} possible permutations.\cr
+\code{couting} can set to :\cr
+\code{"random"} : \code{np} random with replacement permutations/coinflips among the \code{n!}/\code{2^n}  permutations.\cr
+\code{"all"} : all \code{n!}/\code{2^n} possible permutations/coinflips.\cr
 }
 \examples{
 ## data

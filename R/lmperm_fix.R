@@ -36,22 +36,24 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
 
 
   #check P argument
+  type = NULL
   if(!is.null(P)){
     check_P <- check_P(P = P, method = method,
                        test = "t", n = length(y),
                        ncol_x2 = rep(NCOL(mm)-1,NCOL(mm)), ncol_x = NCOL(mm))
     if(!check_P){
       np = np(P)
+      type = attr(P,"type")
       P = NULL
-      warnings("P argument is not valid and will be recomputed")
+      warning("P argument is not valid and will be recomputed")
     }
   }
 
   #create permutation matrices==============================
   if(is.null(P)){switch(method,
                         "huh_jhun" = {
-                          P <- Pmat(np = np, n = length(y) - NCOL(mm) + 1)},
-                        {P = Pmat(np = np, n = length(y))})}
+                          P <- Pmat(np = np, n = length(y) - NCOL(mm) + 1, type = type)},
+                        {P = Pmat(np = np, n = length(y), type = type)})}
   if(sum(np(P) <= 1999)>0){
     warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
@@ -92,11 +94,11 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
   table <-
     as.data.frame(cbind(table, l_pvalue ,r_pvalue,bi_pvalue))
   colnames(table)[3:7] = c("t value","parametric Pr(>|t|)",
-                           "permutation Pr(<t)","permutation Pr(>t)","permutation Pr(>|t|)")
+                           "resample Pr(<t)","resample Pr(>t)","resample Pr(>|t|)")
   rownames(table) = colnames(mm)
   class(table) <- c("lmpermutation_table","data.frame")
   attr(table,"heading") <- c("Table of marginal t-test of the betas")
-  attr(table,"type") = paste("Permutation test using",method,"to handle nuisance variables and",np, "permutations.")
+  attr(table,"type") = paste0("Resample test using ",method," to handle nuisance variables and ",np, " ",attr(P,"type"),"s.")
 
 #####output==================================
   out <- list()

@@ -19,7 +19,8 @@ fisher_Rd_kheradPajouh_renaud_rnd =function(args){
   qr_rdz = qr(qr.resid(qr_d,z))
 
   #####permutation
-  pry = matrix(qr.resid(qr_d,args$y)[args$P], nrow = length(args$y))
+  #pry = matrix(qr.resid(qr_d,args$y)[args$P], nrow = length(args$y))
+  pry <- Pmat_product(qr.resid(qr_d,args$y),args$P)
 
   den = colSums(qr.fitted(qr_rdz,pry)^2)/qr_rdz$rank
   num = colSums(qr.fitted(qr_rdx,pry)^2)/qr_rdx$rank
@@ -63,7 +64,8 @@ fisher_Rde_kheradPajouh_renaud_rnd =function(args){
   ry = qr.resid(qr_de,args$y)
 
   #####permutation
-  pry = matrix(ry[args$P], nrow = length(ry))
+  #pry = matrix(ry[args$P], nrow = length(ry))
+  pry <- Pmat_product(ry,args$P)
 
   den = colSums(qr.fitted(qr_rdez,pry)^2)/qr_rdez$rank
   num = colSums(qr.fitted(qr_rdex,pry)^2)/qr_rdex$rank

@@ -77,13 +77,13 @@ aovperm_rnd <- function( formula, data, method, np, P, coding_sum, rnd_rotation,
 
   #permutation pvalue
   permutation_pvalue = apply(distribution,2,function(d){compute_pvalue(distribution = d,alternative="two.sided", na.rm = T)})
-  table$'permutation P(>F)' = permutation_pvalue
+  table$'Resample P(>F)' = permutation_pvalue
 
   ##sort effect
   table = table[order(link[3,], link[1,]),]
   distribution = distribution[,order(link[3,], link[1,])]
 
-  attr(table,"type") <- paste("Permutation test using",method,"to handle nuisance variables and",np, "permutations.")
+  attr(table,"type") <- paste0("Resample test using ",method," to handle nuisance variables and ",np," ", attr(P,"type"),"s.")
 
   out=list()
   out$y = y

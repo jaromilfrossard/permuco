@@ -29,7 +29,7 @@ compute_clustermass <-  function(distribution, threshold, aggr_FUN, alternative 
            })
 
   ##create connected component labeling
-  cl <- (selected-cbind(0,selected[,-NCOL(selected)]))==1
+  cl <- (selected-cbind(0,selected[,-NCOL(selected),drop=F]))==1
   cl <- t(apply(cl,1,cumsum))
   cl[!selected] <- 0
 
@@ -289,6 +289,7 @@ cluster_table_clustermass = function(x, ...){
     attr(tab,"nDV") <- info$nDV
     attr(tab,"method") <- info$method
     attr(tab,"test") <- info$test
+    attr(tab,"type") = info$type
     attr(tab,"alternative") <- info$alternative
     attr(tab,"df") <- info$df
     attr(tab,"np") <- info$np

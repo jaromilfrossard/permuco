@@ -3,13 +3,12 @@
 #' @description Compute a permutation matrix used as argument in \link{aovperm}, \link{lmperm}, \link{clusterlm} functions. The first column represents the identity permutation.
 #' @param np A numeric value for the number of permutations. Default is 5000.
 #' @param n A numeric value for the number of observations.
-#' @param type A character string to specify the type of matrix. See Details.
+#' @param type A character string to specify the type of transformations: "permutation" and "coinflip" are available.
+#' @param counting A character string to specify the selection of the transformations. "all" and "random" are available. see details.
 #' @return A matrix n x np containing the permutations/coinflips. First permutation is the identity.
-#' @details \code{type} can set to :\cr
-#' \code{"default"} : \code{np} random with replacement permutations among the \code{n!} permutations.\cr
-# \code{"unique"} : \code{np} random without replacement permutations among the \code{n!} permutations. Not available.\cr
-#' \code{"all"} : all \code{n!} possible permutations.\cr
-# \code{"coinflip"} : \code{np} coinflips vectors.
+#' @details \code{couting} can set to :\cr
+#' \code{"random"} : \code{np} random with replacement permutations/coinflips among the \code{n!}/\code{2^n}  permutations.\cr
+#' \code{"all"} : all \code{n!}/\code{2^n} possible permutations/coinflips.\cr
 #' @importFrom permute allPerms
 #' @importFrom permute how
 #' @examples
@@ -34,39 +33,62 @@
 #' mod_cost_2
 #'
 #' @export
-Pmat <- function(np = 5000, n, type = "default"){
+Pmat <- function(np = 5000, n, type = "permutation", counting = "random"){
+  type <- match.arg(type, c("permutation","coinflip"))
+  counting <- match.arg(counting,c("random","all"))
   #warnings
-  switch(type,
+  if(type=="permutation"){
+  switch(counting,
          "all" = {
            if(n > 8){
-           warning("all type is not feasible for n > 8, Pmat is computed with the default type.")
-           type <- "default"}},
+           warning("all permutations are not feasible for n > 8, Pmat is computed with the 'random' counting.")
+             counting <- "random"}},
          {
            if(n <= 8){
              if(factorial(n) <= np){
-               warning("n!<= np all permutations are feasible, Pmat is computed with the 'all' type.")
-               type <- "all"
+               warning("n!<= np all permutations are feasible, Pmat is computed with the 'all' counting.")
+               counting <- "all"
                }
              }
            }
-         )
+         )}else if(type=="coinflip")
+           {switch(counting,
+                  "all" = {
+                    if(n > 16){
+                      warning("all coinflip are not feasible for n > 16, Pmat is computed with the 'random' counting.")
+                      counting <- "random"}},
+                  {
+                    if(n <= 8){
+                      if(2^n <= np){
+                        warning("2^n <= np all coinflip are feasible, Pmat is computed with the 'all' counting.")
+                        counting <- "all"
+                      }
+                    }
+                  }
+           )}
   #matrix
-  switch(type,
-         "default"={P <- cbind(1:n, replicate(np - 1, sample(n, n, replace = F)))},
-         "unique"= {
-           P <- cbind(1:n, replicate(np - 1, sample(n, n, replace = F)))
-           type <- "default"
-           warning("unique type is not implemented, Pmat is computed with the 'default' type.")
-         },
+  if(type=="permutation"){
+  switch(counting,
+         "random"={P <- cbind(1:n, replicate(np - 1, sample(n, n, replace = F)))},
          "all"={
              P <- t(allPerms(n,control = how(observed = T)))
              #as.matrix
              attr(P, "control") <- NULL
              attr(P, "observed") <- NULL
              class(P) <- "matrix"
-             np <- factorial(n)},
-         "coinflip" = {P <- cbind(rep(1, n), replicate(np - 1, sample(c(1, -1), n, replace = T)))})
+             np <- factorial(n)})}
+    else if(type=="coinflip"){
+      switch(counting,
+             "random" = {P <- cbind(rep(1, n), replicate(np - 1, sample(c(1, -1), n, replace = T)))},
+             "all" = {
+               warning("all counting is not available for coinflip switch to random")
+               counting = "random"
+               P <- cbind(rep(1, n), replicate(np - 1, sample(c(1, -1), n, replace = T)))})
+
+             }
+
   attr(P,which = "type") <- type
+  attr(P,which = "counting") <- counting
   attr(P,which = "np") <- np
   attr(P,which = "n") <- n
   class(P) <- "Pmat"

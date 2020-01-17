@@ -20,8 +20,11 @@ cluster_Rd_kheradPajouh_renaud_rnd =function(args){
   ry = qr.resid(qr_d,args$y)
 
   #####permutation
+  type = attr(args$P,"type")
   out = t(apply(args$P,2,function(pi){
-  colSums(qr.fitted(qr_rdx,ry[pi,,drop=F])^2)/colSums(qr.fitted(qr_rdz,ry[pi,,drop=F])^2)}))*(qr_rdz$rank/qr_rdx$rank)
+    pry = Pmat_product(x = ry,P = pi,type = type)
+    colSums(qr.fitted(qr_rdx,pry)^2)/colSums(qr.fitted(qr_rdz,pry)^2)}))*(qr_rdz$rank/qr_rdx$rank)
+  #colSums(qr.fitted(qr_rdx,ry[pi,,drop=F])^2)/colSums(qr.fitted(qr_rdz,ry[pi,,drop=F])^2)}))*(qr_rdz$rank/qr_rdx$rank)
   return(out)}
 
 ##################
@@ -59,7 +62,12 @@ cluster_Rde_kheradPajouh_renaud_rnd =function(args){
   ry = qr.resid(qr_de,args$y)
 
   #####permutation
-  out = t(apply(args$P,2,function(pi){
-    colSums(qr.fitted(qr_rdex,ry[pi,,drop=F])^2)/colSums(qr.fitted(qr_rdez,ry[pi,,drop=F])^2)}))*(qr_rdez$rank/qr_rdex$rank)
+
+    type = attr(args$P,"type")
+    out = t(apply(args$P,2,function(pi){
+      pry = Pmat_product(x = ry,P = pi,type = type)
+      colSums(qr.fitted(qr_rdex,pry)^2)/colSums(qr.fitted(qr_rdez,pry)^2)}))*(qr_rdez$rank/qr_rdex$rank)
+
+    #colSums(qr.fitted(qr_rdex,ry[pi,,drop=F])^2)/colSums(qr.fitted(qr_rdez,ry[pi,,drop=F])^2)}))*(qr_rdez$rank/qr_rdex$rank)
   return(out)}
 

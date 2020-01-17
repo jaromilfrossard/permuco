@@ -19,9 +19,13 @@ cluster_freedman_lane <- function(args){
   qr_rdx <- qr(rdx)
   rdy <- qr.resid(qr_d, args$y)
 
-
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = rdy[pi,, drop = F])})
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = rdy[pi,, drop = F])
+    #print(dim(rdy))
+    #print(length(pi))
+    #print(dim( Pmat_product(x = rdy,P = pi,type = type)))
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = Pmat_product(x = rdy,P = pi,type = type))})
   return(out)}
 
 
@@ -46,9 +50,13 @@ cluster_kennedy <- function(args){
   qr_rdx <- qr(rdx)
   rdy <- qr.resid(qr_d, args$y)
 
-
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = rdy[pi,, drop = F])})
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = rdy[pi,, drop = F])
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = Pmat_product(x = rdy,P = pi,type = type))})
+
+
+
   return(out)}
 
 
@@ -77,9 +85,11 @@ cluster_terBraak <- function(args){
   rdy <- qr.resid(qr_d, args$y)
   rmmy <- qr.resid(qr_mm, args$y)
 
-
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = rmmy[pi,, drop = F])})
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = rmmy[pi,, drop = F])
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = Pmat_product(x = rmmy,P = pi,type = type))})
+
 
   out[,1] = funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = rdy)
 
@@ -111,9 +121,18 @@ cluster_manly <- function(args){
   rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
   qr_rdx <- qr(rdx)
 
+  ## center ys
+  qr_1 <- qr(rep(1,NROW(args$y)))
+  r1y <- qr.resid(qr_1,args$y)
+  h1y <- qr.fitted(qr_1,args$y)
 
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, py = args$y[pi,, drop = F])})
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, py = args$y[pi,, drop = F])
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, py = Pmat_product(x = r1y,P = pi,type = type)+h1y)
+    })
+
+
   return(out)}
 
 
@@ -139,10 +158,17 @@ cluster_draper_stoneman <- function(args){
   rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
   qr_rdx <- qr(rdx)
 
+
+
+
+
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    rdpx = qr.resid(qr_d,args$mm[pi,select_x, drop=F])
+    #rdpx = qr.resid(qr_d,args$mm[pi,select_x, drop=F])
+    px = Pmat_product(x = args$mm[,select_x, drop=F],P =pi,type = type)
+    rdpx = qr.resid(qr_d,px)
     qr_rdpx = qr(rdpx)
-    qr_pmm = qr(cbind(args$mm[,!select_x, drop=F],args$mm[pi,select_x, drop=F]))
+    qr_pmm = qr(cbind(args$mm[,!select_x, drop=F],px))
     funT(qr_rdpx = qr_rdpx, qr_pmm = qr_pmm, y = args$y, qr_mm = qr_mm, qr_rdx = qr_rdx, rdpx = rdpx)})
   return(out)}
 
@@ -169,11 +195,13 @@ cluster_dekker <- function(args){
   qr_rdx <- qr(rdx)
   ry = qr.resid(qr_d,args$y)
 
+
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    rdprx = qr.resid(qr_d,rdx[pi,, drop=F])
+    #rdprx = qr.resid(qr_d,rdx[pi,, drop=F])
+    rdprx = qr.resid(qr_d,Pmat_product(x = rdx,P = pi,type = type))
     qr_rdprx = qr(rdprx)
     #qr_pmm = qr(cbind(args$mm[,!select_x, drop=F],rdx[pi,, drop=F]))
-
     funT(qr_rdprx = qr_rdprx, ry = ry, qr_mm = qr_mm, qr_rdx = qr_rdx, rdprx = rdprx)})
   return(out)}
 
@@ -213,9 +241,10 @@ cluster_huh_jhun <- function(args){
   vy <- v%*%args$y
 
 
-
+  type = attr(args$P,"type")
   out = apply(args$P,2,function(pi){
-    funT(qr_vx = qr_vx, qr_mm = qr_mm, pvy = vy[pi,,drop = F], rdx = rdx)})
+    #funT(qr_vx = qr_vx, qr_mm = qr_mm, pvy = vy[pi,,drop = F], rdx = rdx)
+    funT(qr_vx = qr_vx, qr_mm = qr_mm, pvy = Pmat_product(x = vy,P = pi,type = type), rdx = rdx)})
 
 
   return(out)}
