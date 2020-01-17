@@ -2,7 +2,7 @@
 % Please edit documentation in R/public.R
 \name{Pmat}
 \alias{Pmat}
-\title{Create a set of permutations.}
+\title{Create a set of permutations/coinflip.}
 \usage{
 Pmat(np = 5000, n, type = "permutation", counting = "random")
 }
@@ -11,9 +11,9 @@ Pmat(np = 5000, n, type = "permutation", counting = "random")
 
 \item{n}{A numeric value for the number of observations.}
 
-\item{type}{A character string to specify the type of transformations: "permutation" and "coinflip" are available.}
+\item{type}{A character string to specify the type of transformations: "permutation" and "coinflip" are available. See details.}
 
-\item{counting}{A character string to specify the selection of the transformations. "all" and "random" are available. see details.}
+\item{counting}{A character string to specify the selection of the transformations. "all" and "random" are available. See details.}
 }
 \value{
 A matrix n x np containing the permutations/coinflips. First permutation is the identity.
@@ -33,6 +33,7 @@ data("emergencycost")
 ## Create a set of 2000 permutations
 set.seed(42)
 pmat = Pmat(np = 2000, n = nrow(emergencycost))
+cfmat = Pmat(np = 2000, n = nrow(emergencycost), type = "coinflip")
 
 ## centrering the covariate to the mean
 emergencycost$LOSc <- scale(emergencycost$LOS, scale = FALSE)
@@ -41,10 +42,12 @@ emergencycost$LOSc <- scale(emergencycost$LOS, scale = FALSE)
 mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 2000)
 mod_cost_1 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
 mod_cost_2 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
+mod_cost_3 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = cfmat)
 
-## Same p-values for both models 1 and 2 but differents of model 0
+## Same p-values for both models 1 and 2 but different of model 0
 mod_cost_0
 mod_cost_1
 mod_cost_2
+mod_cost_3
 
 }

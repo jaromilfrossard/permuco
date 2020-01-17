@@ -1,10 +1,10 @@
-#' Create a set of permutations.
+#' Create a set of permutations/coinflip.
 #'
 #' @description Compute a permutation matrix used as argument in \link{aovperm}, \link{lmperm}, \link{clusterlm} functions. The first column represents the identity permutation.
 #' @param np A numeric value for the number of permutations. Default is 5000.
 #' @param n A numeric value for the number of observations.
-#' @param type A character string to specify the type of transformations: "permutation" and "coinflip" are available.
-#' @param counting A character string to specify the selection of the transformations. "all" and "random" are available. see details.
+#' @param type A character string to specify the type of transformations: "permutation" and "coinflip" are available. See details.
+#' @param counting A character string to specify the selection of the transformations. "all" and "random" are available. See details.
 #' @return A matrix n x np containing the permutations/coinflips. First permutation is the identity.
 #' @details \code{couting} can set to :\cr
 #' \code{"random"} : \code{np} random with replacement permutations/coinflips among the \code{n!}/\code{2^n}  permutations.\cr
@@ -18,6 +18,7 @@
 #' ## Create a set of 2000 permutations
 #' set.seed(42)
 #' pmat = Pmat(np = 2000, n = nrow(emergencycost))
+#' cfmat = Pmat(np = 2000, n = nrow(emergencycost), type = "coinflip")
 #'
 #' ## centrering the covariate to the mean
 #' emergencycost$LOSc <- scale(emergencycost$LOS, scale = FALSE)
@@ -26,11 +27,13 @@
 #' mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 2000)
 #' mod_cost_1 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
 #' mod_cost_2 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
+#' mod_cost_3 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = cfmat)
 #'
-#' ## Same p-values for both models 1 and 2 but differents of model 0
+#' ## Same p-values for both models 1 and 2 but different of model 0
 #' mod_cost_0
 #' mod_cost_1
 #' mod_cost_2
+#' mod_cost_3
 #'
 #' @export
 Pmat <- function(np = 5000, n, type = "permutation", counting = "random"){
