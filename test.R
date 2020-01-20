@@ -6,6 +6,18 @@ y = rnorm(10)
 x = matrix(rnorm(20),ncol=2)
 
 
+lf= list.files("R")
+for(lfi in lf){source(paste0("R/",lfi))}
+pm = Pmat(np = 5000, n = 19,type="c",counting = "all")
+dim(pm)
+
+
+n = 15
+mat = t(as.matrix(expand.grid(as.data.frame(t(cbind(rep(1,n),rep(-1,n)))))))
+rownames(mat)<-NULL
+dim(mat)
+expand.grid(A = c(1,-1),B = c(1,-1))
+allPerms::
 
 ys = permuco::attentionshifting_signal[,(1:50)*16]
 df = permuco::attentionshifting_design

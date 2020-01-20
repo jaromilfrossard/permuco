@@ -39,17 +39,17 @@
 Pmat <- function(np = 5000, n, type = "permutation", counting = "random"){
   type <- match.arg(type, c("permutation","coinflip"))
   counting <- match.arg(counting,c("random","all"))
-  #warnings
+  #warnings type dimension
   if(type=="permutation"){
   switch(counting,
          "all" = {
            if(n > 8){
-           warning("all permutations are not feasible for n > 8, Pmat is computed with the 'random' counting.")
+           warning("'all' permutations are not feasible for n > 8, Pmat is computed with the 'random' counting.")
              counting <- "random"}},
          {
            if(n <= 8){
              if(factorial(n) <= np){
-               warning("n!<= np all permutations are feasible, Pmat is computed with the 'all' counting.")
+               warning("n!<= np 'all' permutations are feasible, Pmat is computed with the 'all' counting.")
                counting <- "all"
                }
              }
@@ -57,19 +57,18 @@ Pmat <- function(np = 5000, n, type = "permutation", counting = "random"){
          )}else if(type=="coinflip")
            {switch(counting,
                   "all" = {
-                    if(n > 16){
-                      warning("all coinflip are not feasible for n > 16, Pmat is computed with the 'random' counting.")
+                    if(n > 18){
+                      warning("'all' coinflip are not feasible for n > 18, Pmat is computed with the 'random' counting.")
                       counting <- "random"}},
                   {
-                    if(n <= 8){
-                      if(2^n <= np){
-                        warning("2^n <= np all coinflip are feasible, Pmat is computed with the 'all' counting.")
+                    if(2^n <= np){
+                        warning("2^n <= np 'all' coinflip are feasible, Pmat is computed with the 'all' counting.")
                         counting <- "all"
                       }
-                    }
+
                   }
            )}
-  #matrix
+  #creating matrix
   if(type=="permutation"){
   switch(counting,
          "random"={P <- cbind(1:n, replicate(np - 1, sample(n, n, replace = F)))},
@@ -84,10 +83,9 @@ Pmat <- function(np = 5000, n, type = "permutation", counting = "random"){
       switch(counting,
              "random" = {P <- cbind(rep(1, n), replicate(np - 1, sample(c(1, -1), n, replace = T)))},
              "all" = {
-               warning("all counting is not available for coinflip switch to random")
-               counting = "random"
-               P <- cbind(rep(1, n), replicate(np - 1, sample(c(1, -1), n, replace = T)))})
-
+               P <- t(as.matrix(expand.grid(as.data.frame(t(cbind(rep(1,n),rep(-1,n)))))))
+               rownames(P) <- NULL
+               np <- 2^n})
              }
 
   attr(P,which = "type") <- type
