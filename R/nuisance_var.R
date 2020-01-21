@@ -189,7 +189,7 @@ fisher_terBraak <- function(args){
   qr_rdx =  qr(rdx)
 
   #pry <- matrix(qr.resid(qr_mm, args$y)[args$P],ncol = np(args$P))
-  pry <- Pmat_product(qr.resid(qr_mm, args$y),args$P)+ qr.fitted(qr_mm, args$y)
+  pry <- Pmat_product(qr.resid(qr_mm, args$y),args$P)
 
 
   #statistic
