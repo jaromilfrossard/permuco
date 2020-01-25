@@ -2,6 +2,8 @@
 
 S3method("[",Pmat)
 S3method("[<-",Pmat)
+S3method(Pmat_product,matrix)
+S3method(Pmat_product,numeric)
 S3method(as.Pmat,matrix)
 S3method(as.matrix,Pmat)
 S3method(plot,clusterlm)
