@@ -15,6 +15,7 @@ print.clusterlm <- function(x, multcomp = NULL, alternative = "two.sided", ...){
 #' @export
 print.multcomp_table <- function(x, ...) {
   cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
+  cat("Alternative Hypothesis: ",attr(x,"alternative"), ".\n",sep="")
   cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
   cat("Resample Method: ",attr(x,"method"), ".\n",sep="")
   cat("Number of Dependant Variables: ",attr(x,"nDV"), ".\n",sep="")
