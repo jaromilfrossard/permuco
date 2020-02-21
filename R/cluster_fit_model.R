@@ -5,6 +5,7 @@
 #' @param data A data frame for the independant variables.
 #' @param np The number of permutations. Default value is \code{5000}.
 #' @param method A character string indicating the method used to handle nuisance variables. Default is \code{NULL} and will switch to \code{"freedman_lane"} for the fixed effects model and to \code{"Rd_kheradPajouh_renaud"} for the repeated measures ANOVA. See \link{lmperm} or \link{aovperm} for details on the permutation methods.
+#' @param type A character string to specify the type of transformations: "permutation" and "signflip" are available. Is overridden if P is given. See help from Pmat.
 #' @param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
 #' @param threshold A numerical value that specify the threshold for the \code{"clustermass"} multiple comparisons procedure. If it is a vector each value will be associated to an effect. If it is scalar the same threshold will be used for each test. Default value is \code{NULL} and will compute a threshold based on the 0.95 quantile of the choosen test statistic.
 #' @param aggr_FUN A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.
@@ -71,7 +72,7 @@
 #'
 #'@author jaromil.frossard@unige.ch
 #'@export
-clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fisher", threshold = NULL, aggr_FUN = NULL,
+clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "permutation", test = "fisher", threshold = NULL, aggr_FUN = NULL,
                       multcomp = "clustermass", ...){
 
   cl = match.call()
@@ -137,7 +138,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fish
 
   ###switch fix effet
   if (is.null(indError)) {
-    result <- clusterlm_fix( formula = formula, data = data, method = method, test = test, np = np,
+    result <- clusterlm_fix( formula = formula, data = data, method = method, type = type, test = test, np = np,
                              P = dotargs$P, rnd_rotation = dotargs$rnd_rotation, aggr_FUN = aggr_FUN,
                              E = dotargs$E, H = dotargs$H, threshold = threshold,
                              return_distribution = dotargs$return_distribution, cl = cl, multcomp = multcomp,
@@ -147,7 +148,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, test = "fish
     if(test!="fisher"){
       warning("Random effects model only accept fisher statistics. Test statistic is set to fisher.")
       test="fisher"}
-    result <- clusterlm_rnd( formula = formula, data = data, method = method, test = test, np = np,
+    result <- clusterlm_rnd( formula = formula, data = data, method = method, type = type, test = test, np = np,
                              P = dotargs$P, rnd_rotation = dotargs$rnd_rotation, aggr_FUN = aggr_FUN,
                              E = dotargs$E, H = dotargs$H, threshold = threshold,
                              return_distribution = dotargs$return_distribution, cl = cl, multcomp = multcomp,

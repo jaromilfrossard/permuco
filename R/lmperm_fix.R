@@ -1,5 +1,5 @@
 #' @importFrom stats model.frame model.matrix model.response lm rnorm
-lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = NULL) {
+lmperm_fix <- function(formula, data, method, type, np, P, rnd_rotation, new_method = NULL) {
 
 
   if(is.null(new_method)){new_method = F}
@@ -36,7 +36,6 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
 
 
   #check P argument
-  type = NULL
   if(!is.null(P)){
     check_P <- check_P(P = P, method = method,
                        test = "t", n = length(y),
@@ -54,6 +53,7 @@ lmperm_fix <- function(formula, data, method, np, P, rnd_rotation, new_method = 
                         "huh_jhun" = {
                           P <- Pmat(np = np, n = length(y) - NCOL(mm) + 1, type = type)},
                         {P = Pmat(np = np, n = length(y), type = type)})}
+  type = attr(P,"type")
   if(sum(np(P) <= 1999)>0){
     warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
