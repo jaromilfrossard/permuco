@@ -7,7 +7,7 @@
 #' @param counting A character string to specify the selection of the transformations. "all" and "random" are available. See details.
 #' @return A matrix n x np containing the permutations/signflips. First permutation is the identity.
 #' @details \code{couting} can set to :\cr
-#' \code{"random"} : \code{np} random with replacement permutations/signflips among the \code{n!}/\code{2^n}  permutations.\cr
+#' \code{"random"} : \code{np} random with replacement permutations/signflips among the \code{n!}/\code{2^n}  permutations/signflips.\cr
 #' \code{"all"} : all \code{n!}/\code{2^n} possible permutations/signflips.\cr
 #' @importFrom permute allPerms
 #' @importFrom permute how
@@ -18,7 +18,7 @@
 #' ## Create a set of 2000 permutations
 #' set.seed(42)
 #' pmat = Pmat(np = 2000, n = nrow(emergencycost))
-#' cfmat = Pmat(np = 2000, n = nrow(emergencycost), type = "signflip")
+#' sfmat = Pmat(np = 2000, n = nrow(emergencycost), type = "signflip")
 #'
 #' ## centrering the covariate to the mean
 #' emergencycost$LOSc <- scale(emergencycost$LOS, scale = FALSE)
@@ -27,7 +27,7 @@
 #' mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 2000)
 #' mod_cost_1 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
 #' mod_cost_2 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = pmat)
-#' mod_cost_3 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = cfmat)
+#' mod_cost_3 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, P = sfmat)
 #'
 #' ## Same p-values for both models 1 and 2 but different of model 0
 #' mod_cost_0
