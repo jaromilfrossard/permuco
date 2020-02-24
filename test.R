@@ -17,18 +17,26 @@ mat = t(as.matrix(expand.grid(as.data.frame(t(cbind(rep(1,n),rep(-1,n)))))))
 rownames(mat)<-NULL
 dim(mat)
 expand.grid(A = c(1,-1),B = c(1,-1))
-allPerms::
 
 ys = permuco::attentionshifting_signal[,(1:50)*16]
 df = permuco::attentionshifting_design
 
 
-lf= list.files("R")
+lf= list.files("R/")
 for(lfi in lf){source(paste0("R/",lfi))}
 pm = Pmat(np = 2000, n = nrow(ys),type="s")
+plot(hj_p,effect = "visibility")
+plot(cl_hj)
 
-aovperm(ys[,1]~visibility+emotion,df,P=pm,method ="huh_jhun")
+cl_hj<-clusterlm(ys~visibility+emotion,df,P=pm,method ="huh_jhun")
+
+
+hj_p <- aovperm(ys[,1]~visibility+emotion,df,P=pm,method ="huh_jhun")
+
+hj_s <- aovperm(ys[,1]~visibility+emotion,df,P=hj_s$P,method ="huh_jhun")
+
 aovperm(ys[,1]~visibility+emotion,df,type="sign",method ="huh_jhun")
+
 lmperm(ys[,1]~visibility+emotion,df,np=2000,method ="huh_jhun")
 
 aovperm(ys[,1]~visibility*emotion+Error(id/(visibility*emotion)),df,P=pm)
