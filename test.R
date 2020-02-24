@@ -28,10 +28,13 @@ for(lfi in lf){source(paste0("R/",lfi))}
 pm = Pmat(np = 2000, n = nrow(ys),type="s")
 
 aovperm(ys[,1]~visibility+emotion,df,P=pm,method ="huh_jhun")
+aovperm(ys[,1]~visibility+emotion,df,type="sign",method ="huh_jhun")
 lmperm(ys[,1]~visibility+emotion,df,np=2000,method ="huh_jhun")
 
 aovperm(ys[,1]~visibility*emotion+Error(id/(visibility*emotion)),df,P=pm)
+aovperm(ys[,1]~visibility*emotion+Error(id/(visibility*emotion)),df,type="sign")
 aovperm(ys[,1]~visibility*emotion+Error(id/(visibility*emotion)),df,P=pm,method ="Rde")
+aovperm(ys[,1]~visibility*emotion+Error(id/(visibility*emotion)),df,type="sign",method ="Rde")
 
 
 
@@ -41,7 +44,7 @@ model_permuco = list()
 for(i in 1:nrow(param)){
   set.seed(1)
   print(i)
-  model_permuco[[i]]<- permuco:::clusterlm(ys~visibility+emotion,df,P=pm,method = param$method[i])}
+  model_permuco[[i]]<- clusterlm(ys~visibility+emotion,df,type="sign",method = param$method[i])}
 
 pm = Pmat(np = 2000, n = nrow(ys),type = "permuta")
 a = clusterlm(ys~visibility*emotion,df,P=pm)
@@ -53,13 +56,13 @@ class(sa[[1]])
 
 attributes(sa[[1]])
 
-
-
+a = clusterlm(ys~visibility*emotion,df,type="sign")
 
 attributes(sa[[1]])
 
 pm = Pmat(np = 2000, n = nrow(ys),type = "permuta")
 clusterlm(ys~visibility*emotion+Error(id/(visibility*emotion)),df,P=pm,method = "Rd_")
+clusterlm(ys~visibility*emotion+Error(id/(visibility*emotion)),df,type="sign",method = "Rd_")
 clusterlm(ys~visibility*emotion+Error(id/(visibility*emotion)),df,P=pm,method = "Rde_")
 pm = Pmat(np = 2000, n = nrow(ys),type = "signflip")
 clusterlm(ys~visibility*emotion+Error(id/(visibility*emotion)),df,P=pm,method = "Rd_")

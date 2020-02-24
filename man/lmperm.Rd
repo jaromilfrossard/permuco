@@ -4,7 +4,14 @@
 \alias{lmperm}
 \title{Permutation tests for regression parameters}
 \usage{
-lmperm(formula, data = NULL, np = 5000, method = NULL, ...)
+lmperm(
+  formula,
+  data = NULL,
+  np = 5000,
+  method = NULL,
+  type = "permutation",
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula object.}
@@ -14,6 +21,8 @@ lmperm(formula, data = NULL, np = 5000, method = NULL, ...)
 \item{np}{The number of permutations. Default value is \code{5000}.}
 
 \item{method}{A character string indicating the method use to handle nuisance variables. Default is \code{"freedman_lane"}. For the other methods, see details.}
+
+\item{type}{A character string to specify the type of transformations: "permutation" and "signflip" are available. Is overridden if P is given. See help from Pmat.}
 
 \item{...}{Futher arguments, see details.}
 }

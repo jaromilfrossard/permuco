@@ -1,5 +1,5 @@
 #' @importFrom stats aov update as.formula
-aovperm_rnd <- function( formula, data, method, np, P, coding_sum, rnd_rotation, new_method = NULL){
+aovperm_rnd <- function( formula, data, method, type, np, P, coding_sum, rnd_rotation, new_method = NULL){
 
   if(is.null(coding_sum)){coding_sum = T}
 
@@ -59,7 +59,8 @@ aovperm_rnd <- function( formula, data, method, np, P, coding_sum, rnd_rotation,
   checkBalancedData(fixed_formula = formula_f, data = cbind(y,mf))
 
   #compute permutation
-  if (is.null(P)) {P = Pmat(np = np, n = length(y))}
+  if (is.null(P)) {P = Pmat(np = np, n = length(y), type = type)}
+  type = attr(P,"type")
   np = np(P)
 
   ##distribution
