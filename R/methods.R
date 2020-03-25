@@ -31,16 +31,25 @@ print.lmpermutation_table<-function(x, digits = 4, na.print = "", ...){
 #'@importFrom stats density
 #'@export
 plot.lmperm <- function(x, FUN = density, ...){
-  par0 = par()
-  #data
-  distr = x$distribution
 
-  dotargs = list(...)
+  par0 <-  par()
+  #data
+  distr <- x$distribution
+
+
+  dotargs <- list(...)
+
   if(is.null(dotargs$effect)){
     effect <- colnames(distr)
   }else{effect <- colnames(distr)[which(colnames(distr)%in%dotargs$effect)]}
-  distr = distr[,which(colnames(distr)%in%effect),drop=F]
-  dotargs = dotargs[names(dotargs)!="effect"]
+
+  dotargs_par <- dotargs[names(dotargs)%in%names(par())]
+  dotargs <-  dotargs[!names(dotargs)%in%c(names(par()),"effect")]
+
+
+
+
+  distr <- distr[,which(colnames(distr)%in%effect),drop=F]
 
   #subplot
   p <- NCOL(distr)
@@ -48,14 +57,23 @@ plot.lmperm <- function(x, FUN = density, ...){
   factors <- div[p %% div == 0L]
   mfrow1 <- factors[ceiling(length(factors)/2)]
   mfrow <- c(mfrow1,p/mfrow1)
-  par(mfrow = mfrow)
+
+  ### param default
+  if(is.null(dotargs_par$mfrow)){dotargs_par$mfrow = mfrow}
+  par(dotargs_par)
+
 
   #plot
   for(i in 1:NCOL(distr)){
-    plot(FUN(distr[,i]),main = colnames(distr)[i],dotargs)
+    argi = dotargs
+    argi$x = FUN(distr[,i])
+    argi$main = colnames(distr)[i]
+    do.call("plot",argi)
+    #plot(FUN(distr[,i]),main = colnames(distr)[i])
     abline(v=distr[1,i])
   }
-  par(mfrow=par0$mfrow)
+  par0 <- par0[!names(par0)%in%c("cin","cra","csi","cxy","din","page")]
+  par(par0)
 }
 
 #' @export
@@ -102,6 +120,24 @@ as.matrix.Pmat <- function(x, ...){
   x[i,j] <- value
   return(x)
 }
+
+
+#' @export
+`[.Pmat` <- function(x,i,j,drop = FALSE){
+  if(drop){warning("drop is set to TRUE")}
+  mc <- match.call()
+  attr <- attributes(x)
+  x <- as.matrix(x)
+  x <- x[i,j,drop = FALSE]
+  if(is.null(mc$i)){
+    attr(x,"type") <- attr$type
+    attr(x,"counting") <- attr$counting
+    attr(x,"np") <- ncol(x)
+    attr(x,"n") <- attr$n
+    attr(x,"class") <- attr$class}
+  return(x)
+}
+
 
 #methods for np=============================
 np <- function(object, ...) {UseMethod("np")}

@@ -13,7 +13,7 @@ This function is constructed as an extension of the the `lm()` function for perm
 This function is constructed as an extension of the the `aov()` function for permutation test. It produces marginal F statistics (type III) for factorial ANOVA and ANCOVA. Moreover, repeated measures ANOVA can be perform using the same notations used in an `aov()` formula with `+Error(id/within)` to specify the random effects.
 
 ## The `clusterlm()` function
-This function compute cluster-mass statistics for multiple comparisons. It is designed for ERP analysis of unichannel EEG data. The left part of formula object must be a matrix or dataframe which columns represents multiple responses tested on the same experimental design (specified by right part of the formula). This function provides several methods to handle nuisance variables, a F or t statistics, an extension for repeated measure anova and several methods for the multiple comparisons lit the threshold-free cluster enhancement. 
+This function compute cluster-mass statistics for multiple comparisons. It is designed for ERP analysis of unichannel EEG data. The left part of formula object must be a matrix or dataframe which columns represents multiple responses tested on the same experimental design (specified by right part of the formula). This function provides several methods to handle nuisance variables, a F or t statistics, an extension for repeated measure anova and several methods for the multiple comparisons like the threshold-free cluster enhancement. 
 
 # Contact
 If you need help to use the package or want to report errors, contact Jaromil Frossard at <jaromil.frossard@unige.ch>.

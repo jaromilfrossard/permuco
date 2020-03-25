@@ -1,5 +1,5 @@
 #'@importFrom stats lm.fit rnorm
-aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation, new_method = NULL){
+aovperm_fix <- function( formula, data, method, type, np, coding_sum, P, rnd_rotation, new_method = NULL){
 
   if(is.null(coding_sum)){coding_sum = T}
 
@@ -49,15 +49,15 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
 
 
   #check P========================================
-
     if(!is.null(P)){
     check_P <- check_P(P = P, method = method,
                        test = "fisher", n = length(y),
                        ncol_x2 = as.numeric(table(attr(mm,"assign")[attr(mm,"assign")!=0])), ncol_x = NCOL(mm))
     if(!check_P){
       np = np(P)
+      type = attr(P,"type")
       P = NULL
-      warnings("P argument is not valid and will be recomputed.")
+      warning("P argument is not valid and will be recomputed.")
     }
   }
 
@@ -68,14 +68,14 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
     switch(method,
            "huh_jhun" = {
              P <- lapply(unique(attr(mm,"assign"))[-1], function(assigni){
-               Pmat(np = np, n = length(y) - NCOL(mm) + sum(attr(mm,"assign")==assigni))})},
-           {P = Pmat(np = np, n = length(y))})
+               Pmat(np = np, n = length(y) - NCOL(mm) + sum(attr(mm,"assign")==assigni),type  = type)})},
+           {P = Pmat(np = np, n = length(y), type = type)})
   }
 
   if(sum(np(P) <= 1999)>0){
     warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
-
+  type = attr(P,"type")
   np <- np(P)
 
   #create rnd_rotation matrices==============================
@@ -114,9 +114,12 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   #output
   table = anova_table
   table$pValue_Permutation=c(permutation_pvalue, NA)
-  colnames(table)[4:5]=c("parametric P(>F)","permutation P(>F)")
+  colnames(table)[4:5]=c("parametric P(>F)","Re-sample P(>F)")
 
-  attr(table,"type")=paste("Permutation test using",method,"to handle nuisance variables and",paste(np,sep=", ",collapse = ", "), "permutations.")
+  if(is.matrix(P)){type = attr(P,"type")}else if(is.list(P)){type = attr(P[[1]],"type")}
+
+
+  attr(table,"type") = paste0("Resample test using ",method," to handle nuisance variables and ",paste(np,sep=", ",collapse = ", "), " ",type ,"s.")
 
   out=list()
   out$coefficients <- mod_lm$coefficients

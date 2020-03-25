@@ -1,5 +1,5 @@
 #' @importFrom stats rnorm qf qt pt pf
-clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rotation, aggr_FUN, E, H,
+clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, rnd_rotation, aggr_FUN, E, H,
                           cl, multcomp, alpha, p_scale, coding_sum, ndh, return_distribution, new_method){
 
 
@@ -116,6 +116,7 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
     )
     if (!check_P) {
       np <- np(P)
+      type = attr(P,"type")
       P <- NULL
       warnings("P argument is not valid and will be recomputed")
     }
@@ -125,18 +126,19 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
   if(is.null(P)){switch(method,
                         "huh_jhun" = {
                           switch (test,
-                            "t" = {P <- Pmat(np = np, n = NROW(y) - NCOL(mm) + 1)},
+                            "t" = {P <- Pmat(np = np, n = NROW(y) - NCOL(mm) + 1,type  = type)},
                             "fisher" = {{
                               P <- lapply(as.numeric(table(col_ref))[-1],
-                                          function(cx){Pmat(np = np, n = NROW(y) - NCOL(mm) + cx)})}}
+                                          function(cx){Pmat(np = np, n = NROW(y) - NCOL(mm) + cx,type  = type)})}}
                             )},
-                        {P <- Pmat(np = np, n = NROW(y))})}
+                        {P <- Pmat(np = np, n = NROW(y),type  = type)})}
 
+  type = attr(P,"type")
 
-  if(sum(np(P) <= 1999)>0){
+  np <- np(P)
+  if(sum(np <= 1999)>0){
     warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
-  np <- np(P)
 
   #create rnd_rotation matrices==============================
   if(method=="huh_jhun" & is.null(rnd_rotation)){
@@ -203,8 +205,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
     #####uncorrected
     multiple_comparison[[i]]$uncorrected <- list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para),
-                                                test_info = list(test = test, df = dfi, alternative = "two.sided", method = method, np = np,
-                                                                 nDV = ncol(y), fun_name = fun_name))
+                                                test_info = list(test = test, df = dfi, alternative = "two.sided", method = method,
+                                                                 type = attr(args$P,"type"), np = np, nDV = ncol(y), fun_name = fun_name))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
     ##pscale change
@@ -229,8 +231,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
       pvalue <- apply(distribution,2,function(col)compute_pvalue(distribution = col,alternative = alternative))
 
       multiple_comparison_greater[[i]]$uncorrected <- list(main = cbind(statistic = distribution[1,],pvalue = pvalue,pvalue_para = pvalue_para),
-                                                          test_info = list(test = test, df = df, alternative = alternative, method = method, np = np,
-                                                                           nDV = ncol(y), fun_name = fun_name))
+                                                          test_info = list(test = test, df = df, alternative = alternative, method = method,
+                                                                           type = attr(args$P,"type"), np = np, nDV = ncol(y), fun_name = fun_name))
       multiple_comparison_greater[[i]] <- c(multiple_comparison_greater[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
@@ -248,8 +250,8 @@ clusterlm_fix <- function(formula, data, method, test, threshold, np, P, rnd_rot
 
 
       multiple_comparison_less[[i]]$uncorrected <- list(main = cbind(statistic = distribution[1,], pvalue = pvalue, pvalue_para = pvalue_para),
-                                                       test_info = list(test = test, df = dfi, alternative = alternative, method = method, np = np,
-                                                                        nDV = ncol(y), fun_name = fun_name))
+                                                       test_info = list(test = test, df = dfi, alternative = alternative, method = method,
+                                                                        type = attr(args$P,"type"), np = np, nDV = ncol(y), fun_name = fun_name))
       multiple_comparison_less[[i]] <- c(multiple_comparison_less[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
