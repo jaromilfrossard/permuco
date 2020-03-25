@@ -58,12 +58,18 @@ plot.lmperm <- function(x, FUN = density, ...){
   mfrow1 <- factors[ceiling(length(factors)/2)]
   mfrow <- c(mfrow1,p/mfrow1)
 
+  ### param default
   if(is.null(dotargs_par$mfrow)){dotargs_par$mfrow = mfrow}
   par(dotargs_par)
 
+
   #plot
   for(i in 1:NCOL(distr)){
-    plot(FUN(distr[,i]),main = colnames(distr)[i],dotargs)
+    argi = dotargs
+    argi$x = FUN(distr[,i])
+    argi$main = colnames(distr)[i]
+    do.call("plot",argi)
+    #plot(FUN(distr[,i]),main = colnames(distr)[i])
     abline(v=distr[1,i])
   }
   par0 <- par0[!names(par0)%in%c("cin","cra","csi","cxy","din","page")]
