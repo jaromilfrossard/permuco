@@ -75,7 +75,7 @@ fisher_Rde_kheradPajouh_renaud_rnd =function(args){
 }
 
 
-fisher_Rd_kheradPajouh_renaud2_rnd <- function(args){
+fisher_Rd_replic_kheradPajouh_renaud_rnd <- function(args){
   #select x
   argi <<-args
   mm <- args$mm
