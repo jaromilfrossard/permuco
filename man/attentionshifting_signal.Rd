@@ -4,7 +4,9 @@
 \name{attentionshifting_signal}
 \alias{attentionshifting_signal}
 \title{Dataset containing the event-related potential of the electrod O1 of a control experiment.}
-\format{A data frame with 120 rows and 819 variables.}
+\format{
+A data frame with 120 rows and 819 variables.
+}
 \usage{
 data(attentionshifting_signal)
 }
@@ -16,3 +18,10 @@ The ERP of the electrod O1 of an experiment in attention shifting. This dataset 
 \item ERP (in muV) of the electrod O1 measured from -200 to 600 timeframes before and after the onset of the stimulus.
 }
 }
+\seealso{
+Other dataset: 
+\code{\link{attentionshifting_design}},
+\code{\link{emergencycost}},
+\code{\link{jpah2016}}
+}
+\concept{dataset}

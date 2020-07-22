@@ -38,6 +38,7 @@
 #' mod_cost_4
 #'
 #' @export
+#' @family pmat
 Pmat <- function(np = 5000, n, type = "permutation", counting = "random"){
   type <- match.arg(type, c("permutation","signflip"))
   counting <- match.arg(counting,c("random","all"))

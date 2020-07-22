@@ -1,261 +1,251 @@
-#' Print \code{clusterlm} object.
-#'
-#' @description Display the corrected p-values for each effects. Results of the \code{"clustermass"} procedure.
-#'
-#' @param x A \code{clusterlm} object.
-#' @param multcomp A character string indicating the multiple comparison procedure to print. Default is NULL a print the first multiple comparisons procedure of the \code{clusterlm} object.
-#' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
-#' @param ... Further arguments pass to \code{print}.
-#' @export
-print.clusterlm <- function(x, multcomp = NULL, alternative = "two.sided", ...){
-  print(summary(x, multcomp = multcomp, alternative = alternative, ... = ...))
-}
-
-
-#' @export
-print.multcomp_table <- function(x, ...) {
-  cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
-  cat("Alternative Hypothesis: ",attr(x,"alternative"), ".\n",sep="")
-  cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
-  cat("Resample Method: ",attr(x,"method"), ".\n",sep="")
-  cat("Number of Dependant Variables: ",attr(x,"nDV"), ".\n",sep="")
-  cat("Type of Resample: ",attr(x,"type"), ".\n",sep="")
-  cat("Number of Resamples: ",attr(x,"np"), ".\n",sep="")
-  cat("Multiple Comparisons Procedure: ",attr(x,"multcomp"), ".\n",sep="")
-  if(attr(x,"multcomp") == "clustermass"){
-    cat("Threshold: ",attr(x,"threshold"),".\n",sep="")
-    cat("Mass Function: ",attr(x,"fun_name"),".\n",sep="")
-  }
-  if(attr(x,"table_type")=="cluster"){
-    if(attr(x,"multcomp")=="clustermass"){
-      cat("Table of clusters.\n")
-    }else if(attr(x,"multcomp")!="clustermass"){
-      cat("Table of pseudo-clusters.\n")
-      }
-    }else if(attr(x,"table_type")=="full"){
-    cat("Table of all tests.\n")
-  }
-
-  cat("\n")
-  if(!is.null(attr(x,"nocluster"))){
-    if(attr(x,"nocluster")){
-    cat("No cluster above the threshold.\n")}else{
-      print.data.frame(x)}
-  }else{
-  print.data.frame(x)}
-  cat("\n\n")
-}
-
-#' @export
-print.listof_multcomp_table<- function(x,...){
-  dotargs = list(...)
-  ei = NULL
-  if(!is.null(dotargs$effect)){
-    ei = which(names(x)%in%dotargs$effect)}
-  if(length(ei)>0){
-    for(i in ei){print(x[[i]])}
-    }else{
-      for(i in 1:length(x)){
-        print(x[[i]])}}
-}
-
-###########################summary
-
-#' Summarize of a \code{clusterlm} object.
-#'
-#' @description Display the corrected p-values for each effects.
-#'
-#' @param object A \code{clusterlm} object.
-#' @param alternative A character string indicating the alternative hypothesis. Choose between \code{"two.sided"}, \code{"greater"}, \code{"less"}. Default is \code{"two.sided"}.
-#' @param multcomp A character string indicating the multiple comparison procedure to display.
-#' @param table_type A character string indicating the type of table to display. Choose between \code{"cluster"}, which aggregates test into pseudo-clusters (see details for the interpretations) or \code{"full"} which displays the p-values for all tests. See details for default values.
-#' @param ... Further arguments see details.
-#' @return A table for each effect indicating the statistics and p-values of the clusters.
-#' @details It creates the full table when the number of tests is <=15 and creates a table of pseudo-clusters overwise. Note that for the \code{"troendle"} method is not based on clustering of the data and the table of pseudo-clusters should only be used to facilitate the reading of the results.
-#' @export
-summary.clusterlm <- function(object, alternative = "two.sided", multcomp = NULL, table_type = NULL, ...){
-  dotargs = list(...)
-  if(is.null(table_type)){
-    if(ncol(object$y)>15){
-      table_type = "cluster"
-    }else{
-      table_type = "full"
-    }
-  }
-
-  if(is.null(multcomp)){multcomp <- object$multcomp[1]}
-
-  switch(table_type,
-    "cluster" = {getTable = function(x, multcomp,... ){cluster_table(x, multcomp = multcomp, ... = ...)}},
-    "full" = {getTable = function(x, multcomp,... ){full_table(x, multcomp = multcomp, ... = ...)}}
-  )
-
-  switch(alternative,
-           "two.sided" = {
-             return(getTable(object$multiple_comparison, multcomp = multcomp, ... = ...))},
-           "greater" = {
-             return(getTable(object$multiple_comparison_greater, multcomp = multcomp, ... = ...))},
-           "less" = {
-             return(getTable(object$multiple_comparison_less, multcomp = multcomp, ... = ...))})
-
-}
-
-# #' @export
-# summary.cluster_table <- function(object,...){
-#   object
-# }
-
-
-# summary_multcomp <- function(object, multcomp, alternative){
-#   if(!(multcomp %in% object$multcomp)){
-#     stop(paste("The choosen multiple comparisons procedure does not match with the ones computed in the object.
-#                   Choose between ", paste(object$multcomp,sep=" "),".", sep=""))
-#   }
-#   switch(alternative,
-#          "two.sided" = {mc = object$multiple_comparison},
-#          "greater" = {mc = object$multiple_comparison_greater},
-#          "less" = {mc = object$multiple_comparison_less})
-#
-#   out = lapply(seq_along(mc),function(i){
-#     out = mc[[i]][[multcomp]]$main[,1:2,drop = F]
-#     colnames(out) = paste(names(mc)[i], colnames(out))
-#     out})
-#   out = do.call("cbind",out)
-#   return(out)
-# }
-
-
-
-#'Plot cluster or parameters.
-#'
-#' @description Plot method for class \code{clusterlm}.
-#'
-#' @param x A \code{clusterlm} object.
-#' @param effect A vector of character naming the effects to display. Default is \code{"all"}.
-#' @param type A character string that specified the values to highlight. \code{"statistic"} or \code{"coef"} are available. Default is \code{"statistic"}.
-#' @param multcomp A character string specifying the method use to correct the p-value. It should match the one computed in the object. Default is the (first) method in the call to \link{clusterlm}. See \link{clusterlm}.
-#' @param alternative A character string specifying the alternative hypothesis for the t-test. The available options are \code{"greater"}, \code{"less"} and \code{"two.sided"}. Default is \code{"two.sided"}.
-#' @param enhanced_stat A logical. Default is \code{FALSE}. If \code{TRUE}, the enhanced statistic will be plotted overwise it will plot the observed statistic. Change for the \code{"tfce"} or the \code{"clustermass"} multiple comparisons procedures.
-#' @param nbbaselinepts An integer. Default is 0. If the origin of the x axis should be shifted to show the start of the time lock, provide the number of baseline time points.
-#' @param nbptsperunit An integer. Default is 1. Modify this value to change the scale of the label from the number of points to the desired unit. If points are e.g. sampled at 1024Hz, set to 1024 to scale into seconds and to 1.024 to scale into milliseconds.
-#' @param distinctDVs Boolean. Should the DVs be plotted distictively, i.e. should the points be unlinked and should the name of the DVs be printed on the x axis ? Default is FALSE if the number of DV is large thant 15 or if the method is "clustermass" or "tfce".
-#' @param ... further argument pass to plot.
-#' @importFrom graphics points axis
-#' @export
-plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = x$multcomp[1], alternative = "two.sided", enhanced_stat = FALSE,
-                           nbbaselinepts=0, nbptsperunit=1, distinctDVs=NULL, ...) {
-  par0 <- par()
-
-  dotargs <- list(...)
-  dotargs_par <- dotargs[names(dotargs)%in%names(par())]
-  dotargs <-  dotargs[!names(dotargs)%in%names(par())]
-  ##select effect
-  if("all" %in% effect){effect = names(x$multiple_comparison)}
-  else if(sum(names(x$multiple_comparison)%in%effect) == 0){
-    warning(" the specified effects do not exist. Plot 'all' effects.")
-    effect = names(x$multiple_comparison)
-  }
-  effect_sel <- names(x$multiple_comparison)%in%effect
-
-  ###switch mult comp
-  switch(alternative,
-         "two.sided" = {multiple_comparison = x$multiple_comparison[effect_sel]},
-         "greater" = {multiple_comparison = x$multiple_comparison_greater[effect_sel]},
-         "less" = {multiple_comparison = x$multiple_comparison_less[effect_sel]})
-
-  pvalue = t(sapply(multiple_comparison,function(m){
-    m[[multcomp]]$main[,2]}))
-
-  statistic = t(sapply(multiple_comparison,function(m){
-    m[["uncorrected"]]$main[,1]}))
-  if(enhanced_stat){
-    statistic = t(sapply(multiple_comparison,function(m){
-      m[[multcomp]]$main[,1]}))
-  }
-
-
-
-  ##swich value
-  switch(type,
-         "coef"={
-           data <- x$coef[effect_sel,]
-           title <- "coefficients"
-           hl <- NULL
+#freedman lane================================
+cluster_freedman_lane <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_rdx, qr_mm, prdy){
+           colSums(qr.fitted(qr_rdx, prdy)^2)/colSums(qr.resid(qr_mm, prdy)^2)* (NROW(prdy)-qr_mm$rank)/(qr_rdx$rank)}
          },
-         "statistic" ={
-           data <- statistic
-           title <- paste(x$test, " statistic",sep="",collapse = "")
-           if(multcomp=="clustermass"){
-             switch(x$test,
-                    "fisher"={hl <- x$threshold},
-                    "t"={
-                      switch (alternative,
-                              "less" ={hl <- -c(abs(x$threshold))},
-                              "greater" ={hl <- c(abs(x$threshold))},
-                              "two.sided" ={hl <- c(abs(x$threshold))}
-                      )})}
+         "t" = {funT = function(qr_rdx, qr_mm, prdy){
+           as.numeric(qr.coef(qr_rdx, prdy))/sqrt(colSums(qr.resid(qr_mm, prdy)^2)/sum(rdx^2)) * sqrt(NROW(args$y)-qr_mm$rank)}
          })
 
-  title =paste(title," : ", multcomp, " correction",sep="", collapse = "")
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign"))) %in% args$colx
+
+  ##data reduction
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+  qr_rdx <- qr(rdx)
+  rdy <- qr.resid(qr_d, args$y)
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = rdy[pi,, drop = F])
+    #print(dim(rdy))
+    #print(length(pi))
+    #print(dim( Pmat_product(x = rdy,P = pi,type = type)))
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = Pmat_product(x = rdy,P = pi,type = type))})
+  return(out)}
+
+
+#kennedy================================
+cluster_kennedy <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_rdx, qr_mm, prdy){
+           colSums(qr.fitted(qr_rdx, prdy)^2)/colSums(qr.resid(qr_rdx, prdy)^2)* (NROW(prdy)-qr_mm$rank)/(qr_rdx$rank)}
+         },
+         "t" = {funT = function(qr_rdx, qr_mm, prdy){
+           as.numeric(qr.coef(qr_rdx, prdy))/sqrt(colSums(qr.resid(qr_rdx, prdy)^2)/sum(rdx^2)) * sqrt(NROW(args$y)-qr_mm$rank)}
+         })
+
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign"))) %in% args$colx
+
+  ##data reduction
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+  qr_rdx <- qr(rdx)
+  rdy <- qr.resid(qr_d, args$y)
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = rdy[pi,, drop = F])
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, prdy = Pmat_product(x = rdy,P = pi,type = type))})
 
 
 
-  #####
-  p = sum(NROW(data))
-  rnames = row.names(data)
-  cnames = colnames(data)
-  nbDV = ncol(data)
+  return(out)}
 
 
 
-  ### should the DVs be named in plot and separated ?
-  if (is.null(distinctDVs)){
-    if (multcomp %in% c("clustermass", "tfce"))
-      distinctDVs = FALSE
-    else distinctDVs = (nbDV<16)
-  }
-  if ((distinctDVs==TRUE) &&  (multcomp %in% c("clustermass", "tfce")))
-    warning("Computations and corrections have been based on adjacency of DVs but the the plot will show separated DVs")
-  #####
-
-  par0 <- list(mfcol = par()$mfcol,mar = par()$mar,oma = par()$oma)
-
-  if(is.null(dotargs_par$mfcol)){dotargs_par$mfcol = c(p,1)}
-  if(is.null(dotargs_par$mar)){dotargs_par$mar = c(0,4,0,0)}
-  if(is.null(dotargs_par$oma)){dotargs_par$oma = c(4,0,4,1)}
-
-  par(dotargs_par)
-  #par(mfcol = c(p,1),mar = c(0,4,0,0),oma = c(4,0,4,1))
-  for (i in 1:p) {
-    if (distinctDVs) {
-      plot((1:ncol(data)-nbbaselinepts)/nbptsperunit,
-           data[i,],type = "p", xaxt = "n",xlab = "",ylab = rnames[i], pch=18, cex=2,
-      )
-      if(i==p) axis(1, at= (1:ncol(data)-nbbaselinepts)/nbptsperunit, labels=cnames)
-    }
-    else{
-      if(i==p){xaxt = NULL}else{xaxt = "n"}
-      plot((1:ncol(data)-nbbaselinepts)/nbptsperunit,
-           data[i,],type = "l", xaxt = xaxt,xlab = "",ylab = rnames[i], ... = ...
-      )
-    }
-    if(type == "statistic"){
-      xi = which(pvalue[i,]< x$alpha)
-      y = data[i,xi]
-      col="red"
-      #lines(x = x,y= y,lwd=par()$lwd*2,col=col)
-      points(x = (xi-nbbaselinepts)/nbptsperunit, y = y, pch=18,col=col, cex=distinctDVs+1)
-      if(multcomp=="clustermass"){
-        abline(h=hl[i],lty=3)
-        if(x$test=="t"&alternative=="two.sided"){
-          abline(h=-hl[i],lty=3)
-        }
-      }
-    }}
-  title(title,outer = T,cex = 2)
-  par0 <- par0[!names(par0)%in%c("cin","cra","csi","cxy","din","page")]
-  par(par0)
-}
+#terBraak================================
+cluster_terBraak <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_rdx, qr_mm, pry){
+           colSums(qr.fitted(qr_rdx, pry)^2)/colSums(qr.resid(qr_mm, pry)^2)* (NROW(pry)-qr_mm$rank)/(qr_rdx$rank)}
+         },
+         "t" = {funT = function(qr_rdx, qr_mm, pry){
+           as.numeric(qr.coef(qr_rdx, pry))/sqrt(colSums(qr.resid(qr_mm, pry)^2)/sum(rdx^2)) * sqrt(NROW(args$y)-qr_mm$rank)}
+         })
 
 
+
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign"))) %in% args$colx
+
+  ##data reduction
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+  qr_rdx <- qr(rdx)
+  rdy <- qr.resid(qr_d, args$y)
+  rmmy <- qr.resid(qr_mm, args$y)
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = rmmy[pi,, drop = F])
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = Pmat_product(x = rmmy,P = pi,type = type))})
+
+
+  out[,1] = funT(qr_rdx = qr_rdx, qr_mm = qr_mm, pry = rdy)
+
+
+
+  return(out)}
+
+
+
+
+
+#manly================================
+cluster_manly <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_rdx, qr_mm, py){
+           colSums(qr.fitted(qr_rdx, py)^2)/colSums(qr.resid(qr_mm, py)^2)* (NROW(py)-qr_mm$rank)/(qr_rdx$rank)}
+         },
+         "t" = {funT = function(qr_rdx, qr_mm, py){
+           as.numeric(qr.coef(qr_rdx, py))/sqrt(colSums(qr.resid(qr_mm, py)^2)/sum(rdx^2)) * sqrt(NROW(args$y)-qr_mm$rank)}
+         })
+
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign"))) %in% args$colx
+
+  ##data reduction
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+  qr_rdx <- qr(rdx)
+
+  ## center ys
+  qr_1 <- qr(rep(1,NROW(args$y)))
+  r1y <- qr.resid(qr_1,args$y)
+  h1y <- qr.fitted(qr_1,args$y)
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #funT(qr_rdx = qr_rdx, qr_mm = qr_mm, py = args$y[pi,, drop = F])
+    funT(qr_rdx = qr_rdx, qr_mm = qr_mm, py = Pmat_product(x = r1y,P = pi,type = type)+h1y)
+    })
+
+
+  return(out)}
+
+
+
+
+#draperstoneman================================
+cluster_draper_stoneman <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_rdpx, qr_pmm, y, qr_mm, qr_rdx, rdpx){
+           colSums(qr.fitted(qr_rdpx, y)^2)/colSums(qr.resid(qr_pmm, y)^2)* (NROW(y)-qr_mm$rank)/(qr_rdx$rank)}
+         },
+         "t" = {funT = function(qr_rdpx, qr_pmm, y, qr_mm, qr_rdx, rdpx){
+           as.numeric(qr.coef(qr_rdpx, y))/sqrt(colSums(qr.resid(qr_pmm, y)^2)/sum(rdpx^2)) * sqrt(NROW(y)-qr_mm$rank)}
+         })
+
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign"))) %in% args$colx
+
+  ##data reduction
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+  qr_rdx <- qr(rdx)
+
+
+
+
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #rdpx = qr.resid(qr_d,args$mm[pi,select_x, drop=F])
+    px = Pmat_product(x = args$mm[,select_x, drop=F],P =pi,type = type)
+    rdpx = qr.resid(qr_d,px)
+    qr_rdpx = qr(rdpx)
+    qr_pmm = qr(cbind(args$mm[,!select_x, drop=F],px))
+    funT(qr_rdpx = qr_rdpx, qr_pmm = qr_pmm, y = args$y, qr_mm = qr_mm, qr_rdx = qr_rdx, rdpx = rdpx)})
+  return(out)}
+
+
+#dekker================================
+
+cluster_dekker <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_rdprx, ry, qr_mm,qr_rdx,rdprx){
+           colSums(qr.fitted(qr_rdprx, ry)^2)/colSums(qr.resid(qr_rdprx, ry)^2)* (NROW(ry)-qr_mm$rank)/(qr_rdx$rank)}
+         },
+         "t" = {funT = function(qr_rdprx, ry, qr_mm,qr_rdx,rdprx){
+           as.numeric(qr.coef(qr_rdprx, ry))/sqrt(colSums(qr.resid(qr_rdprx, ry)^2)/sum(rdprx^2)) * sqrt(NROW(ry)-qr_mm$rank)}
+         })
+
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign"))) %in% args$colx
+
+  ##data reduction
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+  qr_rdx <- qr(rdx)
+  ry = qr.resid(qr_d,args$y)
+
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #rdprx = qr.resid(qr_d,rdx[pi,, drop=F])
+    rdprx = qr.resid(qr_d,Pmat_product(x = rdx,P = pi,type = type))
+    qr_rdprx = qr(rdprx)
+    #qr_pmm = qr(cbind(args$mm[,!select_x, drop=F],rdx[pi,, drop=F]))
+    funT(qr_rdprx = qr_rdprx, ry = ry, qr_mm = qr_mm, qr_rdx = qr_rdx, rdprx = rdprx)})
+  return(out)}
+
+
+
+
+#huh_jhun================================
+cluster_huh_jhun <- function(args){
+  ##test selection
+  switch(args$test,
+         "fisher"= {funT = function(qr_vx, qr_mm, pvy, rdx){
+           colSums(qr.fitted(qr_vx, pvy)^2)/colSums(qr.resid(qr_vx, pvy)^2)* (NROW(args$y)-qr_mm$rank)/(qr_vx$rank)}
+         },
+         "t" = {funT = function(qr_vx, qr_mm, pvy, rdx){
+           as.numeric(qr.coef(qr_vx, pvy))/sqrt(colSums(qr.resid(qr_vx, pvy)^2)/sum(rdx^2)) * sqrt(NROW(args$y)-qr_mm$rank)}
+         })
+
+  ##effect selection
+  select_x <- c(1:length(attr(args$mm,"assign")))%in%args$colx
+  qr_mm <- qr(args$mm)
+  qr_d <- qr(args$mm[,!select_x, drop = F])
+  rdx <- qr.resid(qr_d, args$mm[, select_x, drop = F])
+
+  ###creat random roation from space
+  qr_o= qr(args$rnd_rotation[1:(NROW(args$y)-qr_d$rank),1:(NROW(args$y)-qr_d$rank)])
+  omega = qr.Q(qr_o)%*%diag(sign(diag(qr.R(qr_o))))
+
+  ####create orthogonal subspace
+  qcd = qr.Q(qr_d,complete = T)[,-c(1:qr_d$rank),drop=F]
+  v = omega%*%t(qcd)
+
+
+
+  ###reducing data
+  vx <- v%*%(args$mm[,select_x, drop = F])
+  qr_vx <-qr(vx)
+  vy <- v%*%args$y
+
+
+  type = attr(args$P,"type")
+  out = apply(args$P,2,function(pi){
+    #funT(qr_vx = qr_vx, qr_mm = qr_mm, pvy = vy[pi,,drop = F], rdx = rdx)
+    funT(qr_vx = qr_vx, qr_mm = qr_mm, pvy = Pmat_product(x = vy,P = pi,type = type), rdx = rdx)})
+
+
+  return(out)}
 

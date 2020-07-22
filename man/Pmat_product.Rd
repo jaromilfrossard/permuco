@@ -19,3 +19,9 @@ A matrix n x np containing the permutated/signflipped vectors.
 \description{
 Multiplies a vector or matrix with a Pmat object
 }
+\seealso{
+Other pmat: 
+\code{\link{Pmat}()},
+\code{\link{as.Pmat}()}
+}
+\concept{pmat}

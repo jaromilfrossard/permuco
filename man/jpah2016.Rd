@@ -4,7 +4,9 @@
 \name{jpah2016}
 \alias{jpah2016}
 \title{Dataset of a control study in psychology.}
-\format{A data frame with 38 rows and 8 variables.}
+\format{
+A data frame with 38 rows and 8 variables.
+}
 \usage{
 data(jpah2016)
 }
@@ -26,3 +28,10 @@ A subset of a control experiment measuring the impulsive approach tendencies tow
 \references{
 Cheval, B., Sarrazin, P., Pelletier, L., & Friese, M. (2016). Effect of retraining approach-avoidance tendencies on an exercise task: A randomized controlled trial. Journal of Physical Activity and Health, 13(12), 1396-1403.
 }
+\seealso{
+Other dataset: 
+\code{\link{attentionshifting_design}},
+\code{\link{attentionshifting_signal}},
+\code{\link{emergencycost}}
+}
+\concept{dataset}

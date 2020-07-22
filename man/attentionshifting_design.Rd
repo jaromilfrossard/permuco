@@ -4,7 +4,9 @@
 \name{attentionshifting_design}
 \alias{attentionshifting_design}
 \title{Datatset of the design for the data attentionshifting_signal}
-\format{A data frame with 120 rows and 10 variables.}
+\format{
+A data frame with 120 rows and 10 variables.
+}
 \usage{
 data(attentionshifting_design)
 }
@@ -23,3 +25,10 @@ Design of an experiment measuring the EEG brain activity of 15 participants who 
 \item STAIS_trait : measure of the personality trait of anxiety of the subject.
 }
 }
+\seealso{
+Other dataset: 
+\code{\link{attentionshifting_signal}},
+\code{\link{emergencycost}},
+\code{\link{jpah2016}}
+}
+\concept{dataset}

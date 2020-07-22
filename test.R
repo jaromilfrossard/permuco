@@ -37,12 +37,12 @@ m1 = aovperm(f,data = mydata_avg,np=5)
 
 
 m2 = aovperm(f,data = mydata,
-             method ="Rd_kheradPajouh_renaud2",
-             new_method = T,np=5)
+             method ="Rd_replic_kheradPajouh_renaud",
+             np=5)
 
 m3=aovperm(f,data = mydata_avg,
-        method ="Rd_kheradPajouh_renaud2",
-        new_method = T,np=5)
+        method ="Rd_replic_kheradPajouh_renaud",
+        np=5)
 
 
 cbind(wrong=m0$distribution[1,],
