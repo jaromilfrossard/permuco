@@ -1,4 +1,9 @@
 
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/jaromilfrossard/permuco/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco/actions)
+<!-- badges: end -->
+
 # `permuco`
 
 This package provides functions to compute permutation tests in linear
