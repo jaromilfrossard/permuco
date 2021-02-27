@@ -31,3 +31,6 @@ reference:
    Handle permutation matrices
   contents:
    - has_concept("pmat")
+
+news:
+  cran_dates: false

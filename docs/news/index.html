@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dataset of a control study in psychology. — jpah2016 • permuco</title>
+<title>Changelog • permuco</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,7 @@
 
 
 
-<meta property="og:title" content="Dataset of a control study in psychology. — jpah2016" />
-<meta property="og:description" content="A subset of a control experiment measuring the impulsive approach tendencies toward physical activity or sedentary behaviors." />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -59,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -111,51 +110,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Dataset of a control study in psychology.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>jpah2016.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>A subset of a control experiment measuring the impulsive approach tendencies toward physical activity or sedentary behaviors.</p>
-    </div>
-
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>jpah2016</span><span class='op'>)</span></pre>
-
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 38 rows and 8 variables.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    
+    <div id="permuco-111-github" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.1">
+<a href="#permuco-111-github" class="anchor"></a>permuco 1.1.1 (github)</h1>
 <ul>
-<li><p>id identifier of the subject.</p></li>
-<li><p>bmi body mass index.</p></li>
-<li><p>age.</p></li>
-<li><p>sex.</p></li>
-<li><p>condition the experimental condition where the task was to approach physical activity and avoid sedentary behavior (ApSB_AvPA), approach sedentarity behavior and avoid physical activity (ApPA_AvSB), and a control condition (control).</p></li>
-<li><p>time pre, post.</p></li>
-<li><p>iapa measure of impulsive approach tendencies toward physical activity (dependant variable).</p></li>
-<li><p>iasb measure of impulsive approach tendencies toward sedentary behavior (dependant variable).</p></li>
+<li>add signflip test</li>
+<li>add replication for rANOVA</li>
+<li>change Pmat(): argument “type” and “counting”</li>
+<li>plot.lmperm(): … argument can be used (eg xlim, ylim)</li>
+<li>add testthat, pkgdown</li>
 </ul>
-
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Cheval, B., Sarrazin, P., Pelletier, L., &amp; Friese, M. (2016). Effect of retraining approach-avoidance tendencies on an exercise task: A randomized controlled trial. Journal of Physical Activity and Health, 13(12), 1396-1403.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other dataset: 
-<code><a href='attentionshifting_design.html'>attentionshifting_design</a></code>,
-<code><a href='attentionshifting_signal.html'>attentionshifting_signal</a></code>,
-<code><a href='emergencycost.html'>emergencycost</a></code></p></div>
-
+</div>
+    <div id="permuco-110-cran" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0">
+<a href="#permuco-110-cran" class="anchor"></a>permuco 1.1.0 (cran)</h1>
+<ul>
+<li>correction of compute_troendle: pvalue for all tests</li>
+<li>New multiple comparisons procedure: min-P.</li>
+<li>new display of the output of clusterlm():all test or pseudo-clusters</li>
+<li>delete the table of the output of clusterlm. Access the table using summary(clusterlm(…))</li>
+<li>user access to functions compute_tfce, compute_clustermass, compute_troendle, compute_minP</li>
+<li>update vignette permuco_tutorial.pdf</li>
+</ul>
+</div>
+    <div id="permuco-102" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.2">
+<a href="#permuco-102" class="anchor"></a>permuco 1.0.2</h1>
+<ul>
+<li>correction benjaminin to benjamini</li>
+<li>adding parametric (uncorrected) pvalues for signal</li>
+<li>add argument “nbbaselinepts” and “nbptsperunit” in plot.clusterlm</li>
+<li>change argument names: bilateral in two.sided, left in less,right in greater</li>
+<li>update vignette permuco_tutorial.pdf</li>
+</ul>
+</div>
+    <div id="permuco-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#permuco-101" class="anchor"></a>permuco 1.0.1</h1>
+<ul>
+<li>add vignette permuco_tutorial.pdf</li>
+</ul>
+</div>
+    <div id="permuco-100" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#permuco-100" class="anchor"></a>permuco 1.0.0</h1>
+<ul>
+<li>Initial release</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
