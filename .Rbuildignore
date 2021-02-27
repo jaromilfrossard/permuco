@@ -8,3 +8,4 @@ vignettes/permuco_tutorial_00.pdf
 ^README\.Rmd$
 ^\.travis\.yml$
 ^\.github$
+^codecov\.yml$
