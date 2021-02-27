@@ -2,7 +2,22 @@ rm(list=ls())
 library(tidyverse)
 library(dplyr)
 library(tidyr)
-library(permuco)
+#library(permuco)
+
+Rcpp::sourceCpp("src/code.cpp")
+
+source("R/get_cluster.R")
+
+x= sin(seq(from = 0,to = (4*pi),length.out = 200))
+
+permuco:::get_cluster.matrix(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
+
+
+get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
+get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="less")
+get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="two.sided")
+
+
 H=function(mat){mat%*%MASS:::ginv(t(mat)%*%mat)%*%t(mat)}
 
 set.seed(1)

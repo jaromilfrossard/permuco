@@ -14,25 +14,26 @@
 compute_clustermass <-  function(distribution, threshold, aggr_FUN, alternative = "greater"){
   switch(alternative,
          "greater" = {
-           threshold <- abs(threshold)
-           selected <- distribution > threshold
+           #threshold <- abs(threshold)
+           #selected <- distribution > threshold
            extreme <- function(x)max(x,na.rm = T)
          },
          "less" = {
-           threshold <- -abs(threshold)
-           selected <- distribution < threshold
+           #threshold <- -abs(threshold)
+           #selected <- distribution < threshold
            extreme <- function(x)max(x,na.rm = T)},
          "two.sided" = {
            distribution <- abs(distribution)
-           threshold <- abs(threshold)
-           selected <- distribution > threshold
+           # threshold <- abs(threshold)
+           #selected <- distribution > threshold
            extreme <- function(x)max(x,na.rm = T)
          })
 
   ##create connected component labeling
-  cl <- (selected-cbind(0,selected[,-NCOL(selected),drop=F]))==1
-  cl <- t(apply(cl,1,cumsum))
-  cl[!selected] <- 0
+  # cl <- (selected-cbind(0,selected[,-NCOL(selected),drop=F]))==1
+  # cl <- t(apply(cl,1,cumsum))
+  # cl[!selected] <- 0
+  cl <- get_cluster(distribution = distribution, threshold = threshold, alternative = alternative)
 
   mass_distribution <- sapply(1:NROW(cl),function(rowi){
     extreme(sapply(1:max(1,max(cl[rowi,])),function(i){

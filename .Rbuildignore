@@ -9,3 +9,4 @@ vignettes/permuco_tutorial_00.pdf
 ^\.travis\.yml$
 ^\.github$
 ^codecov\.yml$
+^Makefile$
