@@ -10,7 +10,12 @@ URL: https://github.com/jaromilfrossard/permuco
 BugReports: https://github.com/jaromilfrossard/permuco/issues
 Description: Functions to compute p-values based on permutation tests. Regression, ANOVA and ANCOVA, omnibus F-tests, marginal unilateral and bilateral t-tests are available. Several methods to handle nuisance variables are implemented (Kherad-Pajouh, S., & Renaud, O. (2010) <doi:10.1016/j.csda.2010.02.015> ; Kherad-Pajouh, S., & Renaud, O. (2014) <doi:10.1007/s00362-014-0617-3> ; Winkler, A. M., Ridgway, G. R., Webster, M. A., Smith, S. M., & Nichols, T. E. (2014) <doi:10.1016/j.neuroimage.2014.01.060>). An extension for the comparison of signals issued from experimental conditions (e.g. EEG/ERP signals) is provided. Several corrections for multiple testing are possible, including the cluster-mass statistic (Maris, E., & Oostenveld, R. (2007) <doi:10.1016/j.jneumeth.2007.03.024>) and the threshold-free cluster enhancement (Smith, S. M., & Nichols, T. E. (2009) <doi:10.1016/j.neuroimage.2008.03.061>). 
 License: GPL (>= 2)
-Imports: permute,Matrix,stats,graphics
+Imports: 
+    permute,
+    Matrix,
+    stats,
+    graphics,
+    Rcpp
 LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 7.1.1
@@ -19,3 +24,5 @@ Suggests:
     testthat,
     covr
 VignetteBuilder: R.rsp
+LinkingTo: 
+    Rcpp
