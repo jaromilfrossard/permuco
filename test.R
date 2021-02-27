@@ -1,3 +1,169 @@
+rm(list=ls())
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(permuco)
+H=function(mat){mat%*%MASS:::ginv(t(mat)%*%mat)%*%t(mat)}
+
+set.seed(1)
+
+mydata = expand.grid(particip = paste0("P",stringr::str_pad(1:6,2,"left","0")),
+                     W1 = paste0("w",1:3),
+                     W2 = paste0("w",1:2), stringsAsFactors = F)%>%
+  mutate(count=if_else(particip=="P01"&W1=="w1"&W2=="w1",4,1))%>%
+  uncount(count)%>%
+  nest(data=-particip)%>%
+  mutate(B1 = if_else(particip%in%c("P01","P02","P03"),"b1","b2"),
+         Cov1 = rnorm(n()),
+         Cov1 = Cov1-mean(Cov1))%>%
+  unnest(data)%>%
+  mutate(y = rnorm(n()))%>%
+  arrange(particip,W1,W2,B1)
+
+
+mydata_avg = mydata%>%
+  group_by(particip,W1,W2,B1,Cov1)%>%
+  summarise(y = mean(y))%>%
+  ungroup()%>%
+  arrange(particip,W1,W2,B1)
+
+
+f = y~Cov1*B1*W1*W2+Error(particip/(W1*W2))
+#f = y~W1+Error(particip/(W1))
+
+m0 = aovperm(f,data = mydata,np=5)
+
+m1 = aovperm(f,data = mydata_avg,np=5)
+
+
+m2 = aovperm(f,data = mydata,
+             method ="Rd_replic_kheradPajouh_renaud",
+             np=5)
+
+m3=aovperm(f,data = mydata_avg,
+        method ="Rd_replic_kheradPajouh_renaud",
+        np=5)
+
+
+cbind(wrong=m0$distribution[1,],
+      avg=m1$distribution[1,],
+      test =m2$distribution[1,],
+      test_avg =m3$distribution[1,])
+
+
+mm <- argi$mm
+zid <- argi$mm_id
+factors = names(attr(mm,"contrasts"))
+eff = colnames(argi$link)
+wfact_link <- sapply(strsplit(eff,":"),function(effi){sum(!effi%in%factors)==0})
+link_fact <- argi$link[,wfact_link,drop=F]
+wfact_mm <- (attr(mm,"assign"))%in%c(0,link_fact[2,drop=F]+link_fact[3,drop=F])
+ZE = permuco:::khatrirao(zid,mm[,wfact_mm,drop=F])
+mm_gr=cbind(mm[,wfact_mm,drop=F],ZE)
+qr_gr = qr(mm_gr)
+#hii = diag(qr.fitted(qr_gr,diag(length(argi$y))))
+duplic = duplicated.matrix(mm_gr)
+
+###method
+assign = attr(mm,"assign")
+select_x = assign==argi$i
+#select_between = assign%in%args$link[2,]
+select_within = assign == (argi$link[3,argi$i])
+
+
+z = permuco:::khatrirao(a = argi$mm_id, b = mm[,select_within,drop=F])
+z = qr.resid(qr(mm),z)
+qr_z = qr(z)
+
+
+qr_d = qr(mm[,!select_x,drop=F])
+rdx = qr.resid(qr_d,mm[,select_x,drop=F])
+
+qr_rdx = qr(rdx)
+qr_rdz = qr(qr.resid(qr_d,z))
+###method
+
+pry = qr.fitted(qr_gr,qr.resid(qr_d,argi$y))
+pry[!duplic]
+
+qr_dd = qr(mm[!duplic,!select_x,drop=F])
+qr.resid(qr_dd,mm[!duplic,select_x,drop=F])
+
+qr_rdx = qr(qr.resid(qr_d,mm[,select_x,drop=F]))
+qr_rdz = qr(qr.resid(qr_d,z))
+
+den = sum(qr.fitted(qr_rdz,pry)^2)/qr_rdz$rank
+num = sum(qr.fitted(qr_rdx,pry)^2)/qr_rdx$rank
+den
+
+
+qr.fyi - m3$y
+
+
+qr_gr = qr(mm_gr)
+Q_gr = qr.Q(qr_gr)
+
+
+qr.fitted(qr_gr,diag(length(argi$y)))-H(mm_gr)
+
+-as.numeric(H(mm_gr)%*%argi$y)
+
+
+H(mm_gr)%*%argi$y
+
+sum(abs(Q_gr-Q_grc)>1e-10)
+qr_gr$rank
+
+rowSums(Q_gr-Q_grc)
+sum(abs(qr.fitted(qr_gr,argi$y)-as.numeric(H(mm_gr)%*%argi$y))> 1e-10)
+
+H(mm_gr)- t(Q_gr)%*%Q_gr
+
+diag(H(mm_gr))
+
+qr.Q(qr_gr)%*%t(qr.Q(qr_gr))-H(mm_gr)
+
+
+DXZE <- cbind(mm,zid,permuco:::khatrirao(mm,zid))
+
+image(Matrix(round(H(mm_gr),6)))
+
+image(Matrix(H(mm)))
+
+rowSums(qr.Q(qr(DXZE))^2)
+
+
+
+
+# mydata = expand.grid(particip = paste0("P",stringr::str_pad(1:6,2,"left","0")),
+#                      W1 = paste0("w",1:3),
+#                      W2 = paste0("w",1:2), stringsAsFactors = F)%>%
+#   mutate(count=if_else(particip=="P01"&W1=="w1"&W2=="w1",4,1))%>%
+#   uncount(count)%>%
+#   nest(data=-particip)%>%
+#   mutate(B1 = if_else(particip%in%c("P01","P02","P03"),"b1","b2"),
+#          Cov1 = rnorm(n()),
+#          Cov1 = Cov1-mean(Cov1))%>%
+#   unnest(data)%>%
+#   mutate(y = rnorm(n()))%>%
+#   arrange(particip,W1,W2,B1)
+#
+#
+# mydata_avg = mydata%>%
+#   group_by(particip,W1,W2,B1,Cov1)%>%
+#   summarise(y = mean(y))%>%
+#   ungroup()%>%
+#   arrange(particip,W1,W2,B1)
+
+
+
+
+
+
+
+
+
+
 # library(permuco)
 # library(Matrix)
 rm(list=ls())

@@ -18,6 +18,7 @@
 #' @docType data
 #' @usage data(attentionshifting_design)
 #' @format A data frame with 120 rows and 10 variables.
+#' @family dataset
 NULL
 
 
@@ -34,6 +35,7 @@ NULL
 #' @docType data
 #' @usage data(attentionshifting_signal)
 #' @format A data frame with 120 rows and 819 variables.
+#' @family dataset
 NULL
 
 
@@ -58,6 +60,7 @@ NULL
 #' @usage data(jpah2016)
 #' @format A data frame with 38 rows and 8 variables.
 #' @references Cheval, B., Sarrazin, P., Pelletier, L., & Friese, M. (2016). Effect of retraining approach-avoidance tendencies on an exercise task: A randomized controlled trial. Journal of Physical Activity and Health, 13(12), 1396-1403.
+#' @family dataset
 NULL
 
 
@@ -80,4 +83,5 @@ NULL
 #' @usage data(emergencycost)
 #' @format A data frame with 176 rows and 5 variables.
 #' @references Heritier, S., Cantoni, E., Copt, S., & Victoria-Feser, M. P. (2009). Robust methods in Biostatistics (Vol. 825). John Wiley & Sons.
+#' @family dataset
 NULL

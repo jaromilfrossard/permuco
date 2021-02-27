@@ -10,6 +10,6 @@ Description: Functions to compute p-values based on permutation tests. Regressio
 License: GPL (>= 2)
 Imports: permute,Matrix,stats,graphics
 LazyData: TRUE
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Suggests: R.rsp
 VignetteBuilder: R.rsp

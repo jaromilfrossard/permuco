@@ -4,7 +4,9 @@
 \name{emergencycost}
 \alias{emergencycost}
 \title{Dataset of cost of emergency patients.}
-\format{A data frame with 176 rows and 5 variables.}
+\format{
+A data frame with 176 rows and 5 variables.
+}
 \usage{
 data(emergencycost)
 }
@@ -23,3 +25,10 @@ Observational data from 176 emergency patients with variables :
 \references{
 Heritier, S., Cantoni, E., Copt, S., & Victoria-Feser, M. P. (2009). Robust methods in Biostatistics (Vol. 825). John Wiley & Sons.
 }
+\seealso{
+Other dataset: 
+\code{\link{attentionshifting_design}},
+\code{\link{attentionshifting_signal}},
+\code{\link{jpah2016}}
+}
+\concept{dataset}

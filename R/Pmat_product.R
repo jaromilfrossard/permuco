@@ -6,6 +6,7 @@
 #' @param type A character string indicating the type of transformation. This argument need to be specified if P is not of class Pmat.
 #' @return A matrix n x np containing the permutated/signflipped vectors.
 #' @export
+#' @family pmat
 Pmat_product <- function(x, P, type = NULL){UseMethod("Pmat_product")}
 
 #' @export

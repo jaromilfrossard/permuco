@@ -1,0 +1,33 @@
+destination: docs
+
+reference:
+- title: Main Functions
+  desc: >
+   Run the permutation test
+  contents:
+   - has_concept("main function")
+- title: Multiple comparisons procedures
+  desc: >
+   Multiple comparisons on permuted distribution
+  contents:
+   - has_concept("multcomp")
+- title: Plot
+  desc: >
+   Plot results of tests
+  contents:
+   - has_concept("plot")
+- title: Print and summary
+  desc: >
+   Display tables of the results of the tests
+  contents:
+   - has_concept("summary")
+- title: Datasets
+  desc: >
+   Data for examples
+  contents:
+   - has_concept("dataset")
+- title: Permutation Matrices
+  desc: >
+   Handle permutation matrices
+  contents:
+   - has_concept("pmat")

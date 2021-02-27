@@ -72,6 +72,7 @@
 #'
 #'@author jaromil.frossard@unige.ch
 #'@export
+#' @family main function
 clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "permutation", test = "fisher", threshold = NULL, aggr_FUN = NULL,
                       multcomp = "clustermass", ...){
 

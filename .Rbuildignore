@@ -2,3 +2,7 @@
 ^\.Rproj\.user$
 test.R
 vignettes/permuco_tutorial_00.pdf
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^README\.Rmd$
