@@ -6,3 +6,5 @@ vignettes/permuco_tutorial_00.pdf
 ^docs$
 ^pkgdown$
 ^README\.Rmd$
+^\.travis\.yml$
+^\.github$
