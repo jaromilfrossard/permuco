@@ -5,3 +5,23 @@ get_cluster_matrix <- function(distribution, threshold) {
     .Call('_permuco_get_cluster_matrix', PACKAGE = 'permuco', distribution, threshold)
 }
 
+get_clusterdepth_head <- function(cluster, border) {
+    .Call('_permuco_get_clusterdepth_head', PACKAGE = 'permuco', cluster, border)
+}
+
+get_clusterdepth_tail <- function(cluster, border) {
+    .Call('_permuco_get_clusterdepth_tail', PACKAGE = 'permuco', cluster, border)
+}
+
+depth_distribution_head <- function(distribution, head) {
+    .Call('_permuco_depth_distribution_head', PACKAGE = 'permuco', distribution, head)
+}
+
+depth_distribution_tail <- function(distribution, tail) {
+    .Call('_permuco_depth_distribution_tail', PACKAGE = 'permuco', distribution, tail)
+}
+
+depth_distribution_unique <- function(distribution, head, tail) {
+    .Call('_permuco_depth_distribution_unique', PACKAGE = 'permuco', distribution, head, tail)
+}
+

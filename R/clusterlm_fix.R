@@ -1,6 +1,6 @@
 #' @importFrom stats rnorm qf qt pt pf
 clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, rnd_rotation, aggr_FUN, E, H,
-                          cl, multcomp, alpha, p_scale, coding_sum, ndh, return_distribution, new_method){
+                          cl, multcomp, alpha, p_scale, coding_sum, ndh, return_distribution, new_method, border, depth_scale){
 
 
 
@@ -217,7 +217,8 @@ clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, r
     #compute multiple comparison for two.sided
     multiple_comparison[[i]] <- c(multiple_comparison[[i]],
     switch_multcomp(multcomp = multcomp, distribution = distribution, threshold = threshold[i],aggr_FUN = aggr_FUN,
-                    alternative = "two.sided", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
+                    alternative = "two.sided", E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha, border = border,
+                    depth_scale = depth_scale))
     ##one-sided test
     if(test == "t"){
       #greater
@@ -236,7 +237,8 @@ clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, r
       multiple_comparison_greater[[i]] <- c(multiple_comparison_greater[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]), distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
-                                                         E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))
+                                                         E = E,H = H,ndh =ndh,pvalue = pvalue, alpha = alpha, border = border,
+                                                         depth_scale = depth_scale))
       #less
       ##pscale change
       alternative <- "less"
@@ -255,7 +257,8 @@ clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, r
       multiple_comparison_less[[i]] <- c(multiple_comparison_less[[i]],
                                          switch_multcomp(multcomp = c("clustermass",multcomp[!multcomp%in%"tfce"]),distribution = distribution,
                                                          threshold = threshold[i],aggr_FUN = aggr_FUN,alternative = alternative,
-                                                         E = E, H = H, ndh =ndh, pvalue = pvalue, alpha = alpha))}
+                                                         E = E, H = H, ndh =ndh, pvalue = pvalue, alpha = alpha, border = border,
+                                                         depth_scale = depth_scale))}
   }
 
   ####create table

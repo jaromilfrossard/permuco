@@ -1,5 +1,5 @@
 clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, threshold, np, P, rnd_rotation,
-                          aggr_FUN, E, H, cl, multcomp, alpha, p_scale, return_distribution, ndh, new_method){
+                          aggr_FUN, E, H, cl, multcomp, alpha, p_scale, return_distribution, ndh, new_method,  border, depth_scale){
 
 
 
@@ -132,7 +132,8 @@ clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, thresho
                                  switch_multcomp(multcomp = multcomp,
                                                  distribution = distribution, threshold = threshold[i],
                                                  aggr_FUN = aggr_FUN, alternative = "two.sided", E = E,
-                                                 H = H,ndh =ndh,pvalue = pvalue, alpha = alpha))}
+                                                 H = H,ndh =ndh,pvalue = pvalue, alpha = alpha, border = border,
+                                                 depth_scale = depth_scale))}
 
 
   # cluster_table <- cluster_table(multiple_comparison[order(link[3,], link[1,])])

@@ -2,16 +2,32 @@ rm(list=ls())
 library(tidyverse)
 library(dplyr)
 library(tidyr)
-#library(permuco)
+library(permuco)
 
-Rcpp::sourceCpp("src/code.cpp")
+#Rcpp::sourceCpp("src/code.cpp")
 
-source("R/get_cluster.R")
+#source("R/get_cluster.R")
+
+
+object=clusterlm(attentionshifting_signal[,200:400] ~ visibility*emotion*direction
+         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
+         multcomp = c("clustermass","clusterdepth","tfce"), np =2000)
+print(object,multcomp= "clusterdepth")
+
+summary(object,multcomp= "clusterdepth",table_type = "full")
+
+object$multiple_comparison$visibility$clusterdepth
+plot(object,multcomp = "clusterdepth")
+multcomp = "clusterdepth"
+print(object,multcomp= "tfce")
+print(object,multcomp= "clusterdepth")
+x = object$multiple_comparison
 
 x= sin(seq(from = 0,to = (4*pi),length.out = 200))
 
 permuco:::get_cluster.matrix(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
 
+permuco:::compute_clustermass
 
 get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
 get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="less")

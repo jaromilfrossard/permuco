@@ -114,6 +114,15 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
     dotargs$ndh = 500
   }
 
+  #clusterdepth
+  if(is.null(dotargs$border)){
+    dotargs$border = "reverse"
+  }
+  if(is.null(dotargs$depth_scale)){
+    dotargs$depth_scale = "head_and_tail"
+  }
+
+
   if(is.null(dotargs$return_distribution)){
     dotargs$return_distribution = F
   }
@@ -134,7 +143,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
            "fisher" = {dotargs$coding_sum = T})
   }
 
-  multcomp <- match.arg(multcomp, c("clustermass", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
+  multcomp <- match.arg(multcomp, c("clustermass","clusterdepth", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
                         several.ok = T)
 
   ###switch fix effet
@@ -144,7 +153,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
                              E = dotargs$E, H = dotargs$H, threshold = threshold,
                              return_distribution = dotargs$return_distribution, cl = cl, multcomp = multcomp,
                              alpha = dotargs$alpha, p_scale = dotargs$p_scale, coding_sum = dotargs$coding_sum,ndh = dotargs$ndh,
-                             new_method = dotargs$new_method)
+                             new_method = dotargs$new_method, border = dotargs$border, depth_scale = dotargs$depth_scale)
   } else if (!is.null(indError)){
     if(test!="fisher"){
       warning("Random effects model only accept fisher statistics. Test statistic is set to fisher.")
@@ -154,7 +163,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
                              E = dotargs$E, H = dotargs$H, threshold = threshold,
                              return_distribution = dotargs$return_distribution, cl = cl, multcomp = multcomp,
                              alpha = dotargs$alpha, p_scale = dotargs$p_scale, coding_sum = dotargs$coding_sum,ndh = dotargs$ndh,
-                             new_method = dotargs$new_method)}
+                             new_method = dotargs$new_method, border = dotargs$border, depth_scale = dotargs$depth_scale)}
 
   ###output
   return(result)

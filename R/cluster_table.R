@@ -12,7 +12,8 @@ cluster_table = function(x, multcomp = NULL, alpha = 0.05, ...){
   ct = lapply(1:length(x), function(j){
     effect = x[[j]]
     info = effect$uncorrected$test_info
-    selected= effect[[multcomp]]$main[,2]< alpha
+    selected = effect[[multcomp]]$main[,2]< alpha
+    selected[is.na(selected)] = FALSE
     cl = (selected-c(0,selected[-length(selected)]))!=0
     cl = cumsum(cl)+1
     unique_cluster = unique(cl)
