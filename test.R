@@ -4,6 +4,10 @@ library(dplyr)
 library(tidyr)
 library(permuco)
 
+
+# x= sin(seq(from = 0,to = (4*pi),length.out = 200))
+# sum(permuco:::vector_extend(x,0.5)!=0)
+
 #Rcpp::sourceCpp("src/code.cpp")
 
 #source("R/get_cluster.R")
@@ -11,7 +15,32 @@ library(permuco)
 
 object=clusterlm(attentionshifting_signal[,200:400] ~ visibility*emotion*direction
          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
-         multcomp = c("clustermass","clusterdepth","tfce"), np =2000)
+         multcomp = c("clustermass","tfce"), np =2000,return_distribution = T)
+
+distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
+E = object$multiple_comparison[[1]]$tfce$E
+H = object$multiple_comparison[[1]]$tfce$H
+dhi = object$multiple_comparison[[1]]$tfce$dhi
+dh =  dhi[2]-dhi[1]
+
+t0 = proc.time()
+out0=compute_tfce(distribution = distribution,E = E,H = H,ndh = length(dhi))
+t0 =rbind(t0, proc.time())
+out1=permuco:::compute_tfce2(distribution = distribution,E = E,H = H,ndh = length(dhi))
+t0 =rbind(t0, proc.time())
+apply(t0,2,diff)
+
+tfcecpp <- permuco:::tfce_distribution(distribution, E, H, dh, dhi)
+
+plot(out0$main[,1],out1$main[,1])
+
+plot(object$multiple_comparison[[1]]$tfce$main[,1])
+
+compute_tfce
+
+
+permuco:::vector_extend(1:10,3)
+
 print(object,multcomp= "clusterdepth")
 
 summary(object,multcomp= "clusterdepth",table_type = "full")
@@ -23,7 +52,7 @@ print(object,multcomp= "tfce")
 print(object,multcomp= "clusterdepth")
 x = object$multiple_comparison
 
-x= sin(seq(from = 0,to = (4*pi),length.out = 200))
+
 
 permuco:::get_cluster.matrix(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
 

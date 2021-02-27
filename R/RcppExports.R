@@ -25,3 +25,11 @@ depth_distribution_unique <- function(distribution, head, tail) {
     .Call('_permuco_depth_distribution_unique', PACKAGE = 'permuco', distribution, head, tail)
 }
 
+vector_extend <- function(x, threshold) {
+    .Call('_permuco_vector_extend', PACKAGE = 'permuco', x, threshold)
+}
+
+tfce_distribution <- function(distribution, E, H, dh, dhi) {
+    .Call('_permuco_tfce_distribution', PACKAGE = 'permuco', distribution, E, H, dh, dhi)
+}
+

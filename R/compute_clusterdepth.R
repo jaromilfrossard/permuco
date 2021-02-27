@@ -50,7 +50,7 @@ compute_clusterdepth <- function(distribution,threshold, alternative = "two.side
 
   }
 
-  list(main =cbind(statistic = distribution[1,], pvalue = pvalue))
+  list(main =cbind(statistic = distribution[1,], pvalue = pvalue),depth_scale = depth_scale, border = border)
 
 
 }

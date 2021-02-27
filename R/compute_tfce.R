@@ -14,20 +14,22 @@ compute_tfce <- function(distribution, E, H, ndh){
   dhi <- seq(from = range_d[1], to =range_d[2], length.out = ndh)
   dh <- dhi[2]-dhi[1]
 
-  distribution_tfce <- apply(abs(distribution),1, function(rowi){
-    max(compute_tfce_statistic(signal = rowi, E = E, H = H,dh = dh, dhi = dhi))
-  }
-  )
+  # distribution_tfce <- apply(abs(distribution),1, function(rowi){
+  #   max(compute_tfce_statistic(signal = rowi, E = E, H = H,dh = dh, dhi = dhi))})
+  distribution_tfce <- apply(tfce_distribution(distribution, E, H, dh, dhi),1,max)
 
-  statistic <- compute_tfce_statistic(signal = abs(distribution[1,]), E = E, H = H,dh =dh, dhi = dhi)
+
+  statistic <- compute_tfce_statistic(signal = abs(distribution[1,]), E = E, H = H,dh = dh, dhi = dhi)
 
   pvalue <- sapply(statistic,function(s)compute_pvalue(distribution = distribution_tfce,stat=s))
 
   out <- list(main = cbind(statistic = statistic, pvalue = pvalue),
-              distribution = distribution_tfce,
+              distribution = distribution_tfce, E = E, H = H,
               dhi = dhi)
   return(out)
 
 
 
 }
+
+

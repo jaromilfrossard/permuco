@@ -78,6 +78,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// vector_extend
+NumericVector vector_extend(NumericVector x, double threshold);
+RcppExport SEXP _permuco_vector_extend(SEXP xSEXP, SEXP thresholdSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
+    rcpp_result_gen = Rcpp::wrap(vector_extend(x, threshold));
+    return rcpp_result_gen;
+END_RCPP
+}
+// tfce_distribution
+NumericMatrix tfce_distribution(NumericMatrix distribution, double E, double H, double dh, NumericVector dhi);
+RcppExport SEXP _permuco_tfce_distribution(SEXP distributionSEXP, SEXP ESEXP, SEXP HSEXP, SEXP dhSEXP, SEXP dhiSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type distribution(distributionSEXP);
+    Rcpp::traits::input_parameter< double >::type E(ESEXP);
+    Rcpp::traits::input_parameter< double >::type H(HSEXP);
+    Rcpp::traits::input_parameter< double >::type dh(dhSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dhi(dhiSEXP);
+    rcpp_result_gen = Rcpp::wrap(tfce_distribution(distribution, E, H, dh, dhi));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_permuco_get_cluster_matrix", (DL_FUNC) &_permuco_get_cluster_matrix, 2},
@@ -86,6 +113,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_permuco_depth_distribution_head", (DL_FUNC) &_permuco_depth_distribution_head, 2},
     {"_permuco_depth_distribution_tail", (DL_FUNC) &_permuco_depth_distribution_tail, 2},
     {"_permuco_depth_distribution_unique", (DL_FUNC) &_permuco_depth_distribution_unique, 3},
+    {"_permuco_vector_extend", (DL_FUNC) &_permuco_vector_extend, 2},
+    {"_permuco_tfce_distribution", (DL_FUNC) &_permuco_tfce_distribution, 5},
     {NULL, NULL, 0}
 };
 
