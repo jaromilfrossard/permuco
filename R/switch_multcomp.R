@@ -9,7 +9,7 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative
                                              alternative = alternative, depth_scale = depth_scale,
                                              border = border)}
   if("tfce"%in%multcomp){
-    out$tfce <- compute_tfce(distribution = distribution, E = E, H = H, ndh = ndh)}
+    out$tfce <- compute_tfce(distribution = distribution, alternative = alternative, E = E, H = H, ndh = ndh)}
   if("bonferroni"%in%multcomp){
     out$bonferroni <- compute_bonferroni(pvalue = pvalue, statistic = distribution[1,])}
   if("holm"%in%multcomp){

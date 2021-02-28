@@ -4,10 +4,12 @@
 \alias{compute_tfce}
 \title{Threshold-Free Cluster-Enhancement correction}
 \usage{
-compute_tfce(distribution, E, H, ndh)
+compute_tfce(distribution, alternative = "greater", E = 0.5, H = 1, ndh)
 }
 \arguments{
 \item{distribution}{A matrix of permuted statistical signal. The first row indicating the observed statistics.}
+
+\item{alternative}{A character string indicating the alternative hypothesis. Default is \code{"greater"}. Choose between \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 
 \item{E}{A scalar that represent the extend parameter of the TFCE transformation. Default is \code{E = 0.5}.}
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clustermass test correction — compute_clustermass • permuco</title>
+<title>Get the ID of the cluster on a distribution matrix — get_cluster • permuco</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Clustermass test correction — compute_clustermass" />
-<meta property="og:description" content="Compute the clustermass test correction given a matrix a permuted statistical signals." />
+<meta property="og:title" content="Get the ID of the cluster on a distribution matrix — get_cluster" />
+<meta property="og:description" content="Get if of clusters given a threshold" />
 
 
 
@@ -111,48 +111,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clustermass test correction</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/compute_clustermass.R'><code>R/compute_clustermass.R</code></a></small>
-    <div class="hidden name"><code>compute_clustermass.Rd</code></div>
+    <h1>Get the ID of the cluster on a distribution matrix</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/get_cluster.R'><code>R/get_cluster.R</code></a></small>
+    <div class="hidden name"><code>get_cluster.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute the clustermass test correction given a matrix a permuted statistical signals.</p>
+    <p>Get if of clusters given a threshold</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compute_clustermass</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>threshold</span>, <span class='va'>aggr_FUN</span>, alternative <span class='op'>=</span> <span class='st'>"greater"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_cluster</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>threshold</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>distribution</th>
-      <td><p>A matrix of permuted statistical signal. The first row indicating the observed statistics.</p></td>
+      <td><p>a matrix of the distribution.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>A scalar that respresents the threshold to create the clusters.</p></td>
-    </tr>
-    <tr>
-      <th>aggr_FUN</th>
-      <td><p>A function to compute the clustermasses. See details for examples.</p></td>
+      <td><p>a numeric indicating the threshold.</p></td>
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>A character string indicating the alternative hypothesis. Default is <code>"greater"</code>. Choose between <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
+      <td><p>A character string indicating the alternative hypothesis. Choose between <code>"two.sided"</code>, <code>"greater"</code>, <code>"less"</code>. Default is <code>"two.sided"</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The <code>aggr_FUN</code> argument may take predefined function as the sum: <code>aggr_FUN = sum</code> and also user-defined function as the sum of squares: <code>aggr_FUN = function(x){sum(x^2)}</code></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other multcomp: 
-<code><a href='compute_clusterdepth.html'>compute_clusterdepth</a>()</code>,
-<code><a href='compute_minP.html'>compute_minP</a>()</code>,
-<code><a href='compute_tfce.html'>compute_tfce</a>()</code>,
-<code><a href='compute_troendle.html'>compute_troendle</a>()</code></p></div>
+    <p>a matrix with integer indicating the id of the clusters</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -7,6 +7,7 @@
  * add testthat, pkgdown
  * rcpp optimization: get_cluster(), compute_tfce()
  * add compute_clusterdepth()
+ * add alternative to compute_tfce()
  
 
 # permuco 1.1.0 (cran)
