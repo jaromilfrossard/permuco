@@ -143,7 +143,7 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
            "fisher" = {dotargs$coding_sum = T})
   }
 
-  multcomp <- match.arg(multcomp, c("clustermass","clusterdepth", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
+  multcomp <- match.arg(multcomp, c("clustermass","clusterdepth","clusterdepth_head", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
                         several.ok = T)
 
   ###switch fix effet

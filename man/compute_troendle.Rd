@@ -16,6 +16,7 @@ Compute the Troendle's correction given a matrix a permuted statistics.
 }
 \seealso{
 Other multcomp: 
+\code{\link{compute_clusterdepth_head}()},
 \code{\link{compute_clusterdepth}()},
 \code{\link{compute_clustermass}()},
 \code{\link{compute_minP}()},

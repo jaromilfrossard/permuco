@@ -23,6 +23,7 @@ The \code{aggr_FUN} argument may take predefined function as the sum: \code{aggr
 }
 \seealso{
 Other multcomp: 
+\code{\link{compute_clusterdepth_head}()},
 \code{\link{compute_clusterdepth}()},
 \code{\link{compute_minP}()},
 \code{\link{compute_tfce}()},
