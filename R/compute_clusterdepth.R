@@ -106,7 +106,7 @@ compute_clusterdepth_head <- function(distribution, threshold, alternative = "tw
 
   }
 
-  list(main =cbind(statistic = distribution[1,], pvalue = pvalue, depth_scale = depth_scale, border = border))
+  list(main =cbind(statistic = distribution[1,], pvalue = pvalue), depth_scale = depth_scale, border = border)
 
 
 }
