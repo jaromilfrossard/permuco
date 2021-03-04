@@ -14,12 +14,12 @@ models with nuisances variables. The package has several goals :
   - Providing to users the most recent methods to handle nuisance
     variables for permutation tests in the linear models.
   - Giving to users tools to compute most common tests in linear model
-    (t test, ANOVA and repeated measure ANOVA).
-  - Providing an extension for the multiple comparisons problems in
+    (t-test, ANOVA and repeated measures ANOVA).
+  - Providing an extension for the multiple comparisons problem in
     linear models with a focus for EEG data.
 
 See [Reference](https://jaromilfrossard.github.io/permuco/reference/)
-for more information about the function or check the
+for more information on the function or check the
 [article](https://raw.githubusercontent.com/jaromilfrossard/permuco/master/vignettes/permuco_tutorial.pdf)
 presenting the package.
 
@@ -40,8 +40,8 @@ perform using the same notations used in an `aov()` formula with
 ## The `clusterlm()` function
 
 This function compute cluster-mass statistics for multiple comparisons.
-It is designed for ERP analysis of unichannel EEG data. The left part of
-formula object must be a matrix or dataframe which columns represents
+It is designed for ERP analysis of uni-channel EEG data. The left part
+of formula object must be a matrix or dataframe which columns represents
 multiple responses tested on the same experimental design (specified by
 right part of the formula). This function provides several methods to
 handle nuisance variables, a F or t statistics, an extension for
