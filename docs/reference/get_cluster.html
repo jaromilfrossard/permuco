@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multiplies a vector with a Pmat object — Pmat_product • permuco</title>
+<title>Get the ID of the cluster on a distribution matrix — get_cluster • permuco</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Multiplies a vector with a Pmat object — Pmat_product" />
-<meta property="og:description" content="Multiplies a vector or matrix with a Pmat object" />
+<meta property="og:title" content="Get the ID of the cluster on a distribution matrix — get_cluster" />
+<meta property="og:description" content="Get if of clusters given a threshold" />
 
 
 
@@ -123,42 +123,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Multiplies a vector with a Pmat object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/Pmat_product.R'><code>R/Pmat_product.R</code></a></small>
-    <div class="hidden name"><code>Pmat_product.Rd</code></div>
+    <h1>Get the ID of the cluster on a distribution matrix</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/get_cluster.R'><code>R/get_cluster.R</code></a></small>
+    <div class="hidden name"><code>get_cluster.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Multiplies a vector or matrix with a Pmat object</p>
+    <p>Get if of clusters given a threshold</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Pmat_product</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>P</span>, type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_cluster</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>threshold</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A a vector or matrix</p></td>
+      <th>distribution</th>
+      <td><p>a matrix of the distribution.</p></td>
     </tr>
     <tr>
-      <th>P</th>
-      <td><p>A Pmat object</p></td>
+      <th>threshold</th>
+      <td><p>a numeric indicating the threshold.</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>A character string indicating the type of transformation. This argument need to be specified if P is not of class Pmat.</p></td>
+      <th>alternative</th>
+      <td><p>A character string indicating the alternative hypothesis. Choose between <code>"two.sided"</code>, <code>"greater"</code>, <code>"less"</code>. Default is <code>"two.sided"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix n x np containing the permutated/signflipped vectors.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other pmat: 
-<code><a href='Pmat.html'>Pmat</a>()</code>,
-<code><a href='as.Pmat.html'>as.Pmat</a>()</code></p></div>
+    <p>a matrix with integer indicating the id of the clusters</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

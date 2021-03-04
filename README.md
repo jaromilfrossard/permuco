@@ -18,6 +18,11 @@ models with nuisances variables. The package has several goals :
   - Providing an extension for the multiple comparisons problems in
     linear models with a focus for EEG data.
 
+See [Reference](https://jaromilfrossard.github.io/permuco/reference/)
+for more information about the function or check the
+[article](https://raw.githubusercontent.com/jaromilfrossard/permuco/master/vignettes/permuco_tutorial.pdf)
+presenting the package.
+
 ## The `lmperm()` function
 
 This function is constructed as an extension of the the `lm()` function
@@ -40,7 +45,7 @@ formula object must be a matrix or dataframe which columns represents
 multiple responses tested on the same experimental design (specified by
 right part of the formula). This function provides several methods to
 handle nuisance variables, a F or t statistics, an extension for
-repeated measure anova and several methods for the multiple comparisons
+repeated measures ANOVA and several methods for the multiple comparisons
 like the threshold-free cluster enhancement.
 
 # Contact
