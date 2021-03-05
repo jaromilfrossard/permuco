@@ -5,8 +5,16 @@ library(tidyr)
 library(permuco)
 
 
-# x= sin(seq(from = 0,to = (4*pi),length.out = 200))
-# sum(permuco:::vector_extend(x,0.5)!=0)
+#Rcpp::sourceCpp("src/tfce.cpp")
+
+x= sin(seq(from = 0,to = (4*pi),length.out = 200))
+sum(permuco:::vector_extend(x,0.5)!=0)
+sum(permuco:::vector_extend2(x,0.5)!=0)
+
+
+x= c(rep(0,10),rep(1,10))
+sum(permuco:::vector_extend(rev(x),0.5)!=0)
+sum(permuco:::vector_extend2(rev(x),0.5)!=0)
 
 #Rcpp::sourceCpp("src/code.cpp")
 
