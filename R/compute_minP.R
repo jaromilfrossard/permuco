@@ -11,8 +11,8 @@ compute_minP <- function(distribution, alternative) {
   distribution_rank <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
   minp <- apply(distribution_rank,1,min)
 
-  length_unique_minp <- length(unique(minp))
-  if(length_unique_minp<200)warnings(paste0("The adjusted distribution contains only ",length_unique_minp," unique values. Try to increase the number of permutation."))
+  minimal_pval <- table(minp)[1]/nrow(distribution)
+  if(minimal_pval>0.02)warnings(paste0("The minimal adjusted p-value is ",minimal_pval,". Try to increase the number of permutations or you compare to much uncorrelated variables."))
 
   pvalue <- distribution_rank[1,]
   p_corrected <- sapply(pvalue,function(pi)compute_pvalue(distribution = minp,

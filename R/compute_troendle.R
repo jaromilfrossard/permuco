@@ -9,9 +9,9 @@
 #' @family multcomp
 compute_troendle = function (distribution, alternative) {
   distribution_rank <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
-  length_unique_minp <- length(unique(apply(distribution_rank,1,min)))
 
-  if(length_unique_minp<200)warnings(paste0("The adjusted distribution contains only ",length_unique_minp," unique values. Try to increase the number of permutation."))
+  minimal_pval <- table(apply(distribution_rank,1,min))[1]/nrow(distribution)
+  if(minimal_pval>0.02)warnings(paste0("The minimal adjusted p-value is ",minimal_pval,". Try to increase the number of permutations or you compare to much uncorrelated variables."))
 
   pvalue <- distribution_rank[1,]
 
