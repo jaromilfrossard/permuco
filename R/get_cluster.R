@@ -10,6 +10,7 @@
 #' @return a matrix with integer indicating the id of the clusters
 #' @useDynLib permuco
 #' @importFrom Rcpp sourceCpp
+#' @keywords internal
 get_cluster <- function(distribution, threshold, alternative = "two.sided" ){
   UseMethod("get_cluster")
 }
