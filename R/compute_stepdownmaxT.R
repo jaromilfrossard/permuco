@@ -65,10 +65,12 @@ compute_stepdownmaxT = function (distribution, alternative) {
   )
 
   p_corrected = do.call("rbind",p_corrected)
+  p_corrected = cbind(p_corrected,cummax = cummax(p_corrected[,2]))
+  p_corrected = p_corrected[order(p_corrected[,1]),]
 
-  cummax <- cummax(p_corrected[order(p_corrected[,1]),2])
-  cummax = cummax[p_corrected[,1]]
-  p_corrected = cbind(p_corrected,cummax = cummax)
+#   cummax <- cummax(p_corrected[order(p_corrected[,1]),2])
+#   cummax = cummax[p_corrected[,1]]
+  #p_corrected = cbind(p_corrected,cummax = cummax)
 
 
 

@@ -23,9 +23,16 @@ sum(permuco:::vector_extend2(rev(x),0.5)!=0)
 
 object=clusterlm(attentionshifting_signal[,200:400] ~ visibility*emotion*direction
          + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
-         multcomp = c("clustermass","tfce"), np =2000,return_distribution = T)
+         multcomp = c("clustermass"), np =2000,return_distribution = T)
 
 distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
+alternative <- "two.sided"
+
+mt<- compute_maxT(distribution,alternative)
+sdmt<- compute_stepdownmaxT(distribution,alternative)
+
+plot(mt$main[,2],sdmt$main[,2])
+
 E = object$multiple_comparison[[1]]$tfce$E
 H = object$multiple_comparison[[1]]$tfce$H
 dhi = object$multiple_comparison[[1]]$tfce$dhi
