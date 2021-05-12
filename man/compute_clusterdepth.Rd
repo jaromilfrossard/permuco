@@ -30,7 +30,9 @@ Compute the clusterdepth test correction given a matrix a permuted statistical s
 Other multcomp: 
 \code{\link{compute_clusterdepth_head}()},
 \code{\link{compute_clustermass}()},
+\code{\link{compute_maxT}()},
 \code{\link{compute_minP}()},
+\code{\link{compute_stepdownmaxT}()},
 \code{\link{compute_tfce}()},
 \code{\link{compute_troendle}()}
 }

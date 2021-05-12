@@ -8,6 +8,8 @@
 #' @export
 #' @family multcomp
 compute_minP <- function(distribution, alternative) {
+  alternative <- match.arg(alternative, c("two.sided","greater","less"))
+
   distribution_rank <- apply(distribution,2,function(col){compute_all_pvalue(col,alternative = alternative)})
   minp <- apply(distribution_rank,1,min)
 

@@ -22,6 +22,10 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative
     out$troendle <- compute_troendle(distribution = distribution, alternative = alternative)}
   if("minP"%in%multcomp){
     out$minP <- compute_minP(distribution = distribution, alternative = alternative)}
+  if("maxT"%in%multcomp){
+    out$maxT <- compute_maxT(distribution = distribution, alternative = alternative)}
+  if("stepdownmaxT"%in%multcomp){
+    out$stepdownmaxT <- compute_stepdownmaxT(distribution = distribution, alternative = alternative)}
   if("benjamini_hochberg"%in%multcomp){
     out$benjamini_hochberg <- compute_benjamini_hochberg(pvalue = pvalue, statistic = distribution[1,])}
   return(out)}

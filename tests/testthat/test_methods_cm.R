@@ -2,7 +2,8 @@ context("testing permutation methods in clustermass")
 library(permuco)
 
 
-allmc <- c("clustermass","clusterdepth","clusterdepth_head","troendle","tfce","minP","benjamini_hochberg","bonferroni","holm")
+allmc <- c("clustermass","clusterdepth","clusterdepth_head","troendle","tfce","minP","maxT",
+           "stepdownmaxT","benjamini_hochberg","bonferroni","holm")
 
 all_methods_f <- list(
   cm_f_k_p =  clusterlm(attentionshifting_signal[,100:120] ~ direction*STAIS_state, data = attentionshifting_design, np = 20,

@@ -19,6 +19,8 @@ Other multcomp:
 \code{\link{compute_clusterdepth_head}()},
 \code{\link{compute_clusterdepth}()},
 \code{\link{compute_clustermass}()},
+\code{\link{compute_maxT}()},
+\code{\link{compute_stepdownmaxT}()},
 \code{\link{compute_tfce}()},
 \code{\link{compute_troendle}()}
 }
