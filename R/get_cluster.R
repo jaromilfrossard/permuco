@@ -11,12 +11,14 @@
 #' @useDynLib permuco
 #' @importFrom Rcpp sourceCpp
 #' @keywords internal
-get_cluster <- function(distribution, threshold, alternative = "two.sided" ){
+get_cluster <- function(distribution, threshold, alternative = "two.sided", side = "all"){
   UseMethod("get_cluster")
 }
 
-get_cluster.matrix <- function(distribution, threshold, alternative){
+get_cluster.matrix <- function(distribution, threshold, alternative, side){
   alternative <- match.arg(alternative, c("two.sided","greater","less"))
+  side <- match.arg(side, c("all","starting","ending"))
+
 
   if(alternative == "two.sided"){
     distribution <- abs(distribution)
@@ -31,6 +33,6 @@ get_cluster.matrix <- function(distribution, threshold, alternative){
     threshold <- abs(threshold)
   }
 
-  get_cluster_matrix(distribution, abs(threshold))
+  cl <- get_cluster_matrix(distribution, abs(threshold), side = side)
 
 }

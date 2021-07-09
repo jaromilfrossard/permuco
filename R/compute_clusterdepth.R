@@ -6,50 +6,58 @@
 #' @param distribution A matrix of permuted statistical signal. The first row indicating the observed statistics.
 #' @param threshold A scalar that represents the threshold to create the clusters.
 #' @param alternative A character string indicating the alternative hypothesis. Default is \code{"greater"}. Choose between \code{"greater"}, \code{"less"} or \code{"two.sided"}.
-#' @param depth_scale A character string indicating the measure of the depth. Default is \code{"head_and_tail"} corrects independently from head and tail. \code{"unique_depth"} is also available and use a unique depth measure.
-#' @param border A character string indicating the method to handle the clusters at the border. Default is \code{"reverse"} and will reverse the measure of the depth. \code{"ignore"} is also available and consider these cluster similarly to the others.
 #' @export
 #' @family multcomp
-compute_clusterdepth <- function(distribution,threshold, alternative = "two.sided", depth_scale = "head_and_tail", border = "reverse"){
+compute_clusterdepth <- function(distribution,threshold, alternative = "two.sided"){
   alternative <- match.arg(alternative, c("two.sided", "greater", "less"))
-  depth_scale <- match.arg(depth_scale , choices = c("unique_depth", "head_and_tail"))
-  border <- match.arg(border, choices = c("reverse", "ignore"))
 
 
-  cluster <- get_cluster(distribution = distribution, threshold = threshold, alternative = alternative)
-  depth_head <- get_clusterdepth_head(cluster, border = border)
-  depth_tail <- get_clusterdepth_tail(cluster,border = border)
+  cluster <- get_cluster(distribution = distribution[1,,drop=F],
+                         threshold = threshold, alternative = alternative,side= "all")
 
-  if(depth_scale %in% c("head_and_tail")){
-    distr_head <- depth_distribution(distribution, head_mat = depth_head)
-    distr_tail <- depth_distribution(distribution, tail_mat = depth_tail)
-  }
-
-  if(depth_scale %in% c("unique_depth")){
-    distr_head <- depth_distribution(distribution, head_mat = depth_head, tail_mat = depth_tail)
-    distr_tail <- distr_head[,rev(seq_len(ncol(distr_head)))]
-  }
+  cluster_head <- get_cluster(distribution = distribution, threshold = threshold, alternative = alternative, side = "starting")
+  depth_head <- get_clusterdepth_head(cluster_head, border = "ignore")
+  distr_head <- depth_distribution(distribution, head_mat = depth_head)
 
 
+  pvalue_head <- rep(NA,ncol(cluster_head))
+  max_cl_size <- max(table(cluster_head[1,cluster_head[1,]!=0]))
 
 
-
-  pvalue <- rep(NA,ncol(cluster))
-
-
-  for(cli  in seq_len(max(cluster[1,]))){
-    sample <- which(cluster[1,]==cli)
+  for(cli  in seq_len(max(cluster_head[1,]))){
+    sample <- which(cluster_head[1,]==cli)
     stats <- distribution[1,sample]
-    headp <- compute_troendle(rbind(stats,distr_head[,seq_along(sample),drop=F]),
-                              alternative = alternative)$main[,2]
-    tailp <- compute_troendle(rbind(stats,distr_tail[,seq_along(sample)+ncol(distr_tail)-length(sample),drop=F]),
-                              alternative = alternative)$main[,2]
-    pvalue[sample] <- apply(cbind(headp,tailp),1,max)
+    stats <- c(stats,rep(0,max_cl_size-length(stats)))
+    pvalue_head[sample] <- compute_troendle(rbind(stats,distr_head[,seq_len(max_cl_size),drop=F]),
+                                       alternative = alternative)$main[seq_along(sample),2]
 
 
   }
 
-  list(main =cbind(statistic = distribution[1,], pvalue = pvalue),depth_scale = depth_scale, border = border)
+
+  cluster_tail <- get_cluster(distribution = distribution, threshold = threshold, alternative = alternative, side = "ending")
+  depth_tail <- get_clusterdepth_tail(cluster_tail,border = "ignore")
+  distr_tail <- depth_distribution(distribution, tail_mat = depth_tail)
+
+
+
+  pvalue_tail <- rep(NA,ncol(cluster_tail))
+  max_cl_size <- max(table(cluster_tail[1,cluster_tail[1,]!=0]))
+
+
+  for(cli  in seq_len(max(cluster_tail[1,]))){
+    sample <- which(cluster_tail[1,]==cli)
+    stats <- distribution[1,sample]
+    stats <- c(rep(0,max_cl_size-length(stats)),stats)
+    pvalue_tail[sample] <- compute_troendle(rbind(stats,distr_tail[,seq_len(max_cl_size),drop=F]),
+                                            alternative = alternative)$main[seq_along(sample),2]
+
+
+  }
+
+  pvalue = apply(cbind(pvalue_head,pvalue_tail),1,max,na.rm = FALSE)
+
+  list(main =cbind(statistic = distribution[1,], pvalue = pvalue, cluster_id = as.integer(cluster)),threshold = threshold)
 
 
 }

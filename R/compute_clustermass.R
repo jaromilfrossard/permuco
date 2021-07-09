@@ -33,7 +33,7 @@ compute_clustermass <-  function(distribution, threshold, aggr_FUN, alternative 
   # cl <- (selected-cbind(0,selected[,-NCOL(selected),drop=F]))==1
   # cl <- t(apply(cl,1,cumsum))
   # cl[!selected] <- 0
-  cl <- get_cluster(distribution = distribution, threshold = threshold, alternative = alternative)
+  cl <- get_cluster(distribution = distribution, threshold = threshold, alternative = alternative, side= "all")
 
   mass_distribution <- sapply(1:NROW(cl),function(rowi){
     extreme(sapply(1:max(1,max(cl[rowi,])),function(i){

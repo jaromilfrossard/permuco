@@ -6,12 +6,10 @@ switch_multcomp = function(multcomp,distribution, threshold,aggr_FUN,alternative
                                            aggr_FUN = aggr_FUN, alternative = alternative)}
   if("clusterdepth"%in%multcomp){
     out$clusterdepth <- compute_clusterdepth(distribution = distribution, threshold = threshold,
-                                             alternative = alternative, depth_scale = depth_scale,
-                                             border = border)}
+                                             alternative = alternative)}
   if("clusterdepth_head"%in%multcomp){
     out$clusterdepth <- compute_clusterdepth_head(distribution = distribution, threshold = threshold,
-                                             alternative = alternative, depth_scale = depth_scale,
-                                             border = border)}
+                                             alternative = alternative)}
   if("tfce"%in%multcomp){
     out$tfce <- compute_tfce(distribution = distribution, alternative = alternative, E = E, H = H, ndh = ndh)}
   if("bonferroni"%in%multcomp){

@@ -120,13 +120,7 @@
     <p>Compute the clusterdepth test correction given a matrix a permuted statistical signals.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compute_clusterdepth</span><span class='op'>(</span>
-  <span class='va'>distribution</span>,
-  <span class='va'>threshold</span>,
-  alternative <span class='op'>=</span> <span class='st'>"two.sided"</span>,
-  depth_scale <span class='op'>=</span> <span class='st'>"head_and_tail"</span>,
-  border <span class='op'>=</span> <span class='st'>"reverse"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compute_clusterdepth</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>threshold</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,14 +136,6 @@
     <tr>
       <th>alternative</th>
       <td><p>A character string indicating the alternative hypothesis. Default is <code>"greater"</code>. Choose between <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>depth_scale</th>
-      <td><p>A character string indicating the measure of the depth. Default is <code>"head_and_tail"</code> corrects independently from head and tail. <code>"unique_depth"</code> is also available and use a unique depth measure.</p></td>
-    </tr>
-    <tr>
-      <th>border</th>
-      <td><p>A character string indicating the method to handle the clusters at the border. Default is <code>"reverse"</code> and will reverse the measure of the depth. <code>"ignore"</code> is also available and consider these cluster similarly to the others.</p></td>
     </tr>
     </table>
 

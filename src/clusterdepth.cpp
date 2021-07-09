@@ -2,34 +2,68 @@
 using namespace Rcpp;
 
 //[[Rcpp::export]]
-IntegerVector get_cluster_matrix(NumericMatrix distribution, double threshold){
+IntegerVector get_cluster_matrix(NumericMatrix distribution, double threshold, String side){
     // initialize an accumulator variable
     double acc = 0;
 
     // initialize the result matrix
     IntegerMatrix res(distribution.nrow(),distribution.ncol());
 
-    for(int rowi = 0; rowi < res.nrow(); rowi++){
-      if(distribution(rowi,0)>threshold){
-        res(rowi,0) = 1;
-        acc = 1;
-      }else{
-        res(rowi,0) = 0;
-        acc = 0;
+    if((side == "all")|(side == "ending")){
+      for(int rowi = 0; rowi < res.nrow(); rowi++){
+        if(distribution(rowi,0)>threshold){
+          res(rowi,0) = 1;
+          acc = 1;
+        }else{
+          res(rowi,0) = 0;
+          acc = 0;
+        }
+
+        for(int coli = 1; coli < res.ncol(); coli++){
+          if(distribution(rowi,coli)<=threshold){
+            res(rowi,coli) = 0;
+          }else{
+            if(res(rowi,coli-1)==0){
+              acc = acc+1;
+            }
+            res(rowi,coli) = acc;
+          }
+        }
+
       }
 
-      for(int coli = 1; coli < res.ncol(); coli++){
-        if(distribution(rowi,coli)<=threshold){
-          res(rowi,coli) = 0;
-        }else{
-          if(res(rowi,coli-1)==0){
-            acc = acc+1;
+    }else if(side == "starting"){
+      for(int rowi = 0; rowi < res.nrow(); rowi++){
+        acc = 0;
+        for(int coli = 0; coli < res.ncol(); coli++){
+          if((coli==0)|(distribution(rowi,coli)<threshold)){
+            res(rowi,coli) = 0;
+          }else if((coli>0) & (distribution(rowi,coli)>threshold)){
+            if(distribution(rowi,coli-1)<threshold){
+              acc ++;
+            }
+            res(rowi,coli) = acc;
+
           }
-          res(rowi,coli) = acc;
+
         }
+
       }
 
     }
+
+    if(side == "ending"){
+      for(int rowi = 0; rowi < res.nrow(); rowi++){
+        int coli = res.ncol()-1;
+        while((res(rowi,coli)>0)&(coli>0)){
+          res(rowi,coli)=0;
+          coli = coli-1;
+        }
+      }
+    }
+
+
+
     return res;
 
 

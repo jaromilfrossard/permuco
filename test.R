@@ -5,11 +5,37 @@ library(tidyr)
 library(permuco)
 
 
-#Rcpp::sourceCpp("src/tfce.cpp")
+#
+#Rcpp::sourceCpp("src/clusterdepth.cpp")
 
+#Rcpp::sourceCpp("src/clusterdepth.cpp")
 x= sin(seq(from = 0,to = (4*pi),length.out = 200))
+
+
+xmat = matrix(x[c(10:141)],nrow = 1)
+cla = get_cluster_matrix(xmat,0.5,"all")
+
+cls = get_cluster_matrix(xmat,0.5,"starting")
+cle = get_cluster_matrix(xmat,0.5,"ending")
+
+cbind(as.numeric(cla),as.numeric(cls),as.numeric(cle))
+
 sum(permuco:::vector_extend(x,0.5)!=0)
 sum(permuco:::vector_extend2(x,0.5)!=0)
+
+
+permuco::compute_clusterdepth
+
+
+object=clusterlm(attentionshifting_signal ~ visibility
+                 + Error(id/(visibility)), data = attentionshifting_design,
+                 multcomp = c("clusterdepth"), np =2000,return_distribution = T)
+
+object$multiple_comparison$visibility$clusterdepth$main
+
+distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
+threshold <- object$threshold[1]
+alternative <- "two.sided"
 
 
 x= c(rep(0,10),rep(1,10))
@@ -21,11 +47,12 @@ sum(permuco:::vector_extend2(rev(x),0.5)!=0)
 #source("R/get_cluster.R")
 
 
-object=clusterlm(attentionshifting_signal[,200:400] ~ visibility*emotion*direction
-         + Error(id/(visibility*emotion*direction)), data = attentionshifting_design,
-         multcomp = c("clustermass"), np =2000,return_distribution = T)
+object=clusterlm(attentionshifting_signal ~ visibility
+         + Error(id/(visibility)), data = attentionshifting_design,
+         multcomp = c("clustermass"), np =200,return_distribution = T)
 
 distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
+threshold <- object$threshold[1]
 alternative <- "two.sided"
 
 mt<- compute_maxT(distribution,alternative)

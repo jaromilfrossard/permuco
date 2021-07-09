@@ -4,13 +4,7 @@
 \alias{compute_clusterdepth_head}
 \title{Cluster-depth correction (from the head only)}
 \usage{
-compute_clusterdepth_head(
-  distribution,
-  threshold,
-  alternative = "two.sided",
-  depth_scale = "head",
-  border = "reverse"
-)
+compute_clusterdepth_head(distribution, threshold, alternative = "two.sided")
 }
 \arguments{
 \item{distribution}{A matrix of permuted statistical signal. The first row indicating the observed statistics.}
@@ -18,10 +12,6 @@ compute_clusterdepth_head(
 \item{threshold}{A scalar that represents the threshold to create the clusters.}
 
 \item{alternative}{A character string indicating the alternative hypothesis. Default is \code{"greater"}. Choose between \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
-
-\item{depth_scale}{A character string indicating the measure of the depth. Default is \code{"head"} compute the distribution from the head only . \code{"unique_depth"} is also available and use a unique depth measure. To be consistent, \code{"head_and_tail"} is also available and produces the same results as \code{"head"}.}
-
-\item{border}{A character string indicating the method to handle the clusters at the border. Default is \code{"reverse"} and will reverse the measure of the depth. \code{"ignore"} is also available and consider these cluster similarly to the others.}
 }
 \description{
 Compute the cluster-depth test correction (from the head) given a matrix a permuted statistical signals.
