@@ -25,8 +25,8 @@ compute_clusterdepth_head <- function(distribution, threshold, alternative = "tw
 
   for(cli  in seq_len(max(cluster[1,]))){
     sample <- which(cluster[1,]==cli)
-    di <- distr_head[,seq_len(max_cl_size),drop=F]
-    di[1,seq_along(sample)] <- distribution[1,sample]
+    di <- distr_head#[,seq_len(max_cl_size), drop=FALSE]
+    di <- rbind(c(distribution[1, sample],rep(0,ncol(di)-length(sample))),di)
     pvalue[sample] <- compute_troendle(di,
                                        alternative = alternative)$main[seq_along(sample),2]
 
