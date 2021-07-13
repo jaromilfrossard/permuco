@@ -31,13 +31,54 @@ object=clusterlm(attentionshifting_signal ~ visibility
                  + Error(id/(visibility)), data = attentionshifting_design,
                  multcomp = c("clusterdepth"), np =2000,return_distribution = T)
 
-object$multiple_comparison$visibility$clusterdepth$main
 
 distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
 threshold <- object$threshold[1]
 alternative <- "two.sided"
 
 
+cluster_all =permuco:::get_cluster_matrix(distribution,threshold,side="all")
+
+cluster_head =permuco:::get_cluster_matrix(distribution,threshold,side="starting")
+
+apply(abs((cluster_all!=0)-(cluster_head!=0)),2,sum)
+
+depth_head = permuco:::get_clusterdepth_head(cluster_head, border = "ignore")
+distr_head <- permuco:::depth_distribution(distribution, head_mat = depth_head)
+
+
+plot(apply(distr_head,2,quantile,p = 0.95))
+
+
+pvalue_head <- rep(NA,ncol(cluster_head))
+max_cl_size <- max(table(cluster_head[1,cluster_head[1,]!=0]))
+
+for(cli  in seq_len(max(cluster_head[1,]))){
+  sample <- which(cluster_head[1,]==cli)
+  stats <- distribution[1,sample]
+  stats <- c(stats,rep(0,max_cl_size-length(stats)))
+  pvalue_head[sample] <- compute_troendle(rbind(stats,distr_head[,seq_len(max_cl_size),drop=F]),
+                                          alternative = alternative)$main[seq_along(sample),2]
+
+
+}
+
+compute_minP(rbind(stats,distr_head[,seq_len(max_cl_size),drop=F]),
+                 alternative = alternative)$main
+
+
+plot(apply(distr_head[,1:2],2,rank))
+
+
+hist(apply(distr_head[,1:2],2,rank)
+
+cdepth
+
+permuco:::get_cluster(distribution,threshold,side ="starting")
+
+
+sum(mat[,1])
+sum(cdepth[,1])
 x= c(rep(0,10),rep(1,10))
 sum(permuco:::vector_extend(rev(x),0.5)!=0)
 sum(permuco:::vector_extend2(rev(x),0.5)!=0)
