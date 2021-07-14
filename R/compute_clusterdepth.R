@@ -21,7 +21,7 @@ compute_clusterdepth <- function(distribution,threshold, alternative = "two.side
 
 
   pvalue_head <- rep(NA,ncol(cluster_head))
-  max_cl_size <- max(table(cluster_head[1,cluster_head[1,]!=0]))
+  #max_cl_size <- max(table(cluster_head[1,cluster_head[1,]!=0]))
 
 
   for(cli  in seq_len(max(cluster_head[1,]))){
@@ -42,7 +42,7 @@ compute_clusterdepth <- function(distribution,threshold, alternative = "two.side
 
 
   pvalue_tail <- rep(NA,ncol(cluster_tail))
-  max_cl_size <- max(table(cluster_tail[1,cluster_tail[1,]!=0]))
+  #max_cl_size <- max(table(cluster_tail[1,cluster_tail[1,]!=0]))
 
 
   for(cli  in seq_len(max(cluster_tail[1,]))){
@@ -50,7 +50,7 @@ compute_clusterdepth <- function(distribution,threshold, alternative = "two.side
     di <- distr_tail
     di <- rbind(c(rep(0,ncol(di)-length(sample)),distribution[1, sample]),di)
     pvalue_tail[sample] <- compute_troendle(di,
-                                       alternative = alternative)$main[seq_along(sample)+max_cl_size-length(sample),2]
+                                       alternative = alternative)$main[seq_along(sample)+ncol(distr_tail)-length(sample),2]
 
     # stats <- distribution[1,sample]
     # stats <- c(rep(0,max_cl_size-length(stats)),stats)
