@@ -1,4 +1,4 @@
-# permuco 1.1.1 (github)
+# permuco 1.1.1 (cran)
 
  * add signflip test
  * add replication for rANOVA
@@ -12,7 +12,7 @@
  * add compute_maxT() and compute_stepdownmaxT()
 
 
-# permuco 1.1.0 (cran)
+# permuco 1.1.0
 
 
  * correction of compute_troendle: pvalue for all tests

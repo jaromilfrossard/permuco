@@ -18,7 +18,7 @@ Imports:
     Rcpp
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     R.rsp,
     testthat,
