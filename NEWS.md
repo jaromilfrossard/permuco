@@ -5,7 +5,12 @@
  * change Pmat(): argument "type" and "counting"
  * plot.lmperm(): ... argument can be used (eg xlim, ylim)
  * add testthat, pkgdown
- 
+ * rcpp optimization: get_cluster(), compute_tfce()
+ * add compute_clusterdepth()
+ * add alternative to compute_tfce()
+ * add warnings to minp and troendle
+ * add compute_maxT() and compute_stepdownmaxT()
+
 
 # permuco 1.1.0 (cran)
 

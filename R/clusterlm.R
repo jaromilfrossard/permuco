@@ -114,6 +114,8 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
     dotargs$ndh = 500
   }
 
+
+
   if(is.null(dotargs$return_distribution)){
     dotargs$return_distribution = F
   }
@@ -134,7 +136,9 @@ clusterlm <- function(formula, data=NULL, np = 5000, method = NULL, type = "perm
            "fisher" = {dotargs$coding_sum = T})
   }
 
-  multcomp <- match.arg(multcomp, c("clustermass", "tfce", "troendle","minP" , "bonferroni", "holm", "benjamini_hochberg"),
+  multcomp <- match.arg(multcomp, c("clustermass","clusterdepth","clusterdepth_head",
+                                    "tfce", "troendle","minP","maxT","stepdownmaxT",
+                                    "bonferroni", "holm", "benjamini_hochberg"),
                         several.ok = T)
 
   ###switch fix effet

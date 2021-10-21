@@ -1,7 +1,5 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles:
-  citing-permutation-test: citing-permutation-test.html
-last_built: 2021-03-04T09:40Z
-
+articles: {}
+last_built: 2021-07-09T17:01Z

@@ -2,7 +2,7 @@ context("testing permutation methods in clustermass")
 library(permuco)
 
 
-allmc <- c("clustermass","troendle","tfce","minP","benjamini_hochberg","bonferroni","holm")
+allmc <- c("clustermass","clusterdepth","clusterdepth_head","troendle","tfce","minP","benjamini_hochberg","bonferroni","holm")
 
 
 

@@ -4,7 +4,7 @@
 \alias{get_cluster}
 \title{Get the ID of the cluster on a distribution matrix}
 \usage{
-get_cluster(distribution, threshold, alternative = "two.sided")
+get_cluster(distribution, threshold, alternative = "two.sided", side = "all")
 }
 \arguments{
 \item{distribution}{a matrix of the distribution.}
@@ -19,3 +19,4 @@ a matrix with integer indicating the id of the clusters
 \description{
 Get if of clusters given a threshold
 }
+\keyword{internal}

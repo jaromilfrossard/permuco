@@ -2,16 +2,144 @@ rm(list=ls())
 library(tidyverse)
 library(dplyr)
 library(tidyr)
-#library(permuco)
+library(permuco)
 
-Rcpp::sourceCpp("src/code.cpp")
 
-source("R/get_cluster.R")
+#
+#Rcpp::sourceCpp("src/clusterdepth.cpp")
 
+#Rcpp::sourceCpp("src/clusterdepth.cpp")
 x= sin(seq(from = 0,to = (4*pi),length.out = 200))
+
+
+xmat = matrix(x[c(10:141)],nrow = 1)
+cla = get_cluster_matrix(xmat,0.5,"all")
+
+cls = get_cluster_matrix(xmat,0.5,"starting")
+cle = get_cluster_matrix(xmat,0.5,"ending")
+
+cbind(as.numeric(cla),as.numeric(cls),as.numeric(cle))
+
+sum(permuco:::vector_extend(x,0.5)!=0)
+sum(permuco:::vector_extend2(x,0.5)!=0)
+
+
+permuco::compute_clusterdepth
+
+
+object=clusterlm(attentionshifting_signal ~ visibility
+                 + Error(id/(visibility)), data = attentionshifting_design,
+                 multcomp = c("clusterdepth"), np =2000,return_distribution = T)
+
+
+distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
+threshold <- object$threshold[1]
+alternative <- "two.sided"
+
+
+cluster_all =permuco:::get_cluster_matrix(distribution,threshold,side="all")
+
+cluster_head =permuco:::get_cluster_matrix(distribution,threshold,side="starting")
+
+apply(abs((cluster_all!=0)-(cluster_head!=0)),2,sum)
+
+depth_head = permuco:::get_clusterdepth_head(cluster_head, border = "ignore")
+distr_head <- permuco:::depth_distribution(distribution, head_mat = depth_head)
+
+
+plot(apply(distr_head,2,quantile,p = 0.95))
+
+
+pvalue_head <- rep(NA,ncol(cluster_head))
+max_cl_size <- max(table(cluster_head[1,cluster_head[1,]!=0]))
+
+for(cli  in seq_len(max(cluster_head[1,]))){
+  sample <- which(cluster_head[1,]==cli)
+  stats <- distribution[1,sample]
+  stats <- c(stats,rep(0,max_cl_size-length(stats)))
+  pvalue_head[sample] <- compute_troendle(rbind(stats,distr_head[,seq_len(max_cl_size),drop=F]),
+                                          alternative = alternative)$main[seq_along(sample),2]
+
+
+}
+
+compute_minP(rbind(stats,distr_head[,seq_len(max_cl_size),drop=F]),
+                 alternative = alternative)$main
+
+
+plot(apply(distr_head[,1:2],2,rank))
+
+
+hist(apply(distr_head[,1:2],2,rank)
+
+cdepth
+
+permuco:::get_cluster(distribution,threshold,side ="starting")
+
+
+sum(mat[,1])
+sum(cdepth[,1])
+x= c(rep(0,10),rep(1,10))
+sum(permuco:::vector_extend(rev(x),0.5)!=0)
+sum(permuco:::vector_extend2(rev(x),0.5)!=0)
+
+#Rcpp::sourceCpp("src/code.cpp")
+
+#source("R/get_cluster.R")
+
+
+object=clusterlm(attentionshifting_signal ~ visibility
+         + Error(id/(visibility)), data = attentionshifting_design,
+         multcomp = c("clustermass"), np =200,return_distribution = T)
+
+distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
+threshold <- object$threshold[1]
+alternative <- "two.sided"
+
+mt<- compute_maxT(distribution,alternative)
+sdmt<- compute_stepdownmaxT(distribution,alternative)
+
+plot(mt$main[,2],sdmt$main[,2])
+
+E = object$multiple_comparison[[1]]$tfce$E
+H = object$multiple_comparison[[1]]$tfce$H
+dhi = object$multiple_comparison[[1]]$tfce$dhi
+dh =  dhi[2]-dhi[1]
+
+t0 = proc.time()
+out0=compute_tfce(distribution = distribution,E = E,H = H,ndh = length(dhi))
+t0 =rbind(t0, proc.time())
+out1=permuco:::compute_tfce2(distribution = distribution,E = E,H = H,ndh = length(dhi))
+t0 =rbind(t0, proc.time())
+apply(t0,2,diff)
+
+tfcecpp <- permuco:::tfce_distribution(distribution, E, H, dh, dhi)
+
+plot(out0$main[,1],out1$main[,1])
+
+plot(object$multiple_comparison[[1]]$tfce$main[,1])
+
+compute_tfce
+
+
+permuco:::vector_extend(1:10,3)
+
+print(object,multcomp= "clusterdepth")
+
+summary(object,multcomp= "clusterdepth",table_type = "full")
+
+object$multiple_comparison$visibility$clusterdepth
+plot(object,multcomp = "clusterdepth")
+multcomp = "clusterdepth"
+print(object,multcomp= "tfce")
+print(object,multcomp= "clusterdepth")
+x = object$multiple_comparison
+
+
 
 permuco:::get_cluster.matrix(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
 
+permuco:::compute_clustermass
 
 get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="greater")
 get_cluster(distribution = rbind(x,x),threshold = 0.5,alternative="less")

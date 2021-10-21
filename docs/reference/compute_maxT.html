@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • permuco</title>
+<title>The max-T correction — compute_maxT • permuco</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="The max-T correction — compute_maxT" />
+<meta property="og:description" content="Compute the max-T correction given a matrix a permuted statistics." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -86,18 +87,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/citing-permutation-test.html">Citing Permutation Test</a>
-    </li>
-  </ul>
-</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -122,71 +111,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>The max-T correction</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/compute_maxT.R'><code>R/compute_maxT.R</code></a></small>
+    <div class="hidden name"><code>compute_maxT.Rd</code></div>
     </div>
 
-    <div id="permuco-111-github" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.1">
-<a href="#permuco-111-github" class="anchor"></a>permuco 1.1.1 (github)</h1>
-<ul>
-<li>add signflip test</li>
-<li>add replication for rANOVA</li>
-<li>change Pmat(): argument “type” and “counting”</li>
-<li>plot.lmperm(): … argument can be used (eg xlim, ylim)</li>
-<li>add testthat, pkgdown</li>
-<li>rcpp optimization: get_cluster(), compute_tfce()</li>
-<li>add compute_clusterdepth()</li>
-<li>add alternative to compute_tfce()</li>
-<li>add warnings to minp and troendle</li>
-<li>add compute_maxT() and compute_stepdownmaxT()</li>
-</ul>
-</div>
-    <div id="permuco-110-cran" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0">
-<a href="#permuco-110-cran" class="anchor"></a>permuco 1.1.0 (cran)</h1>
-<ul>
-<li>correction of compute_troendle: pvalue for all tests</li>
-<li>New multiple comparisons procedure: min-P.</li>
-<li>new display of the output of clusterlm():all test or pseudo-clusters</li>
-<li>delete the table of the output of clusterlm. Access the table using summary(clusterlm(…))</li>
-<li>user access to functions compute_tfce, compute_clustermass, compute_troendle, compute_minP</li>
-<li>update vignette permuco_tutorial.pdf</li>
-</ul>
-</div>
-    <div id="permuco-102" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.2">
-<a href="#permuco-102" class="anchor"></a>permuco 1.0.2</h1>
-<ul>
-<li>correction benjaminin to benjamini</li>
-<li>adding parametric (uncorrected) pvalues for signal</li>
-<li>add argument “nbbaselinepts” and “nbptsperunit” in plot.clusterlm</li>
-<li>change argument names: bilateral in two.sided, left in less,right in greater</li>
-<li>update vignette permuco_tutorial.pdf</li>
-</ul>
-</div>
-    <div id="permuco-101" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.1">
-<a href="#permuco-101" class="anchor"></a>permuco 1.0.1</h1>
-<ul>
-<li>add vignette permuco_tutorial.pdf</li>
-</ul>
-</div>
-    <div id="permuco-100" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0">
-<a href="#permuco-100" class="anchor"></a>permuco 1.0.0</h1>
-<ul>
-<li>Initial release</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Compute the max-T correction given a matrix a permuted statistics.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>compute_maxT</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>alternative</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>distribution</th>
+      <td><p>A matrix of permuted statistical signal. The first row indicating the observed statistics.</p></td>
+    </tr>
+    <tr>
+      <th>alternative</th>
+      <td><p>A character string indicating the alternative hypothesis. Default is <code>"greater"</code>. Choose between <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other multcomp: 
+<code><a href='compute_clusterdepth_head.html'>compute_clusterdepth_head</a>()</code>,
+<code><a href='compute_clusterdepth.html'>compute_clusterdepth</a>()</code>,
+<code><a href='compute_clustermass.html'>compute_clustermass</a>()</code>,
+<code><a href='compute_minP.html'>compute_minP</a>()</code>,
+<code><a href='compute_stepdownmaxT.html'>compute_stepdownmaxT</a>()</code>,
+<code><a href='compute_tfce.html'>compute_tfce</a>()</code>,
+<code><a href='compute_troendle.html'>compute_troendle</a>()</code></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
