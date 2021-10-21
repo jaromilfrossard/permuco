@@ -118,8 +118,8 @@ clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, thresho
 
     #####uncorrected
     multiple_comparison[[i]]$uncorrected <- list(main = cbind(statistic = distribution[1,],pvalue = pvalue, pvalue_para = pvalue_para),
-                                                test_info = list(test = test, df = df[i,], alternative = "two.sided", method = method, np = np,
-                                                                 nDV = ncol(y), fun_name = fun_name))
+                                                test_info = list(test = test, df = df[i,], alternative = "two.sided", method = method,
+                                                                 type = attr(args$P,"type"), np = np, nDV = ncol(y), fun_name = fun_name))
     if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution <- distribution}
 
     ##pscale change
@@ -147,7 +147,6 @@ clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, thresho
   out$link <- link
   out$P <- P
   out$np <- np
-  out$type <- type
   # out$cluster_table = cluster_table
   out$multiple_comparison <- multiple_comparison
   out$data <- mf
