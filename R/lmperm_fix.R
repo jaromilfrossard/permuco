@@ -94,11 +94,11 @@ lmperm_fix <- function(formula, data, method, type, np, P, rnd_rotation, new_met
   table <-
     as.data.frame(cbind(table, l_pvalue ,r_pvalue,bi_pvalue))
   colnames(table)[3:7] = c("t value","parametric Pr(>|t|)",
-                           "resample Pr(<t)","resample Pr(>t)","resample Pr(>|t|)")
+                           "resampled Pr(<t)","resampled Pr(>t)","resampled Pr(>|t|)")
   rownames(table) = colnames(mm)
   class(table) <- c("lmpermutation_table","data.frame")
   attr(table,"heading") <- c("Table of marginal t-test of the betas")
-  attr(table,"type") = paste0("Resample test using ",method," to handle nuisance variables and ",np, " ",attr(P,"type"),"s.")
+  attr(table,"type") = paste0("Resampling test using ",method," to handle nuisance variables and ",np, " ",attr(P,"type"),"s.")
 
 #####output==================================
   out <- list()

@@ -114,12 +114,12 @@ aovperm_fix <- function( formula, data, method, type, np, coding_sum, P, rnd_rot
   #output
   table = anova_table
   table$pValue_Permutation=c(permutation_pvalue, NA)
-  colnames(table)[4:5]=c("parametric P(>F)","Re-sample P(>F)")
+  colnames(table)[4:5]=c("parametric P(>F)","resampled P(>F)")
 
   if(is.matrix(P)){type = attr(P,"type")}else if(is.list(P)){type = attr(P[[1]],"type")}
 
 
-  attr(table,"type") = paste0("Resample test using ",method," to handle nuisance variables and ",paste(np,sep=", ",collapse = ", "), " ",type ,"s.")
+  attr(table,"type") = paste0("Resampling test using ",method," to handle nuisance variables and ",paste(np,sep=", ",collapse = ", "), " ",type ,"s.")
 
   out=list()
   out$coefficients <- mod_lm$coefficients
