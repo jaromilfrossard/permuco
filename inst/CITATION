@@ -1,0 +1,17 @@
+bibentry(bibtype = "Article",
+  title        = "Permutation Tests for Regression, {ANOVA}, and Comparison of Signals: The {permuco} Package",
+  author       = c(person(given = "Jaromil",
+                          family = "Frossard",
+                          email = "jaromil.frossard@unige.ch"),
+                   person(given = "Olivier",
+                          family = "Renaud",
+                          email = "olivier.renaud@unige.ch")),
+  journal      = "Journal of Statistical Software",
+  year         = "2021",
+  volume       = "99",
+  number       = "15",
+  pages        = "1--32",
+  doi          = "10.18637/jss.v099.i15",
+  header       = "To cite permuco in publications use:"
+)
+
