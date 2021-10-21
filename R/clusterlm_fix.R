@@ -296,6 +296,7 @@ clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, r
   out$threshold <- threshold
   out$P <- P
   out$np <- np
+  out$type <- type
   out$df <- df
   out$rnd_rotation <- rnd_rotation
   out$multcomp <- multcomp

@@ -3,9 +3,9 @@ print.multcomp_table <- function(x, ...) {
   cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
   cat("Alternative Hypothesis: ",attr(x,"alternative"), ".\n",sep="")
   cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
-  cat("Resample Method: ",attr(x,"method"), ".\n",sep="")
+  cat("Resampling Method: ",attr(x,"method"), ".\n",sep="")
+  cat("Type of Resampling: ",attr(x,"type"), ".\n",sep="")
   cat("Number of Dependant Variables: ",attr(x,"nDV"), ".\n",sep="")
-  cat("Type of Resample: ",attr(x,"type"), ".\n",sep="")
   cat("Number of Resamples: ",attr(x,"np"), ".\n",sep="")
   cat("Multiple Comparisons Procedure: ",attr(x,"multcomp"), ".\n",sep="")
   if(attr(x,"multcomp") == "clustermass"){

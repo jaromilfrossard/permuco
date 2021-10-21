@@ -147,6 +147,7 @@ clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, thresho
   out$link <- link
   out$P <- P
   out$np <- np
+  out$type <- type
   # out$cluster_table = cluster_table
   out$multiple_comparison <- multiple_comparison
   out$data <- mf
