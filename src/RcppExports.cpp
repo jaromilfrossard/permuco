@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // get_cluster_matrix
 IntegerVector get_cluster_matrix(NumericMatrix distribution, double threshold, String side);
 RcppExport SEXP _permuco_get_cluster_matrix(SEXP distributionSEXP, SEXP thresholdSEXP, SEXP sideSEXP) {

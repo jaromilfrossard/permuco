@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cluster test for longitudinal data — clusterlm • permuco</title>
+<title>Cluster-mass test for longitudinal data — clusterlm • permuco</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Cluster test for longitudinal data — clusterlm" />
+<meta property="og:title" content="Cluster-mass test for longitudinal data — clusterlm" />
 <meta property="og:description" content="Compute the cluster-mass test for longitudinal linear model." />
 
 
@@ -123,7 +123,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cluster test for longitudinal data</h1>
+    <h1>Cluster-mass test for longitudinal data</h1>
     <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco/blob/master/R/clusterlm.R'><code>R/clusterlm.R</code></a></small>
     <div class="hidden name"><code>clusterlm.Rd</code></div>
     </div>
@@ -154,7 +154,7 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame for the independant variables.</p></td>
+      <td><p>A data frame for the independent variables.</p></td>
     </tr>
     <tr>
       <th>np</th>
@@ -195,14 +195,14 @@
     <p>A <code>clusterlm</code> object. Use the <a href='plot.clusterlm.html'>plot.clusterlm</a> or <a href='summary.clusterlm.html'>summary.clusterlm</a> method to see results of the tests.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The random effects model is only avaible with a F statistic.<br /></p>
+    <p>The random effects model is only available with a F statistic.<br /></p>
 <p>Other arguments could be pass in <code>...</code> :<br /> <br />
-<code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproductibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
+<code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproducibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
 <code>rnd_rotation</code> : A matrix of random value to compute a rotation of size \(n \times n\) that will be used for the <code>"huh_jhun"</code> method. <br /> <br />
 <code>p_scale = FALSE</code> : if set to <code>TRUE</code>, the several multiple comparisons procedures are compute on the <code>1 - p</code> scale, where <code>p</code> is the p-value. The threshold have to be set between 0 and 1 (eg: <code>threshold = 0.95</code>). The function <code>aggr_FUN</code> should be big when there is evidence against the null (eg: <code>aggr_FUN = function(p)sum(abs(log(1-p)))</code>. Moreover under the probability scale the cluster mass statistics is sensitive to the number permutations.<br /> <br />
 <code>H</code>, <code>E</code>, <code>ndh</code> : the parameters used for the <code>"tfce"</code> method. Default values are set to <code>H = 2</code> for the height parameter, to <code>E = 0.5</code> for the extend parameter and to <code>ndh = 500</code> for the number terms to approximate the integral.<br /> <br />
 <code>alpha = 0.05</code> : the type I error rate. Used for the <code>troendle</code> multiple comparisons procedure.<br /> <br />
-<code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.<br />
+<code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.<br />
 <code>coding_sum</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br /></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
