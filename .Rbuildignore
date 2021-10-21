@@ -1,7 +1,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 test.R
+vignettes/permuco.bib
 vignettes/permuco_tutorial_00.pdf
+vignettes/permuco_tutorial_01.pdf
+vignettes/permuco_tutorial.pdf
+vignettes/permuco_tutorial.pdf.asis
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$

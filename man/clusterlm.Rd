@@ -2,7 +2,7 @@
 % Please edit documentation in R/clusterlm.R
 \name{clusterlm}
 \alias{clusterlm}
-\title{Cluster test for longitudinal data}
+\title{Cluster-mass test for longitudinal data}
 \usage{
 clusterlm(
   formula,
@@ -20,7 +20,7 @@ clusterlm(
 \arguments{
 \item{formula}{A formula object where the left part is a matrix defined in the global environment.}
 
-\item{data}{A data frame for the independant variables.}
+\item{data}{A data frame for the independent variables.}
 
 \item{np}{The number of permutations. Default value is \code{5000}.}
 
@@ -45,15 +45,15 @@ A \code{clusterlm} object. Use the \link{plot.clusterlm} or \link{summary.cluste
 Compute the cluster-mass test for longitudinal linear model.
 }
 \details{
-The random effects model is only avaible with a F statistic.\cr
+The random effects model is only available with a F statistic.\cr
 
 Other arguments could be pass in \code{...} :\cr \cr
-\code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat}; which is used for the reproductibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
+\code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat}; which is used for the reproducibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
 \code{rnd_rotation} : A matrix of random value to compute a rotation of size \eqn{n \times n} that will be used for the \code{"huh_jhun"} method. \cr \cr
 \code{p_scale = FALSE} : if set to \code{TRUE}, the several multiple comparisons procedures are compute on the \code{1 - p} scale, where \code{p} is the p-value. The threshold have to be set between 0 and 1 (eg: \code{threshold = 0.95}). The function \code{aggr_FUN} should be big when there is evidence against the null (eg: \code{aggr_FUN = function(p)sum(abs(log(1-p)))}. Moreover under the probability scale the cluster mass statistics is sensitive to the number permutations.\cr \cr
 \code{H}, \code{E}, \code{ndh} : the parameters used for the \code{"tfce"} method. Default values are set to \code{H = 2} for the height parameter, to \code{E = 0.5} for the extend parameter and to \code{ndh = 500} for the number terms to approximate the integral.\cr \cr
 \code{alpha = 0.05} : the type I error rate. Used for the \code{troendle} multiple comparisons procedure.\cr \cr
-\code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.\cr
+\code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.\cr
 \code{coding_sum} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
 }
 \examples{

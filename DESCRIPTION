@@ -22,7 +22,9 @@ RoxygenNote: 7.1.1
 Suggests: 
     R.rsp,
     testthat,
-    covr
-VignetteBuilder: R.rsp
+    covr,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 LinkingTo: 
     Rcpp

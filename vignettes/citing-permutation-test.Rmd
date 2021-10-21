@@ -1,0 +1,88 @@
+---
+title: "Citing Permutation Test"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+bibliography: permuco.bib
+vignette: >
+  %\VignetteIndexEntry{Citing Permutation Test}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# How to cite results using `permuco`
+
+The `permuco` package includes several permutation methods as well as several multiple comparisons procedures. We propose here the citation commonly used in the literature to cite these methods. When reporting a results using `permuco`, we suggest to cite the `permuco` package [@frossard_permuco], the permutation methods and the multiple comparisons procedure (when using the `clusterlm(...)`):
+
+## Citing the permutation method
+
+The `method` argument set the permutation method for the `aovperm(...)`, `lmperm(...)` and `clusterlm(...)` functions. If you are using a fixed effect linear model (without `+ Error(...)` in the formula) you can use the following references:
+
+
+`method = `     | Reference                        | Comments
+----------------|-----------------------------------------|----------------------------------------------------
+`freedmand_lane`| @freedman_nonstochastic_1983     | Default method in `permuco`
+`kennedy`       | @kennedy_randomization_1995      | 
+`manly`         | @manly_randomization_1991        | 
+`huh_jhun`      | @huh_random_2001  <br />  @kheradpajouh_exact_2010 | @huh_random_2001 propose it for factorial design <br /> @kheradpajouh_exact_2010 generalized it to linear model
+`terBraak`      | @terbraak_permutation_1992       |
+`dekker`        | @dekker_sensitivity_2007         |
+
+
+For repeated measures ANOVA/ANCOVA using `aovperm(...)` and `clusterlm(...)` (when the formula contains `+ Error(...)`), the methods are:
+
+
+`method = `               | Reference                    | Comments
+--------------------------|------------------------------|----------------------------------
+`Rd_kheradPajouh_renaud`  | @kherad-pajouh_general_2015  |  Default method in `permuco`
+`Rde_kheradPajouh_renaud` | @kherad-pajouh_general_2015  |
+
+
+# Citing the multiple comparisons procedure
+
+The `clusterlm(...)` function has several multiple comparison procedure implemented. It can be chosen using the `multcomp` argument. 
+
+Moreover, the implemented method does not control, the same error rate/measure, we recall the measures as well as the reference in the following table:
+
+
+`multcomp = `          | Reference                      |Parameters  |        Comments
+-----------------------|--------------------------------|---------------|-------------------------------------
+`clustermass`          | @maris_nonparametric_2007 <br /> @bullmore_global_1999 | `threshold`, `aggr_FUN` |   Default method in `permuco`. <br />  @maris_nonparametric_2007 is used by the EEG community.
+`troendle`             | @troendle_stepwise_1995        |  |
+`minP`                 | @westfall_resamplingbased_1993 |  `H`, `E` | The default parameters are suggested by @pernet_clusterbased_2015.
+`tfce`                 | @smith_thresholdfree_2009      |  |
+`bonferroni`           | @dunn_estimation_1958          |  |
+`holm`                 | @holm_simple_1979              |  |
+`benjamini_hochberg`   | @benjamini_controlling_1995    |  |
+
+
+
+For completeness and full reproducibility of the results, you can also report the parameters used in the `clustermass` and `tfce` method.
+
+
+## Citing the dataset
+
+The `permuco` package offers 3 data-sets as example. You will find the reference of the data below:
+
+data-set                     |  Reference
+-----------------------------|----------------------------------
+`attentionshifting_signal`  <br /> `attentionshifting_design`  | @tipura_attention_2019
+`emergencycost`  | @heritier_robust_2009
+`jpah2016`     | @cheval_effect_2016
+
+
+# Reference
+
+
+
+
+
+
+
