@@ -2,7 +2,7 @@ Package: permuco
 Type: Package
 Title: Permutation Tests for Regression, (Repeated Measures) ANOVA/ANCOVA and Comparison of Signals
 Version: 1.1.1
-Date: 2021-02-27
+Date: 2021-10-21
 Authors@R: c(
   person("Jaromil","Frossard", email = "jaromil.frossard@unige.ch",role = c("aut", "cre")),
   person("Olivier","Renaud",email="olivier.renaud@unige.ch",role=c("aut")))
@@ -25,6 +25,8 @@ Suggests:
     covr,
     knitr,
     rmarkdown
-VignetteBuilder: knitr
+VignetteBuilder:
+    R.rsp,
+    knitr
 LinkingTo: 
     Rcpp

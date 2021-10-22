@@ -1,5 +1,6 @@
 %\VignetteIndexEntry{Permutation tests for regression, ANOVA and comparison of signals}
 %\VignetteEngine{R.rsp::asis}
+%\VignetteEncoding{UTF-8}
 %\VignetteKeyword{EEG}
 %\VignetteKeyword{ERP}
 %\VignetteKeyword{TFCE}

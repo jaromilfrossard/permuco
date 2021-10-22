@@ -1,9 +1,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/jaromilfrossard/permuco/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco/actions)
+[![R-CMD-check](https://github.com/jaromilfrossard/permuco/workflows/R-CMD-check/badge.svg/)](https://github.com/jaromilfrossard/permuco/actions/)
 [![Codecov test
-coverage](https://codecov.io/gh/jaromilfrossard/permuco/branch/master/graph/badge.svg)](https://codecov.io/gh/jaromilfrossard/permuco?branch=master)
+coverage](https://codecov.io/gh/jaromilfrossard/permuco/branch/master/graph/badge.svg/)](https://codecov.io/gh/jaromilfrossard/permuco?branch=master/)
 <!-- badges: end -->
 
 # `permuco`
