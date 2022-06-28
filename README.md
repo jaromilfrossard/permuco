@@ -4,6 +4,10 @@
 [![R-CMD-check](https://github.com/jaromilfrossard/permuco/workflows/R-CMD-check/badge.svg/)](https://github.com/jaromilfrossard/permuco/actions/)
 [![Codecov test
 coverage](https://codecov.io/gh/jaromilfrossard/permuco/branch/master/graph/badge.svg/)](https://app.codecov.io/gh/jaromilfrossard/permuco?branch=master/)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/permuco)](https://CRAN.R-project.org/package=permuco)
+[![R-CMD-check](https://github.com/jaromilfrossard/permuco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jaromilfrossard/permuco/actions/workflows/R-CMD-check.yaml)
+[![test-coverage](https://github.com/jaromilfrossard/permuco/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/jaromilfrossard/permuco/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 # `permuco`

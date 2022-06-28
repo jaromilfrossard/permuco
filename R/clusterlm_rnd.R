@@ -35,7 +35,7 @@ clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, thresho
     {warning(paste("the method",method, "is not defined. Choose between Rd_kheradPajouh_renaud or Rde_kheradPajouh_renaud."))
       funP <- function(...){eval(parse(text=paste("cluster_fisher_",method,"_rnd(...)",sep="",collpase="")))}})
 
-  if(!(class(formula[[2]]) == "matrix")){
+  if(!(is.matrix(formula[[2]]))){
     formula[[2]] <- call("as.matrix", formula[[2]])}
 
 

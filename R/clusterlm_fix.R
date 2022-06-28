@@ -61,7 +61,7 @@ clusterlm_fix <- function(formula, data, method, type, test, threshold, np, P, r
   #preprocess formula=========================================
 
 
-  if(!(class(formula[[2]]) == "matrix")){
+  if(!(is.matrix(formula[[2]]))){
     formula[[2]] <- call("as.matrix", formula[[2]])}
 
 

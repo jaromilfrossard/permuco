@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">permuco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jaromilfrossard/permuco/">
+  <a href="https://github.com/jaromilfrossard/permuco/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,9 +79,9 @@
   <div class="contents col-md-9">
 
 
-<div id="permuco" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#permuco" class="anchor"></a><code>permuco</code>
+<div class="section level1">
+<div class="page-header"><h1 id="permuco">
+<code>permuco</code><a class="anchor" aria-label="anchor" href="#permuco"></a>
 </h1></div>
 <p>This package provides functions to compute permutation tests in linear models with nuisances variables. The package has several goals :</p>
 <ul>
@@ -93,31 +89,31 @@
 <li>Giving to users tools to compute most common tests in linear model (t-test, ANOVA and repeated measures ANOVA).</li>
 <li>Providing an extension for the multiple comparisons problem in linear models with a focus for EEG data.</li>
 </ul>
-<p>See <a href="https://jaromilfrossard.github.io/permuco/reference/">Reference</a> for more information on the function or check the <a href="https://raw.githubusercontent.com/jaromilfrossard/permuco/master/vignettes/permuco_tutorial.pdf">article</a> presenting the package.</p>
-<div id="the-lmperm-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-lmperm-function" class="anchor"></a>The <code>lmperm()</code> function</h2>
-<p>This function is constructed as an extension of the the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function for permutation test. It produces t statistics with univariate and bivariate p-value by permutation.</p>
+<p>See <a href="https://jaromilfrossard.github.io/permuco/reference/" class="external-link">Reference</a> for more information on the function or check the <a href="https://raw.githubusercontent.com/jaromilfrossard/permuco/master/vignettes/permuco_tutorial.pdf" class="external-link">article</a> presenting the package.</p>
+<div class="section level2">
+<h2 id="the-lmperm-function">The <code>lmperm()</code> function<a class="anchor" aria-label="anchor" href="#the-lmperm-function"></a>
+</h2>
+<p>This function is constructed as an extension of the the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function for permutation test. It produces t statistics with univariate and bivariate p-value by permutation.</p>
 </div>
-<div id="the-aovperm-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-aovperm-function" class="anchor"></a>The <code>aovperm()</code> function</h2>
-<p>This function is constructed as an extension of the the <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> function for permutation test. It produces marginal F statistics (type III) for factorial ANOVA and ANCOVA. Moreover, repeated measures ANOVA can be perform using the same notations used in an <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> formula with <code>+Error(id/within)</code> to specify the random effects.</p>
+<div class="section level2">
+<h2 id="the-aovperm-function">The <code>aovperm()</code> function<a class="anchor" aria-label="anchor" href="#the-aovperm-function"></a>
+</h2>
+<p>This function is constructed as an extension of the the <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> function for permutation test. It produces marginal F statistics (type III) for factorial ANOVA and ANCOVA. Moreover, repeated measures ANOVA can be perform using the same notations used in an <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> formula with <code>+Error(id/within)</code> to specify the random effects.</p>
 </div>
-<div id="the-clusterlm-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-clusterlm-function" class="anchor"></a>The <code>clusterlm()</code> function</h2>
+<div class="section level2">
+<h2 id="the-clusterlm-function">The <code>clusterlm()</code> function<a class="anchor" aria-label="anchor" href="#the-clusterlm-function"></a>
+</h2>
 <p>This function compute cluster-mass statistics for multiple comparisons. It is designed for ERP analysis of uni-channel EEG data. The left part of formula object must be a matrix or dataframe which columns represents multiple responses tested on the same experimental design (specified by right part of the formula). This function provides several methods to handle nuisance variables, a F or t statistics, an extension for repeated measures ANOVA and several methods for the multiple comparisons like the threshold-free cluster enhancement.</p>
 </div>
 </div>
-<div id="contact" class="section level1">
-<h1 class="hasAnchor">
-<a href="#contact" class="anchor"></a>Contact</h1>
+<div class="section level1">
+<h1 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
+</h1>
 <p>If you need help to use the package or want to report errors, contact Jaromil Frossard at <a href="mailto:jaromil.frossard@unige.ch" class="email">jaromil.frossard@unige.ch</a>.</p>
 </div>
-<div id="references" class="section level1">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div class="section level1">
+<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h1>
 <p>For permutation tests with nuisance variables :</p>
 <ul>
 <li><p>Kherad-Pajouh, S., &amp; Renaud, O. (2010). An exact permutation method for testing any effect in balanced and unbalanced fixed effect ANOVA. Computational Statistics &amp; Data Analysis, 54(7), 1881-1893.</p></li>
@@ -136,9 +132,9 @@
 <li>Smith, S. M., &amp; Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98.</li>
 </ul>
 </div>
-<div id="academic-works-using-permuco" class="section level1">
-<h1 class="hasAnchor">
-<a href="#academic-works-using-permuco" class="anchor"></a>Academic works using permuco</h1>
+<div class="section level1">
+<h1 id="academic-works-using-permuco">Academic works using permuco<a class="anchor" aria-label="anchor" href="#academic-works-using-permuco"></a>
+</h1>
 <ul>
 <li><p>Allen, S. L., Bonduriansky, R., &amp; Chenoweth, S. F. (2018). Genetic constraints on microevolutionary divergence of sex-biased gene expression. Phil. Trans. R. Soc. B, 373(1757), 20170427.</p></li>
 <li><p>Almodóvar-Rivera, I., &amp; Maitra, R. (2019). FAST adaptive smoothing and thresholding for improved activation detection in low-signal fMRI. IEEE transactions on medical imaging.</p></li>
@@ -160,53 +156,60 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=permuco">https://​cloud.r-project.org/​package=permuco</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/jaromilfrossard/permuco/">https://​github.com/​jaromilfrossard/​permuco/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/jaromilfrossard/permuco/issues">https://​github.com/​jaromilfrossard/​permuco/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=permuco" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing permuco</a></li>
+<li><a href="authors.html#citation">Citing permuco</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Jaromil Frossard <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Olivier Renaud <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/jaromilfrossard/permuco/actions"><img src="https://github.com/jaromilfrossard/permuco/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/jaromilfrossard/permuco?branch=master"><img src="https://codecov.io/gh/jaromilfrossard/permuco/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco/actions/" class="external-link"><img src="https://github.com/jaromilfrossard/permuco/workflows/R-CMD-check/badge.svg/" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/jaromilfrossard/permuco?branch=master/" class="external-link"><img src="https://codecov.io/gh/jaromilfrossard/permuco/branch/master/graph/badge.svg/" alt="Codecov test coverage"></a></li>
+<li><a href="https://CRAN.R-project.org/package=permuco" class="external-link"><img src="https://www.r-pkg.org/badges/version/permuco" alt="CRAN status"></a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/jaromilfrossard/permuco/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/jaromilfrossard/permuco/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p></p>
+<p>Developed by Jaromil Frossard, Olivier Renaud.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -214,6 +217,8 @@
 
   
 
+
+  
 
   </body>
 </html>

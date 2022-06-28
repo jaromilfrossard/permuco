@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jaromilfrossard/permuco/">
+  <a href="https://github.com/jaromilfrossard/permuco/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -79,29 +75,38 @@
 
       
 
-      </header><script src="citing-permutation-test_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Citing Permutation Test</h1>
             
-            <h4 class="date">2021-10-21</h4>
+            <h4 data-toc-skip class="date">2022-06-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco/blob/master/vignettes/citing-permutation-test.Rmd"><code>vignettes/citing-permutation-test.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco/blob/HEAD/vignettes/citing-permutation-test.Rmd" class="external-link"><code>vignettes/citing-permutation-test.Rmd</code></a></small>
       <div class="hidden name"><code>citing-permutation-test.Rmd</code></div>
 
     </div>
 
     
     
-<div id="how-to-cite-results-using-permuco" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-to-cite-results-using-permuco" class="anchor"></a>How to cite results using <code>permuco</code>
-</h1>
-<p>The <code>permuco</code> package includes several permutation methods as well as several multiple comparisons procedures. We propose here the citation commonly used in the literature to cite these methods. When reporting a results using <code>permuco</code>, we suggest to cite the <code>permuco</code> package <span class="citation">(Frossard and Renaud 2020)</span>, the permutation methods and the multiple comparisons procedure (when using the <code><a href="../reference/clusterlm.html">clusterlm(...)</a></code>):</p>
-<div id="citing-the-permutation-method" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citing-the-permutation-method" class="anchor"></a>Citing the permutation method</h2>
-<p>The <code>method</code> argument set the permutation method for the <code><a href="../reference/aovperm.html">aovperm(...)</a></code>, <code><a href="../reference/lmperm.html">lmperm(...)</a></code> and <code><a href="../reference/clusterlm.html">clusterlm(...)</a></code> functions. If you are using a fixed effect linear model (without <code>+ Error(...)</code> in the formula) you can use the following references:</p>
+<div class="section level2">
+<h2 id="how-to-cite-results-using-permuco">How to cite results using <code>permuco</code><a class="anchor" aria-label="anchor" href="#how-to-cite-results-using-permuco"></a>
+</h2>
+<p>The <code>permuco</code> package includes several permutation methods
+as well as several multiple comparisons procedures. We propose here the
+citation commonly used in the literature to cite these methods. When
+reporting a results using <code>permuco</code>, we suggest to cite the
+<code>permuco</code> package <span class="citation">(Frossard and Renaud
+2021)</span>, the permutation methods and the multiple comparisons
+procedure (when using the <code>clusterlm(...)</code>):</p>
+<div class="section level3">
+<h3 id="citing-the-permutation-method">Citing the permutation method<a class="anchor" aria-label="anchor" href="#citing-the-permutation-method"></a>
+</h3>
+<p>The <code>method</code> argument set the permutation method for the
+<code>aovperm(...)</code>, <code>lmperm(...)</code> and
+<code>clusterlm(...)</code> functions. If you are using a fixed effect
+linear model (without <code>+ Error(...)</code> in the formula) you can
+use the following references:</p>
 <table class="table">
 <colgroup>
 <col width="14%">
@@ -136,7 +141,9 @@
 <span class="citation">Huh and Jhun (2001)</span> <br><span class="citation">Kherad Pajouh and Renaud (2010)</span>
 </td>
 <td>
-<span class="citation">Huh and Jhun (2001)</span> propose it for factorial design <br><span class="citation">Kherad Pajouh and Renaud (2010)</span> generalized it to linear model</td>
+<span class="citation">Huh and Jhun (2001)</span> propose it for
+factorial design <br><span class="citation">Kherad Pajouh and Renaud
+(2010)</span> generalized it to linear model</td>
 </tr>
 <tr class="odd">
 <td><code>terBraak</code></td>
@@ -145,12 +152,15 @@
 </tr>
 <tr class="even">
 <td><code>dekker</code></td>
-<td><span class="citation">Dekker, Krackhardt, and Snijders (2007)</span></td>
+<td><span class="citation">Dekker, Krackhardt, and Snijders
+(2007)</span></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>For repeated measures ANOVA/ANCOVA using <code><a href="../reference/aovperm.html">aovperm(...)</a></code> and <code><a href="../reference/clusterlm.html">clusterlm(...)</a></code> (when the formula contains <code>+ Error(...)</code>), the methods are:</p>
+<p>For repeated measures ANOVA/ANCOVA using <code>aovperm(...)</code>
+and <code>clusterlm(...)</code> (when the formula contains
+<code>+ Error(...)</code>), the methods are:</p>
 <table class="table">
 <colgroup>
 <col width="28%">
@@ -178,11 +188,12 @@
 </table>
 </div>
 </div>
-<div id="citing-the-multiple-comparisons-procedure" class="section level1">
-<h1 class="hasAnchor">
-<a href="#citing-the-multiple-comparisons-procedure" class="anchor"></a>Citing the multiple comparisons procedure</h1>
-<p>The <code><a href="../reference/clusterlm.html">clusterlm(...)</a></code> function has several multiple comparison procedure implemented. It can be chosen using the <code>multcomp</code> argument.</p>
-<p>Moreover, the implemented method does not control, the same error rate/measure, we recall the measures as well as the reference in the following table:</p>
+<div class="section level2">
+<h2 id="citing-the-multiple-comparisons-procedure">Citing the multiple comparisons procedure<a class="anchor" aria-label="anchor" href="#citing-the-multiple-comparisons-procedure"></a>
+</h2>
+<p>The <code>clusterlm(...)</code> function has several multiple
+comparisons procedures implemented. It can be chosen using the
+<code>multcomp</code> argument.</p>
 <table class="table">
 <colgroup>
 <col width="21%">
@@ -205,7 +216,8 @@
 <td>
 <code>threshold</code>, <code>aggr_FUN</code>
 </td>
-<td>Default method in <code>permuco</code>. <br><span class="citation">Maris and Oostenveld (2007)</span> is used by the EEG community.</td>
+<td>Default method in <code>permuco</code>. <br><span class="citation">Maris and Oostenveld (2007)</span> is used by the EEG
+community.</td>
 </tr>
 <tr class="even">
 <td><code>troendle</code></td>
@@ -243,15 +255,25 @@
 <td><code>benjamini_hochberg</code></td>
 <td><span class="citation">Benjamini and Hochberg (1995)</span></td>
 <td></td>
+<td>Control the FDR.</td>
+</tr>
+<tr class="even">
+<td><code>clusterdepth</code></td>
+<td><span class="citation">Frossard and Renaud (2022)</span></td>
+<td><code>threshold</code></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>For completeness and full reproducibility of the results, you can also report the parameters used in the <code>clustermass</code> and <code>tfce</code> method.</p>
-<div id="citing-the-dataset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citing-the-dataset" class="anchor"></a>Citing the dataset</h2>
-<p>The <code>permuco</code> package offers 3 data-sets as example. You will find the reference of the data below:</p>
+<p>For completeness and full reproducibility of the results, you can
+also report the parameters used in the
+<code>clustermass</code>,<code>tfce</code> or <code>clusterdepth</code>
+methods.</p>
+<div class="section level3">
+<h3 id="citing-the-dataset">Citing the dataset<a class="anchor" aria-label="anchor" href="#citing-the-dataset"></a>
+</h3>
+<p>The <code>permuco</code> package offers 3 data-sets as example. You
+will find the reference of the data below:</p>
 <table class="table">
 <colgroup>
 <col width="46%">
@@ -280,72 +302,141 @@
 </table>
 </div>
 </div>
-<div id="reference" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#reference" class="anchor"></a>Reference</h1>
+<div class="section level2">
+<h2 class="unnumbered" id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-benjamini_controlling_1995" class="csl-entry">
-Benjamini, Yoav, and Yosef Hochberg. 1995. <span>“Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing.”</span> <em>Journal of the Royal Statistical Society B</em> 57 (1): 289–300.
+Benjamini, Yoav, and Yosef Hochberg. 1995. <span>“Controlling the False
+Discovery Rate: A Practical and Powerful Approach to Multiple
+Testing.”</span> <em>Journal of the Royal Statistical Society B</em> 57
+(1): 289–300.
 </div>
 <div id="ref-bullmore_global_1999" class="csl-entry">
-Bullmore, Edward T., John Suckling, Stephan Overmeyer, Sophia Rabe-Hesketh, Eric Taylor, and Michael J. Brammer. 1999. <span>“Global, Voxel, and Cluster Tests, by Theory and Permutation, for a Difference Between Two Groups of Structural <span>MR</span> Images of the Brain.”</span> <em>IEEE Transactions on Medical Imaging</em> 18 (1): 32–42. <a href="https://doi.org/10.1109/42.750253">https://doi.org/10.1109/42.750253</a>.
+Bullmore, Edward T., John Suckling, Stephan Overmeyer, Sophia
+Rabe-Hesketh, Eric Taylor, and Michael J. Brammer. 1999. <span>“Global,
+Voxel, and Cluster Tests, by Theory and Permutation, for a Difference
+Between Two Groups of Structural <span>MR</span> Images of the
+Brain.”</span> <em>IEEE Transactions on Medical Imaging</em> 18 (1):
+32–42. <a href="https://doi.org/10.1109/42.750253" class="external-link">https://doi.org/10.1109/42.750253</a>.
 </div>
 <div id="ref-cheval_effect_2016" class="csl-entry">
-Cheval, Boris, Philippe Sarrazin, Luc Pelletier, and Malte Friese. 2016. <span>“Effect of <span>Retraining Approach</span>-<span>Avoidance Tendencies</span> on an <span>Exercise Task</span>: <span>A Randomized Controlled Trial</span>.”</span> <em>Journal of Physical Activity and Health</em> 13 (12): 1396–1403. <a href="https://doi.org/10.1123/jpah.2015-0597">https://doi.org/10.1123/jpah.2015-0597</a>.
+Cheval, Boris, Philippe Sarrazin, Luc Pelletier, and Malte Friese. 2016.
+<span>“Effect of <span>Retraining Approach</span>-<span>Avoidance
+Tendencies</span> on an <span>Exercise Task</span>: <span>A Randomized
+Controlled Trial</span>.”</span> <em>Journal of Physical Activity and
+Health</em> 13 (12): 1396–1403. <a href="https://doi.org/10.1123/jpah.2015-0597" class="external-link">https://doi.org/10.1123/jpah.2015-0597</a>.
 </div>
 <div id="ref-dekker_sensitivity_2007" class="csl-entry">
-Dekker, David, David Krackhardt, and Tom A. B. Snijders. 2007. <span>“Sensitivity of <span>MRQAP Tests</span> to <span>Collinearity</span> and <span>Autocorrelation Conditions</span>.”</span> <em>Psychometrika</em> 72 (4): 563–81. <a href="https://doi.org/10.1007/s11336-007-9016-1">https://doi.org/10.1007/s11336-007-9016-1</a>.
+Dekker, David, David Krackhardt, and Tom A. B. Snijders. 2007.
+<span>“Sensitivity of <span>MRQAP Tests</span> to
+<span>Collinearity</span> and <span>Autocorrelation
+Conditions</span>.”</span> <em>Psychometrika</em> 72 (4): 563–81. <a href="https://doi.org/10.1007/s11336-007-9016-1" class="external-link">https://doi.org/10.1007/s11336-007-9016-1</a>.
 </div>
 <div id="ref-dunn_estimation_1958" class="csl-entry">
-Dunn, Olive Jean. 1958. <span>“Estimation of the <span>Means</span> of <span>Dependent Variables</span>.”</span> <em>The Annals of Mathematical Statistics</em> 29 (4): 1095–1111.
+Dunn, Olive Jean. 1958. <span>“Estimation of the <span>Means</span> of
+<span>Dependent Variables</span>.”</span> <em>The Annals of Mathematical
+Statistics</em> 29 (4): 1095–1111.
 </div>
 <div id="ref-freedman_nonstochastic_1983" class="csl-entry">
-Freedman, David, and David Lane. 1983. <span>“A <span>Nonstochastic Interpretation</span> of <span>Reported Significance Levels</span>.”</span> <em>Journal of Business &amp; Economic Statistics</em> 1 (4): 292. <a href="https://doi.org/10.2307/1391660">https://doi.org/10.2307/1391660</a>.
+Freedman, David, and David Lane. 1983. <span>“A <span>Nonstochastic
+Interpretation</span> of <span>Reported Significance
+Levels</span>.”</span> <em>Journal of Business &amp; Economic
+Statistics</em> 1 (4): 292. <a href="https://doi.org/10.2307/1391660" class="external-link">https://doi.org/10.2307/1391660</a>.
 </div>
 <div id="ref-frossard_permuco" class="csl-entry">
-Frossard, Jaromil, and Olivier Renaud. 2020. <em>Permuco: Permutation Tests for Regression, (Repeated Measures) ANOVA/ANCOVA and Comparison of Signals</em>.
+Frossard, Jaromil, and Olivier Renaud. 2021. <em>Permutation Tests for
+Regression, <span>ANOVA</span>, and Comparison of Signals: The <span class="nocase">permuco</span> Package</em>. <em>Journal of Statistical
+Software</em>. Vol. 99. <a href="https://doi.org/10.18637/jss.v099.i15" class="external-link">https://doi.org/10.18637/jss.v099.i15</a>.
+</div>
+<div id="ref-frossard_cluster_2022" class="csl-entry">
+———. 2022. <span>“The Cluster Depth Tests: <span>Toward</span>
+Point-Wise Strong Control of the Family-Wise Error Rate in Massively
+Univariate Tests with Application to
+<span>M</span>/<span>EEG</span>.”</span> <em>NeuroImage</em> 247
+(February): 118824. <a href="https://doi.org/10.1016/j.neuroimage.2021.118824" class="external-link">https://doi.org/10.1016/j.neuroimage.2021.118824</a>.
 </div>
 <div id="ref-heritier_robust_2009" class="csl-entry">
-Heritier, Stephane, Eva Cantoni, Samuel Copt, and Maria-Pia Victoria-Feser. 2009. <em>Robust <span>Methods</span> in <span>Biostatistics</span></em>. <span>John Wiley &amp; Sons</span>.
+Heritier, Stephane, Eva Cantoni, Samuel Copt, and Maria-Pia
+Victoria-Feser. 2009. <em>Robust <span>Methods</span> in
+<span>Biostatistics</span></em>. <span>John Wiley &amp; Sons</span>.
 </div>
 <div id="ref-holm_simple_1979" class="csl-entry">
-Holm, Sture. 1979. <span>“A <span>Simple Sequentially Rejective Multiple Test Procedure</span>.”</span> <em>Scandinavian Journal of Statistics</em> 6 (2): 65–70.
+Holm, Sture. 1979. <span>“A <span>Simple Sequentially Rejective Multiple
+Test Procedure</span>.”</span> <em>Scandinavian Journal of
+Statistics</em> 6 (2): 65–70.
 </div>
 <div id="ref-huh_random_2001" class="csl-entry">
-Huh, Myung-Hoe, and Myoungshic Jhun. 2001. <span>“Random <span>Permutation Testing</span> in <span>Multiple Linear Regression</span>.”</span> <em>Communications in Statistics - Theory and Methods</em> 30 (10): 2023–32. <a href="https://doi.org/10.1081/STA-100106060">https://doi.org/10.1081/STA-100106060</a>.
+Huh, Myung-Hoe, and Myoungshic Jhun. 2001. <span>“Random
+<span>Permutation Testing</span> in <span>Multiple Linear
+Regression</span>.”</span> <em>Communications in Statistics - Theory and
+Methods</em> 30 (10): 2023–32. <a href="https://doi.org/10.1081/STA-100106060" class="external-link">https://doi.org/10.1081/STA-100106060</a>.
 </div>
 <div id="ref-kennedy_randomization_1995" class="csl-entry">
-Kennedy, Peter E. 1995. <span>“Randomization <span>Tests</span> in <span>Econometrics</span>.”</span> <em>Journal of Business &amp; Economic Statistics</em> 13 (1): 85. <a href="https://doi.org/10.2307/1392523">https://doi.org/10.2307/1392523</a>.
+Kennedy, Peter E. 1995. <span>“Randomization <span>Tests</span> in
+<span>Econometrics</span>.”</span> <em>Journal of Business &amp;
+Economic Statistics</em> 13 (1): 85. <a href="https://doi.org/10.2307/1392523" class="external-link">https://doi.org/10.2307/1392523</a>.
 </div>
 <div id="ref-kheradpajouh_exact_2010" class="csl-entry">
-Kherad Pajouh, Sara, and Olivier Renaud. 2010. <span>“An Exact Permutation Method for Testing Any Effect in Balanced and Unbalanced Fixed Effect <span>ANOVA</span>.”</span> <em>Computational Statistics &amp; Data Analysis</em> 54: 1881–93. <a href="https://doi.org/10.1016/j.csda.2010.02.015">https://doi.org/10.1016/j.csda.2010.02.015</a>.
+Kherad Pajouh, Sara, and Olivier Renaud. 2010. <span>“An Exact
+Permutation Method for Testing Any Effect in Balanced and Unbalanced
+Fixed Effect <span>ANOVA</span>.”</span> <em>Computational Statistics
+&amp; Data Analysis</em> 54: 1881–93. <a href="https://doi.org/10.1016/j.csda.2010.02.015" class="external-link">https://doi.org/10.1016/j.csda.2010.02.015</a>.
 </div>
 <div id="ref-kherad-pajouh_general_2015" class="csl-entry">
-Kherad-Pajouh, Sara, and Olivier Renaud. 2015. <span>“A General Permutation Approach for Analyzing Repeated Measures <span>ANOVA</span> and Mixed-Model Designs.”</span> <em>Statistical Papers</em> 56 (4): 947–67. <a href="https://doi.org/10.1007/s00362-014-0617-3">https://doi.org/10.1007/s00362-014-0617-3</a>.
+Kherad-Pajouh, Sara, and Olivier Renaud. 2015. <span>“A General
+Permutation Approach for Analyzing Repeated Measures <span>ANOVA</span>
+and Mixed-Model Designs.”</span> <em>Statistical Papers</em> 56 (4):
+947–67. <a href="https://doi.org/10.1007/s00362-014-0617-3" class="external-link">https://doi.org/10.1007/s00362-014-0617-3</a>.
 </div>
 <div id="ref-manly_randomization_1991" class="csl-entry">
-Manly, Bryan F. J. 1991. <em>Randomization, <span>Bootstrap</span> and <span>Monte Carlo Methods</span> in <span>Biology</span></em>. <span>Chapman and Hall/CRC</span>.
+Manly, Bryan F. J. 1991. <em>Randomization, <span>Bootstrap</span> and
+<span>Monte Carlo Methods</span> in <span>Biology</span></em>.
+<span>Chapman and Hall/CRC</span>.
 </div>
 <div id="ref-maris_nonparametric_2007" class="csl-entry">
-Maris, Eric, and Robert Oostenveld. 2007. <span>“Nonparametric Statistical Testing of <span>EEG</span>- and <span>MEG</span>-Data.”</span> <em>Journal of Neuroscience Methods</em> 164 (1): 177–90. <a href="https://doi.org/10.1016/j.jneumeth.2007.03.024">https://doi.org/10.1016/j.jneumeth.2007.03.024</a>.
+Maris, Eric, and Robert Oostenveld. 2007. <span>“Nonparametric
+Statistical Testing of <span>EEG</span>- and
+<span>MEG</span>-Data.”</span> <em>Journal of Neuroscience Methods</em>
+164 (1): 177–90. <a href="https://doi.org/10.1016/j.jneumeth.2007.03.024" class="external-link">https://doi.org/10.1016/j.jneumeth.2007.03.024</a>.
 </div>
 <div id="ref-pernet_clusterbased_2015" class="csl-entry">
-Pernet, C. R., M. Latinus, T. E. Nichols, and G. A. Rousselet. 2015. <span>“Cluster-Based Computational Methods for Mass Univariate Analyses of Event-Related Brain Potentials/Fields: <span>A</span> Simulation Study.”</span> <em>Journal of Neuroscience Methods</em> 250: 85–93. <a href="https://doi.org/10.1016/j.jneumeth.2014.08.003">https://doi.org/10.1016/j.jneumeth.2014.08.003</a>.
+Pernet, C. R., M. Latinus, T. E. Nichols, and G. A. Rousselet. 2015.
+<span>“Cluster-Based Computational Methods for Mass Univariate Analyses
+of Event-Related Brain Potentials/Fields: <span>A</span> Simulation
+Study.”</span> <em>Journal of Neuroscience Methods</em> 250: 85–93. <a href="https://doi.org/10.1016/j.jneumeth.2014.08.003" class="external-link">https://doi.org/10.1016/j.jneumeth.2014.08.003</a>.
 </div>
 <div id="ref-smith_thresholdfree_2009" class="csl-entry">
-Smith, S, and T Nichols. 2009. <span>“Threshold-Free Cluster Enhancement: <span>Addressing</span> Problems of Smoothing, Threshold Dependence and Localisation in Cluster Inference.”</span> <em>NeuroImage</em> 44 (1): 83–98. <a href="https://doi.org/10.1016/j.neuroimage.2008.03.061">https://doi.org/10.1016/j.neuroimage.2008.03.061</a>.
+Smith, S, and T Nichols. 2009. <span>“Threshold-Free Cluster
+Enhancement: <span>Addressing</span> Problems of Smoothing, Threshold
+Dependence and Localisation in Cluster Inference.”</span>
+<em>NeuroImage</em> 44 (1): 83–98. <a href="https://doi.org/10.1016/j.neuroimage.2008.03.061" class="external-link">https://doi.org/10.1016/j.neuroimage.2008.03.061</a>.
 </div>
 <div id="ref-terbraak_permutation_1992" class="csl-entry">
-ter Braak, Cajo J. F. 1992. <span>“Permutation <span>Versus Bootstrap Significance Tests</span> in <span>Multiple Regression</span> and <span>Anova</span>.”</span> In <em>Bootstrapping and <span>Related Techniques</span></em>, edited by Karl-Heinz Jöckel, Günter Rothe, and Wolfgang Sendler, 79–85. <span>Berlin, Heidelberg</span>: <span>Springer-Verlag</span>. <a href="https://doi.org/10.1007/978-3-642-48850-4_10">https://doi.org/10.1007/978-3-642-48850-4_10</a>.
+ter Braak, Cajo J. F. 1992. <span>“Permutation <span>Versus Bootstrap
+Significance Tests</span> in <span>Multiple Regression</span> and
+<span>Anova</span>.”</span> In <em>Bootstrapping and <span>Related
+Techniques</span></em>, edited by Karl-Heinz Jöckel, Günter Rothe, and
+Wolfgang Sendler, 79–85. <span>Berlin, Heidelberg</span>:
+<span>Springer-Verlag</span>. <a href="https://doi.org/10.1007/978-3-642-48850-4_10" class="external-link">https://doi.org/10.1007/978-3-642-48850-4_10</a>.
 </div>
 <div id="ref-tipura_attention_2019" class="csl-entry">
-Tipura, E., O. Renaud, and A. J. Pegna. 2019. <span>“Attention Shifting and Subliminal Cueing Under High Attentional Load: An <span>EEG</span> Study Using Emotional Faces.”</span> <em>Neuroreport</em>, October. <a href="https://doi.org/10.1097/WNR.0000000000001349">https://doi.org/10.1097/WNR.0000000000001349</a>.
+Tipura, E., O. Renaud, and A. J. Pegna. 2019. <span>“Attention Shifting
+and Subliminal Cueing Under High Attentional Load: An <span>EEG</span>
+Study Using Emotional Faces.”</span> <em>Neuroreport</em>, October. <a href="https://doi.org/10.1097/WNR.0000000000001349" class="external-link">https://doi.org/10.1097/WNR.0000000000001349</a>.
 </div>
 <div id="ref-troendle_stepwise_1995" class="csl-entry">
-Troendle, James F. 1995. <span>“A <span>Stepwise Resampling Method</span> of <span>Multiple Hypothesis Testing</span>.”</span> <em>Journal of the American Statistical Association</em> 90 (429): 370–78. <a href="https://doi.org/10.1080/01621459.1995.10476522">https://doi.org/10.1080/01621459.1995.10476522</a>.
+Troendle, James F. 1995. <span>“A <span>Stepwise Resampling
+Method</span> of <span>Multiple Hypothesis Testing</span>.”</span>
+<em>Journal of the American Statistical Association</em> 90 (429):
+370–78. <a href="https://doi.org/10.1080/01621459.1995.10476522" class="external-link">https://doi.org/10.1080/01621459.1995.10476522</a>.
 </div>
 <div id="ref-westfall_resamplingbased_1993" class="csl-entry">
-Westfall, Peter H., and S. Stanley Young. 1993. <em>Resampling-<span>Based Multiple Testing</span>: <span>Examples</span> and <span>Methods</span> for p-<span>Value Adjustment</span></em>. 1 edition. <span>New York</span>: <span>John Wiley &amp; Sons</span>.
+Westfall, Peter H., and S. Stanley Young. 1993.
+<em>Resampling-<span>Based Multiple Testing</span>:
+<span>Examples</span> and <span>Methods</span> for p-<span>Value
+Adjustment</span></em>. 1 edition. <span>New York</span>: <span>John
+Wiley &amp; Sons</span>.
 </div>
 </div>
 </div>
@@ -362,11 +453,13 @@ Westfall, Peter H., and S. Stanley Young. 1993. <em>Resampling-<span>Based Multi
 
 
       <footer><div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p></p>
+<p>Developed by Jaromil Frossard, Olivier Renaud.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -374,6 +467,8 @@ Westfall, Peter H., and S. Stanley Young. 1993. <em>Resampling-<span>Based Multi
 
   
 
+
+  
 
   </body>
 </html>
