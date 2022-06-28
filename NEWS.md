@@ -1,4 +1,8 @@
-# permuco 1.1.1 (cran)
+# permuco 1.1.2 (cran) (github)
+
+ * change email
+
+# permuco 1.1.1 
 
  * add signflip test
  * add replication for rANOVA

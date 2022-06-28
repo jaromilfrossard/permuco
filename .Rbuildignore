@@ -13,3 +13,5 @@ vignettes/permuco_tutorial_02.pdf
 ^\.github$
 ^codecov\.yml$
 ^Makefile$
+^doc$
+^Meta$

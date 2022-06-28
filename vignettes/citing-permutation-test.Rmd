@@ -47,9 +47,7 @@ For repeated measures ANOVA/ANCOVA using `aovperm(...)` and `clusterlm(...)` (wh
 
 # Citing the multiple comparisons procedure
 
-The `clusterlm(...)` function has several multiple comparison procedure implemented. It can be chosen using the `multcomp` argument. 
-
-Moreover, the implemented method does not control, the same error rate/measure, we recall the measures as well as the reference in the following table:
+The `clusterlm(...)` function has several multiple comparisons procedures implemented. It can be chosen using the `multcomp` argument. 
 
 
 `multcomp = `          | Reference                      |Parameters  |        Comments
@@ -60,11 +58,12 @@ Moreover, the implemented method does not control, the same error rate/measure, 
 `tfce`                 | @smith_thresholdfree_2009      |  |
 `bonferroni`           | @dunn_estimation_1958          |  |
 `holm`                 | @holm_simple_1979              |  |
-`benjamini_hochberg`   | @benjamini_controlling_1995    |  |
+`benjamini_hochberg`   | @benjamini_controlling_1995    |  | Control the FDR.
+`clusterdepth`         | @frossard_cluster_2022         |`threshold`|
 
 
 
-For completeness and full reproducibility of the results, you can also report the parameters used in the `clustermass` and `tfce` method.
+For completeness and full reproducibility of the results, you can also report the parameters used in the `clustermass`,`tfce` or `clusterdepth` methods.
 
 
 ## Citing the dataset

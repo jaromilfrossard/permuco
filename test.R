@@ -29,9 +29,26 @@ permuco::compute_clusterdepth
 
 object=clusterlm(attentionshifting_signal ~ visibility
                  + Error(id/(visibility)), data = attentionshifting_design,
-                 multcomp = c("clusterdepth"), np =2000,return_distribution = T)
+                 multcomp = c("troendle","clusterdepth","clusterdepth_tr"),
+                 np =4000,return_distribution = T)
+
+plot(object,multcomp = "clusterdepth")
+plot(object,multcomp = "clusterdepth_tr")
+plot(object,multcomp = "troendle")
 
 
+object2=clusterlm(attentionshifting_signal ~ visibility
+                 + Error(id/(visibility)), data = attentionshifting_design,
+                 multcomp = "clusterdepth",
+                 np =2000,return_distribution = T)
+
+Rcpp::sourceCpp("src/clusterdepth.cpp")
+
+source("R/get_cluster.R")
+source("R/depth_distribution.R")
+source("R/compute_troendle.R")
+source("R/compute_all_pvalue.R")
+source("R/compute_pvalue.R")
 distribution <- object$multiple_comparison[[1]]$uncorrected$distribution
 threshold <- object$threshold[1]
 alternative <- "two.sided"
