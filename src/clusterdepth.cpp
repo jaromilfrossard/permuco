@@ -9,7 +9,7 @@ IntegerVector get_cluster_matrix(NumericMatrix distribution, double threshold, S
     // initialize the result matrix
     IntegerMatrix res(distribution.nrow(),distribution.ncol());
 
-    if((side == "all")|(side == "ending")){
+    if((side == "all")||(side == "ending")){
       for(int rowi = 0; rowi < res.nrow(); rowi++){
         if(distribution(rowi,0)>threshold){
           res(rowi,0) = 1;
@@ -98,7 +98,7 @@ IntegerMatrix get_clusterdepth_head(IntegerMatrix cluster, String border){
   if(border == "rm"){
     for(int rowi = 0; rowi < res.nrow(); rowi++){
       int coli = 0;
-      while((res(rowi,coli)>=(coli+1))&(coli<res.ncol())){
+      while((res(rowi,coli)>=(coli+1))&&(coli<res.ncol())){
         res(rowi,coli)=0;
         coli = coli+1;
       }
@@ -112,7 +112,7 @@ IntegerMatrix get_clusterdepth_head(IntegerMatrix cluster, String border){
 
         //length of border cluster
         int lcli=0;
-        while((res(rowi,lcli)>0) & (lcli<res.ncol())){
+        while((res(rowi,lcli)>0) && (lcli<res.ncol())){
           lcli = lcli+1;
         }
 
@@ -170,7 +170,7 @@ IntegerMatrix get_clusterdepth_tail(IntegerMatrix cluster, String border){
 
         //length of border cluster
         int lcli=0;
-        while( (res(rowi,abs(res.ncol()-1-lcli))>0) & (lcli<res.ncol())){
+        while( (res(rowi,abs(res.ncol()-1-lcli))>0) && (lcli<res.ncol())){
           lcli = lcli+1;
         }
 

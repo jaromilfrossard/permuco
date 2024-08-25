@@ -1,6 +1,6 @@
 
 #methods for np=============================
-np <- function(object, ...) {UseMethod("np")}
+np <- function(object) {UseMethod("np")}
 
 np.matrix <-function(object){
   return(NCOL(object))
