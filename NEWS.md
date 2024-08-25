@@ -1,3 +1,8 @@
+# permuco 1.1.3 (cran) (github)
+
+ * bugfix of integral TFCE (https://github.com/jaromilfrossard/permuco/issues/15)
+ * bugfix of TFCE alternative="less" (https://github.com/jaromilfrossard/permuco/issues/14)
+
 # permuco 1.1.2 (cran) (github)
 
  * change email

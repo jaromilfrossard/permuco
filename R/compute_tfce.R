@@ -7,6 +7,9 @@
 #' @param E A scalar that represent the extend parameter of the TFCE transformation. Default is \code{E = 0.5}.
 #' @param H A scalar that represent the height parameter of the TFCE transformation. Default is \code{H = 1}.
 #' @param ndh The number of terms in the approximation of the integral.
+#'
+#' @details The approximation of the TFCE integral starts from the minimal statistic (among the permuted statistic), not 0. Indeed, the value of the integral (from 0, to this minimal value) is the same for all time points, all permutations and does not need to be computed to get p-values.
+#'
 #' @export
 #' @family multcomp
 compute_tfce <- function(distribution, alternative = "greater", E = 0.5, H = 1, ndh){
@@ -24,7 +27,7 @@ compute_tfce <- function(distribution, alternative = "greater", E = 0.5, H = 1, 
     distribution_tfce <- tfce_distribution(abs(distribution), E, H, dh, dhi)
   }else if(alternative=="greater"){
     distribution_tfce <- tfce_distribution(distribution, E, H, dh, dhi)
-  }else if(alternative=="greater"){
+  }else if(alternative=="less"){
   distribution_tfce <- tfce_distribution(-distribution, E, H, dh, dhi)
   }
 mx_tfce <-apply(distribution_tfce,1,max)

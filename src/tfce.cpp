@@ -59,10 +59,10 @@ NumericMatrix tfce_distribution(NumericMatrix distribution, double E, double H, 
 
 
   for(int rowi = 0; rowi < res.nrow(); rowi++){
-    int rowmax = max(distribution(rowi, _));
+    double rowmax = max(distribution(rowi, _));
     for(int ddi = 0; dhi(ddi)<rowmax;ddi++){
+      //handle that dhi does not start at 0
       res(rowi,_) = res(rowi,_) + pow(vector_extend(distribution(rowi, _),dhi(ddi)),E)*pow(dhi[ddi],H)*dh ;
-
     }
 
   }

@@ -20,6 +20,9 @@ compute_tfce(distribution, alternative = "greater", E = 0.5, H = 1, ndh)
 \description{
 Compute the TFCE correction given a matrix a permuted statistical signals.
 }
+\details{
+The approximation of the TFCE integral starts from the minimal statistic (among the permuted statistic), not 0. Indeed, the value of the integral (from 0, to this minimal value) is the same for all time points, all permutations and does not need to be computed to get p-values.
+}
 \seealso{
 Other multcomp: 
 \code{\link{compute_clusterdepth_head}()},
