@@ -2,7 +2,7 @@ Package: permuco
 Type: Package
 Title: Permutation Tests for Regression, (Repeated Measures) ANOVA/ANCOVA and Comparison of Signals
 Version: 1.1.3
-Date: 2022-06-28
+Date: 2024-08-25
 Authors@R: c(
   person("Jaromil","Frossard", email = "jaromil.frossard@gmail.com",role = c("aut", "cre")),
   person("Olivier","Renaud",email="olivier.renaud@unige.ch",role=c("aut")))
