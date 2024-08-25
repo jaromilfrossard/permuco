@@ -6,6 +6,7 @@
 #' @param data A data frame or matrix.
 #' @param np The number of permutations. Default value is \code{5000}.
 #' @param method A character string indicating the method used to handle nuisance variables. Default is \code{NULL} and will change if to \code{"freedman_lane"} for the fixed effects model and \code{"Rd_kheradPajouh_renaud"} for the random effect models. See Details for other methods.
+#' @param type A character string to specify the type of transformations: "permutation" and "signflip" are available. Is overridden if P is given. See help from Pmat.
 #' @param ... Futher arguments, see details.
 #'
 #' @return A \code{lmperm} object containing most of the objects given in an \link{lm} object, an ANOVA table with parametric and permutation p-values, the test statistics and the permutation distributions.
@@ -47,6 +48,11 @@
 #' mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 2000)
 #' mod_cost_0
 #'
+#' ## same analysis but with signflip
+#' ## Warning : np argument must be greater (recommendation: np>=5000)
+#' mod_cost_0s <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, type="signflip", np = 2000)
+#' mod_cost_0s
+#'
 #' ## Testing at 14 days
 #' emergencycost$LOS14 <- emergencycost$LOS - 14
 #'
@@ -77,7 +83,7 @@
 #'
 #'
 #' @export
-aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
+aovperm<-function(formula, data=NULL, np = 5000, method = NULL, type = "permutation", ...){
   #method <- pmatch(method)
 
   if(is.null(data)){data <- model.frame(formula = formula)}
@@ -94,11 +100,11 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
 
   ###switch fix effet
   if (is.null(indError)) {
-    result <- aovperm_fix( formula = formula, data = data, method = method, np = np, coding_sum = dotargs$coding_sum, P = dotargs$P,
+    result <- aovperm_fix( formula = formula, data = data, method = method, type = type, np = np, coding_sum = dotargs$coding_sum, P = dotargs$P,
                            rnd_rotation = dotargs$rnd_rotation, new_method = dotargs$new_method)
   } else if (!is.null(indError))
   {
-    result <- aovperm_rnd( formula = formula, data = data, method = method, np = np, coding_sum = dotargs$coding_sum, P = dotargs$P,
+    result <- aovperm_rnd( formula = formula, data = data, method = method, type = type, np = np, coding_sum = dotargs$coding_sum, P = dotargs$P,
                            rnd_rotation = dotargs$rnd_rotation, new_method = dotargs$new_method)
   }
 
@@ -113,6 +119,7 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
 #' @param data A data frame or matrix.
 #' @param np The number of permutations. Default value is \code{5000}.
 #' @param method A character string indicating the method use to handle nuisance variables. Default is \code{"freedman_lane"}. For the other methods, see details.
+#' @param type A character string to specify the type of transformations: "permutation" and "signflip" are available. Is overridden if P is given. See help from Pmat.
 #' @param ... Futher arguments, see details.
 #' @return A \code{lmperm} object. See \link{aovperm}.
 #' @details The following methods are available for the fixed effects model defined as \eqn{y = D\eta + X\beta + \epsilon}. If we want to test \eqn{\beta = 0} and take into account the effects of the nuisance variables \eqn{D}, we transform the data :
@@ -155,7 +162,7 @@ aovperm<-function(formula, data=NULL, np = 5000, method = NULL,...){
 #' modlm_cost_14 <- lmperm(cost ~ LOS14*sex*insurance, data = emergencycost, np = 2000)
 #' modlm_cost_14
 #' @export
-lmperm<-function(formula, data = NULL, np = 5000, method = NULL,... ){
+lmperm<-function(formula, data = NULL, np = 5000, method = NULL, type = "permutation",... ){
   if(is.null(data)){data <- model.frame(formula = formula)}
 
   ############
@@ -168,11 +175,11 @@ lmperm<-function(formula, data = NULL, np = 5000, method = NULL,... ){
 
   ###switch fix effet
   if (is.null(indError)) {
-    result <- lmperm_fix( formula = formula, data = data, method = method, np = np, P = dotargs$P,
+    result <- lmperm_fix( formula = formula, data = data, method = method, type = type, np = np, P = dotargs$P,
                           rnd_rotation = dotargs$rnd_rotation, new_method = dotargs$new_method)
   } else
   {
-    stop("the random effects model is not implemented yet.")
+    stop("the random effects model is not implemented yet. See aovperm")
   }
 
   ###output

@@ -15,6 +15,7 @@ print.clusterlm <- function(x, multcomp = NULL, alternative = "two.sided", ...){
 #' @export
 print.multcomp_table <- function(x, ...) {
   cat("Effect: ",attr(x,"effect_name"), ".\n",sep="")
+  cat("Alternative Hypothesis: ",attr(x,"alternative"), ".\n",sep="")
   cat("Statistic: ",attr(x,"test"),"(",paste(attr(x,"df"),collapse=", "),")", ".\n",sep="")
   cat("Resample Method: ",attr(x,"method"), ".\n",sep="")
   cat("Number of Dependant Variables: ",attr(x,"nDV"), ".\n",sep="")
@@ -143,7 +144,11 @@ summary.clusterlm <- function(object, alternative = "two.sided", multcomp = NULL
 #' @export
 plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = x$multcomp[1], alternative = "two.sided", enhanced_stat = FALSE,
                            nbbaselinepts=0, nbptsperunit=1, distinctDVs=NULL, ...) {
+  par0 <- par()
 
+  dotargs <- list(...)
+  dotargs_par <- dotargs[names(dotargs)%in%names(par())]
+  dotargs <-  dotargs[!names(dotargs)%in%names(par())]
   ##select effect
   if("all" %in% effect){effect = names(x$multiple_comparison)}
   else if(sum(names(x$multiple_comparison)%in%effect) == 0){
@@ -215,7 +220,12 @@ plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = x$m
 
   par0 <- list(mfcol = par()$mfcol,mar = par()$mar,oma = par()$oma)
 
-  par(mfcol = c(p,1),mar = c(0,4,0,0),oma = c(4,0,4,1),...=...)
+  if(is.null(dotargs_par$mfcol)){dotargs_par$mfcol = c(p,1)}
+  if(is.null(dotargs_par$mar)){dotargs_par$mar = c(0,4,0,0)}
+  if(is.null(dotargs_par$oma)){dotargs_par$oma = c(4,0,4,1)}
+
+  par(dotargs_par)
+  #par(mfcol = c(p,1),mar = c(0,4,0,0),oma = c(4,0,4,1))
   for (i in 1:p) {
     if (distinctDVs) {
       plot((1:ncol(data)-nbbaselinepts)/nbptsperunit,
@@ -226,7 +236,7 @@ plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = x$m
     else{
       if(i==p){xaxt = NULL}else{xaxt = "n"}
       plot((1:ncol(data)-nbbaselinepts)/nbptsperunit,
-           data[i,],type = "l", xaxt = xaxt,xlab = "",ylab = rnames[i]
+           data[i,],type = "l", xaxt = xaxt,xlab = "",ylab = rnames[i], ... = ...
       )
     }
     if(type == "statistic"){
@@ -243,7 +253,8 @@ plot.clusterlm <- function(x, effect = "all", type = "statistic", multcomp = x$m
       }
     }}
   title(title,outer = T,cex = 2)
-  par(mfcol = par0$mfcol, mar = par0$mar, oma = par0$oma)
+  par0 <- par0[!names(par0)%in%c("cin","cra","csi","cxy","din","page")]
+  par(par0)
 }
 
 

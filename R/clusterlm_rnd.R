@@ -1,4 +1,4 @@
-clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np, P, rnd_rotation,
+clusterlm_rnd <- function(formula, data, method, type, test, coding_sum, threshold, np, P, rnd_rotation,
                           aggr_FUN, E, H, cl, multcomp, alpha, p_scale, return_distribution, ndh, new_method){
 
 
@@ -35,7 +35,7 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
     {warning(paste("the method",method, "is not defined. Choose between Rd_kheradPajouh_renaud or Rde_kheradPajouh_renaud."))
       funP <- function(...){eval(parse(text=paste("cluster_fisher_",method,"_rnd(...)",sep="",collpase="")))}})
 
-  if(!(class(formula[[2]]) == "matrix")){
+  if(!(inherits(formula[[2]], what = "matrix"))){
     formula[[2]] <- call("as.matrix", formula[[2]])}
 
 
@@ -84,11 +84,11 @@ clusterlm_rnd <- function(formula, data, method, test, coding_sum, threshold, np
   checkBalancedData(fixed_formula = formula_f, data = cbind(mf))
 
   #compute permutation
-  if (is.null(P)) {P <- Pmat(np = np, n = NROW(y))}
-  if(sum(np(P) <= 1999)>0){
+  if (is.null(P)) {P <- Pmat(np = np, n = NROW(y), type = type)}
+  np <- np(P)
+  if(sum(np <= 1999)>0){
     warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
-  np <- np(P)
 
 
 

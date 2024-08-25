@@ -9,6 +9,7 @@ clusterlm(
   data = NULL,
   np = 5000,
   method = NULL,
+  type = "permutation",
   test = "fisher",
   threshold = NULL,
   aggr_FUN = NULL,
@@ -24,6 +25,8 @@ clusterlm(
 \item{np}{The number of permutations. Default value is \code{5000}.}
 
 \item{method}{A character string indicating the method used to handle nuisance variables. Default is \code{NULL} and will switch to \code{"freedman_lane"} for the fixed effects model and to \code{"Rd_kheradPajouh_renaud"} for the repeated measures ANOVA. See \link{lmperm} or \link{aovperm} for details on the permutation methods.}
+
+\item{type}{A character string to specify the type of transformations: "permutation" and "signflip" are available. Is overridden if P is given. See help from Pmat.}
 
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 

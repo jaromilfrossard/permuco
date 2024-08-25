@@ -1,5 +1,5 @@
 #'@importFrom stats lm.fit rnorm
-aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation, new_method = NULL){
+aovperm_fix <- function( formula, data, method, type, np, coding_sum, P, rnd_rotation, new_method = NULL){
 
   if(is.null(coding_sum)){coding_sum = T}
 
@@ -49,7 +49,6 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
 
 
   #check P========================================
-  type = NULL
     if(!is.null(P)){
     check_P <- check_P(P = P, method = method,
                        test = "fisher", n = length(y),
@@ -76,7 +75,7 @@ aovperm_fix <- function( formula, data, method, np, coding_sum, P, rnd_rotation,
   if(sum(np(P) <= 1999)>0){
     warning("The number of permutations is below 2000, p-values might be unreliable.")
   }
-
+  type = attr(P,"type")
   np <- np(P)
 
   #create rnd_rotation matrices==============================

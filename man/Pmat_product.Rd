@@ -14,7 +14,7 @@ Pmat_product(x, P, type = NULL)
 \item{type}{A character string indicating the type of transformation. This argument need to be specified if P is not of class Pmat.}
 }
 \value{
-A matrix n x np containing the permutated/coin-flipped vectors.
+A matrix n x np containing the permutated/signflipped vectors.
 }
 \description{
 Multiplies a vector or matrix with a Pmat object

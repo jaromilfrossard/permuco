@@ -4,7 +4,7 @@
 #' @param x A a vector or matrix
 #' @param P A Pmat object
 #' @param type A character string indicating the type of transformation. This argument need to be specified if P is not of class Pmat.
-#' @return A matrix n x np containing the permutated/coin-flipped vectors.
+#' @return A matrix n x np containing the permutated/signflipped vectors.
 #' @export
 Pmat_product <- function(x, P, type = NULL){UseMethod("Pmat_product")}
 
@@ -16,7 +16,7 @@ Pmat_product.numeric <- function(x, P, type = NULL){
   ### product
   switch(type,
          "permutation" ={x <- matrix(x[as.matrix(P)],ncol = np(P))},
-         "coinflip" = {x <- matrix(x*as.matrix(P),ncol = np(P))}
+         "signflip" = {x <- matrix(x*as.matrix(P),ncol = np(P))}
          )
   return(x)
 }
@@ -36,7 +36,7 @@ Pmat_product.matrix <- function(x, P, type = NULL){
   ## product
   switch(type,
          "permutation" ={x <- matrix(x[as.numeric(P),],ncol = ncol(x))},
-         "coinflip" = {x <- matrix(x*as.numeric(P),ncol = ncol(x))})
+         "signflip" = {x <- matrix(x*as.numeric(P),ncol = ncol(x))})
 
   return(x)
 }

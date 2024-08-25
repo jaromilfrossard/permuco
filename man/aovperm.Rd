@@ -4,7 +4,14 @@
 \alias{aovperm}
 \title{P-values based on permutation tests for ANOVA and repeated measures ANOVA designs.}
 \usage{
-aovperm(formula, data = NULL, np = 5000, method = NULL, ...)
+aovperm(
+  formula,
+  data = NULL,
+  np = 5000,
+  method = NULL,
+  type = "permutation",
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula object. The formula for repeated measures ANOVA should be written using the same notation as \link{aov} by adding
@@ -15,6 +22,8 @@ aovperm(formula, data = NULL, np = 5000, method = NULL, ...)
 \item{np}{The number of permutations. Default value is \code{5000}.}
 
 \item{method}{A character string indicating the method used to handle nuisance variables. Default is \code{NULL} and will change if to \code{"freedman_lane"} for the fixed effects model and \code{"Rd_kheradPajouh_renaud"} for the random effect models. See Details for other methods.}
+
+\item{type}{A character string to specify the type of transformations: "permutation" and "signflip" are available. Is overridden if P is given. See help from Pmat.}
 
 \item{...}{Futher arguments, see details.}
 }
@@ -58,6 +67,11 @@ emergencycost$LOSc <- scale(emergencycost$LOS, scale = FALSE)
 ## Warning : np argument must be greater (recommendation: np>=5000)
 mod_cost_0 <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, np = 2000)
 mod_cost_0
+
+## same analysis but with signflip
+## Warning : np argument must be greater (recommendation: np>=5000)
+mod_cost_0s <- aovperm(cost ~ LOSc*sex*insurance, data = emergencycost, type="signflip", np = 2000)
+mod_cost_0s
 
 ## Testing at 14 days
 emergencycost$LOS14 <- emergencycost$LOS - 14
